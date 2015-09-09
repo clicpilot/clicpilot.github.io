@@ -1,0 +1,1 @@
+Here is an example of web application, which only has one HTML page and. it creates messages and save them into database and meanwhile show the messages in the web page.
