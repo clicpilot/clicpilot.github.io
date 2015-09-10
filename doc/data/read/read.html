@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Read Action</title>
+</head>
+<body>
+	<h4>Read Item</h4>
+	<form>
+		<label>ItemId</label>
+		<input type="text" id="IdField"></input>
+		<button type="button" onclick="javascript:var id=$('#IdField').val();CP_DoAction('ReadItem', {Id:id});">Load</button>
+	</form>
+	<p>
+	<div class="cp-read" cp-entity-name="Item" cp-action-name="ReadItem" cp-field="['ItemId', 'Name']">
+		<span>ItemId</span>
+        <span>{{=it.ItemId?it.ItemId:'&nbsp;'}}</span>
+        <p/>
+        <span>Name</span>
+        <span class="cp-string" cp-prop-name="Name">{{=it.Name?it.Name:'&nbsp;'}}</span>
+	</div>
+	<pre id="msg"></pre>
+	<script>
+	    window.ShowResponse = function(msg) {
+	      $("#msg").text(msg);
+	    }
+	    window.ShowActionMsg = window.ShowResponse;
+	    window.ShowMessage = window.ShowResponse;
+    </script>
+    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+</body>
+</html>
