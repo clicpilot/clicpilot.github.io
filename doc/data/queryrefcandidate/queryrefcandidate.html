@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Query Reference Action</title>
+</head>
+<body>
+	<h4>Query Reference Item</h4>
+	<h5>Items</h5>
+	<ul class="cp-query" cp-entity-name="Item" cp-action-name="QueryItem" cp-field="['ItemId','Name']">
+		<li>
+		  	<span>{{=it.ItemId}}</span>
+		  	<a class="cp-string" cp-prop-name="Name" href="#" onclick="javascript:CP_DoAction('QueryItemSubItem', {Id: {{=it.ItemId}} })">{{=it.Name}}</a>
+		</li>
+	</ul>
+	<h5>Sub Items</h5>
+	<ul class="cp-query-ref cp-one2many" cp-entity-name="Item" cp-refe-entity="SubItem" cp-refe-name="Refe1" cp-inv-name="InvRefe1" cp-action-name="QueryItemSubItem"   cp-field="['SubItemId', 'SubName']">
+		<li>
+		<span>{{=it.SubItemId}}</span>
+		<span>{{=it.SubName}}</span>
+		</li>
+	</ul>
+	<h5>Sub Items Candidates</h5>
+	<ul class="cp-query-ref-candidate" cp-entity-name="Item" cp-refe-name="Refe1" cp-action-name="QueryItemSubItemCandidate"  cp-field="['SubItemId', 'SubName']">
+		<li>
+		<span>{{=it.SubItemId}}</span>
+		<span>{{=it.SubName}}</span>
+		</li>
+	</ul>
+	<h5>All Sub Items</h5>
+	<ul class="cp-query" cp-entity-name="SubItem" cp-action-name="QuerySubItem" cp-field="['SubItemId','SubName', 'InvRefe1.ItemId','InvRefe1.Name']">
+		<li>
+		  	<span>{{=it.SubItemId}}</span>
+		  	<span class="cp-string" cp-prop-name="SubName">{{=it.SubName}}</span>
+			<span>{{=it.InvRefe1?it.InvRefe1.Name:'&nbsp;'}}</span>
+		</li>
+	</ul>
+	<pre id="msg"></pre>
+	<script>
+	    window.ShowResponse = function(msg) {
+	      $("#msg").text(msg);
+	    }
+	    window.ShowActionMsg = window.ShowResponse;
+	    window.ShowMessage = window.ShowResponse;
+    </script>
+    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+</body>
+</html> 
