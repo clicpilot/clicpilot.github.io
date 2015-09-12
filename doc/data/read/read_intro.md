@@ -1,6 +1,6 @@
 The HTML tag which has the class __cp-read__ defines a __Read__ action, and the tags in this action tag with class name __cp-string__ defines a property included this action. If a tag with class name __cp-one2one__ defines a reference included in action. For the reference example please see the chapter about reference.
 
-
+After page loaded, 
 * Click the "clicpilot-js console" button to open the console. 
 * Select the Data in the menu. 
 * In the SQL textarea, input "INSERT INTO ITEM(NAME) VALUES ('Item 1')"

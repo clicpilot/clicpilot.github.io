@@ -5,7 +5,7 @@ So that, we need write code in these three layers. Some code generation tools ca
 
 * Concept
 
-HTML is a programming language to build user interface, while it can be used to describe server-side logic. FORM, for example, can be used to generated describe a create or update action in the middle-tier and it can be generated as a table of database layer, the input fields of the FORM are the columns of the table. In this way, developers can write UI code then get server-side code by clicpilot.
+HTML is a programming language to build user interface, while it can be used to describe server-side logic. FORM, for example, can be used to describe a create or update action in the middle-tier and it can be generated as a table of database layer, the input fields of the FORM are the columns of the table. In this way, developers can write UI code then get server-side code.
 
 clicpilot can mockup the application in browser without server-side environment. 
 
