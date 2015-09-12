@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Update Action</title>
+</head>
+<body>
+	<form>
+		<label>ItemId</label>
+		<input type="text" id="IdField"></input>
+		<button type="button" onclick="javascript:var id=$('#IdField').val();CP_UpdateView('UpdateItem', {Id:id});">Load</button>
+	</form>
+	<p>
+	<h4>Update Item</h4>
+	<form class="cp-update" cp-entity-name="Item" cp-action-name="UpdateItem" cp-read-action-name="ReadUpdateItem" cp-read-field="['ItemId','Name']">
+		<label>Item</label><p>
+		<input type="text" class="cp-string" cp-prop-name="Name" value="{{=it.Name||''}}"></input>
+		<button type="button" class="cp-submit">Update</button>
+	</form>
+	<pre id="msg"></pre>
+	<script>
+	    window.ShowResponse = function(msg) {
+	      $("#msg").text(msg);
+	    }
+	    window.ShowActionMsg = window.ShowResponse;
+	    window.ShowMessage = window.ShowResponse;
+    </script>
+    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+</body>
+</html>

@@ -3,10 +3,10 @@ The HTML tag which has the class __cp-create__ defines a Create action, and the 
 After creating some items in this example, 
 * Click the "clicpilot-js console" button to open the console. 
 * Select the Data in the menu. 
-* Chhose "Item" in Tables list.
+* Choose "Item" in Tables list.
 * Click "Show Data" button, a SQL will be generated in the SQL textarea.
 * Click "execute" buuton under the SQL textarea.
 * the data will be displayed in the console page.
 
 
-![Create Action](./data/create/Create_Action_01.jpg)
+![Create Action](./data/create/create_action_1.jpg)
