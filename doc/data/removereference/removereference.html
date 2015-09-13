@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Add Reference Action</title>
+	<title>Remove Reference Action</title>
 </head>
 <body>
-	<h4>Add Reference Item</h4>
+	<h4>Remove Reference Item</h4>
 	<h5>Items</h5>
 	<ul class="cp-query" cp-entity-name="Item" cp-action-name="QueryItem" cp-field="['ItemId','Name']">
 		<li>
@@ -17,6 +17,7 @@
 		<li>
 			<span>{{=it.SubItemId}}</span>
 			<span>{{=it.SubName}}</span>
+			<a href="#" class="cp-remove-ref" cp-action-name="RemoveSubItem" cp-entity-name="Item" cp-refe-name="Refe1" cp-complete-observer="['QueryItemSubItem', 'QueryItemSubItemCandidate']" onclick="javascript:CP_DoAction('RemoveSubItem', {Id:$('#ItemId').text(), RefeId: [ {{=it.SubItemId}} ]});return false;">Remove</a>
 		</li>
 	</ul>
 	<h5>Sub Items Candidates</h5>

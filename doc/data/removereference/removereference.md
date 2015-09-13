@@ -1,8 +1,8 @@
-__AddReference__ action is to link one or a set of objects to another object. In SQL, it will be converted into INSERT or UPDATE statement. To define an __AddReference__ action, the below is required.
+__RemoveReference__ action is to remove the linkbetween an object to another object. In SQL, it will be converted into DELETE or UPDATE statement. To define a __RemoveReference__ action, the below is required.
 
 |type|code|
 |:------|:-------:|
-|class|class="cp-add-ref"|
+|class|class="cp-remove-ref"|
 |attribute|cp-action-name="_actionname_"|
 |attribute|cp-entity-name="_entityname_"|
 |attribute|cp-refe-name="_referencename_"|

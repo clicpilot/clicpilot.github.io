@@ -1,4 +1,4 @@
-The HTML tag which has the class __cp-add-ref__ defines a __AddReference__ action. While to demostrate add reference, it needs to list the owner objects. so in the example there is a query to list all the items, all the subitems and reference objects and candidate objects.
+The HTML tag which has the class __cp-remove-ref__ defines a __RemoveReference__ action. While to demostrate remove reference, it needs to list the owner objects. so in the example there is a query to list all the items, all the subitems and reference objects and candidate objects.
 
 After page loaded, 
 * Click the "clicpilot-js console" button to open the console. 
@@ -12,9 +12,9 @@ After page loaded,
 * Click the "clicpilot-js console" button back to page preview.
 * The data will be displayed in the console page. 'Item1', exists, and "SubItem 1" links to "Item 1", and "SubItem 2", "SubItem 3" are displayed as candidates for new Item.
 * Click "Item 1", "SubItem 2", "SubItem 3" displayed as candidates of "Item 1".
-* Click "Add" of "SubItem 2", "SubItem 2" is added as subitem of "Item 1".
+* Click "Remove" of "SubItem 1", "SubItem 1" is removed from subitem of "Item 1".
 * Click "Add" of "SubItem 3", "SubItem 3" is added as subitem of "Item 1".
 
 The _cp-complete-observer_ is an array of actions, which will be invoked after the action execute completetly.
 
-![Query Action](./data/addreference/addreference_action_1.jpg)
+![Query Action](./data/removereference/removereference_action_1.jpg)
