@@ -1,6 +1,9 @@
 var content = 
 	[
 		{
+			"title":"clicpilot documentation",
+		},
+		{
 			"title":"Overview",
 		},
 		{
@@ -109,67 +112,63 @@ var content =
 					"children":[
 						{
 							"title":"One To One",
-							"file":["one2one.html", "one2one_intro.md",
-							"one2one_s.html", "one2one_s_intro.md",
-							"one2one_i.html", "one2one_i_intro.md",
-							"one2one_a.html", "one2one_a_intro.md",
-							"one2one_d.html", "one2one_d_intro.md"]
+							"file":["one2one.html", "one2one_intro.md"]
 						},
 						{
 							"title":"One To One Single-directional",
-							"file":["one2ones.html", "one2ones_intro.md"]
+							"file":["one2one_s.html"]
 						},
 						{
 							"title":"One To One Bidirectional",
-							"file":["one2oneb.html", "one2oneb_intro.md"]
+							"file":["one2one_i.html"]
 						},
 						{
 							"title":"One To One Ancestry",
-							"file":["one2onea.html", "one2onea_intro.md"]
+							"file":["one2one_a.html"]
 						},
 						{
 							"title":"One To One Descendant",
-							"file":["one2oned.html", "one2oned_intro.md"]
+							"file":["one2one_d.html"]
 						},
 						{
 							"title":"One To Many",
-							"file":["one2many.html", "one2many_intro.md"]
+							"file":["one2many.html"]
 						},
 						{
 							"title":"One To Many Single-directional",
-							"file":["one2manys.html", "one2manys_intro.md"]
+							"file":["one2many_s.html"]
 						},
 						{
 							"title":"One To Many Bidirectional",
-							"file":["one2manyb.html", "one2manyb_intro.md"]
+							"file":["one2many_i.html"]
 						},
 						{
 							"title":"One To Many Descendant",
-							"file":["one2manyd.html", "one2manyd_intro.md"]
+							"file":["one2many_d.html"]
 						},
 						{
 							"title":"Many To One",
-							"file":["many2one.html", "many2one_intro.md"]
+							"file":["many2one.html"]
 						},
 						{
 							"title":"Many To One Single-directional",
-							"file":["many2ones.html", "many2ones_intro.md"]
+							"file":["many2one_s.html"]
 						},
 						{
 							"title":"Many To One Bidirectional",
-							"file":["many2oneb.html", "many2oneb_intro.md"]
+							"file":["many2one_b.html"]
 						},
 						{
 							"title":"Many To One Ancestry",
-							"file":["many2onea.html", "many2onea_intro.md"]
+							"file":["many2one_a.html"]
 						},
 						{
 							"title":"Many To Many",
-							"file":["many2many.html", "many2many_intro.md"]
+							"file":["many2many.html"]
 						},
 						{
 							"title":"Many To Many Single-directional",
-							"file":["many2manys.html", "many2manys_intro.md"]
+							"file":["many2many_s.html"]
 						},
 					]
 				},

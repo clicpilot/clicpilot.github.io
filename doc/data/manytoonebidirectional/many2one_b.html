@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Many To One Bidirectional</title>
+  </head>
+  <body>
+    <h1>Many To One Bidirectional</h1>
+    <pre id="msg"></pre>
+      <h4>Create A</h4>
+      <form class="cp-create" cp-entity-name="EM2OBA" cp-action-name="CreateEM2OBA" cp-complete-observer="['CreateEM2OBA', 'CreateEM2OBB', 'ReadEM2OBA', 'ReadEM2OBB', 'UpdateEM2OBA', 'UpdateEM2OBB', 'QueryEM2OBA', 'QueryEM2OBB']">
+        <label>Prop1</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop1" value="">
+        </input>
+        <label>Refe1</label>
+        <select id="EM2OB-refe1-select" class="cp-many2one-b" cp-refe-name="Refe1" cp-inv-name="InvRefe1" cp-refe-entity="EM2OBB" cp-refe-cand="QueryCandEM2OBARefe1">
+          <option value="0">&nbsp;</option>
+          <option class="cp-query-ref-candidate" cp-action-name="QueryCandEM2OBARefe1" cp-container-id="EM2OB-refe1-select" cp-entity-name="EM2OBA" cp-refe-name="Refe1" cp-refe-entity="EM2OBB" cp-field="['EM2OBBId', 'Prop2']" value="{{=it.EM2OBBId}}">{{=it.Prop2}}</option>
+        <select>
+        <button type="button" class="cp-submit">Create</button>
+      </form>
+      <h4>Create B</h4>
+      <form class="cp-create" cp-entity-name="EM2OBB" cp-action-name="CreateEM2OBB" cp-complete-observer="['CreateEM2OBA', 'CreateEM2OBB', 'ReadEM2OBA', 'ReadEM2OBB', 'UpdateEM2OBA', 'UpdateEM2OBB', 'QueryEM2OBA', 'QueryEM2OBB']">
+        <label>Prop2</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop2" value="">
+        </input>
+        <label>InvRefe1</label>
+        <select multiple="multiple" row="8" id="EM2OB-invrefe1-select" class="cp-many2one-b" cp-inv-refe="true" cp-refe-name="InvRefe1" cp-refe-entity="EM2OBA" cp-refe-cand="QueryCandEM2OBBInvRefe1">
+          <option class="cp-query-ref-candidate" cp-action-name="QueryCandEM2OBBInvRefe1" cp-container-id="EM2OB-invrefe1-select" cp-entity-name="EM2OBB" cp-refe-name="InvRefe1" cp-field="['EM2OBAId', 'Prop1']" value="{{=it.EM2OBAId}}">{{=it.Prop1||'&nbsp;'}}</option>
+        <select>
+        <button type="button" class="cp-submit">Create</button>
+      </form>
+      <h4>Read A</h4>
+      <form class="cp-read" cp-entity-name="EM2OBA" cp-action-name="ReadEM2OBA" cp-field="['EM2OBAId','Prop1', 'Refe1.EM2OBBId', 'Refe1.Prop2']">
+        <label>Prop1</label>
+        <span>{{=it.Prop1?it.Prop1:'&nbsp;'}}</span>
+        <label>Prop2</label>
+        <span>{{=it.Refe1?it.Refe1.Prop2:'&nbsp;'}}</span>
+        <button type="button" class="cp-delete" cp-entity-name="EM2OBA" cp-action-name="DeleteEM2OBA" onclick="javascript:CP_DoAction('DeleteEM2OBA', {Id: {{=it.EM2OBAId?it.EM2OBAId:'0'}} });return false;" cp-complete-observer="['CreateEM2OBA', 'CreateEM2OBB', 'ReadEM2OBA', 'ReadEM2OBB', 'UpdateEM2OBA', 'UpdateEM2OBB', 'QueryEM2OBA', 'QueryEM2OBB']">Delete</button>
+      </form>
+      <h4>Read B</h4>
+      <form >
+        <div class="cp-read" cp-entity-name="EM2OBB" cp-action-name="ReadEM2OBB" cp-field="['EM2OBBId','Prop2']" cp-complete-observer="['QueryEM2OBBInvRefe1Read', 'QueryCandEM2OBBInvRefe1Read']">
+        <label>EM2OBBId</label>
+        <span id="ReadEM2OBB-ID">{{=it.EM2OBBId?it.EM2OBBId:'&nbsp;'}}</span>
+        <label>Prop2</label>
+        <span>{{=it.Prop2?it.Prop2:'&nbsp;'}}</span>
+        </div>
+        <label>InvRefe1</label>
+        <ul class="cp-query-ref" cp-action-name="QueryEM2OBBInvRefe1Read" cp-entity-name="EM2OBB" cp-refe-name="InvRefe1" cp-field="['EM2OBAId', 'Prop1']" >
+          <li>
+            <span>{{=it.EM2OBAId}}</span>
+            <span>{{=it.Prop1}}</span>
+            <a href="#" class="cp-remove-ref" cp-action-name="RemoveEM2OBBInvRefe1" cp-entity-name="EM2OBB" cp-refe-name="InvRefe1" cp-refe-entity="EM2OBA" cp-complete-observer="['CreateEM2OBA', 'CreateEM2OBB', 'ReadEM2OBA', 'ReadEM2OBB', 'UpdateEM2OBA', 'UpdateEM2OBB', 'QueryEM2OBA', 'QueryEM2OBB']" onclick="javascript:CP_DoAction('RemoveEM2OBBInvRefe1', {Id:$('#ReadEM2OBB-ID').text(), RefeId: [$(this).siblings().first().text()]});return false;" >Remove</a>
+          </li>
+        </ul>
+        <ul class="cp-query-ref-candidate" cp-action-name="QueryCandEM2OBBInvRefe1Read" cp-entity-name="EM2OBB" cp-refe-name="InvRefe1" cp-field="['EM2OBAId', 'Prop1']" >
+          <li>
+            <span>{{=it.EM2OBAId}}</span>
+            <span>{{=it.Prop1}}</span>
+            <a href="#" class="cp-add-ref" cp-action-name="AddEM2OBBInvRefe1" cp-entity-name="EM2OBB" cp-refe-name="InvRefe1" cp-refe-entity="EM2OBA" cp-complete-observer="['CreateEM2OBA', 'CreateEM2OBB', 'ReadEM2OBA', 'ReadEM2OBB', 'UpdateEM2OBA', 'UpdateEM2OBB', 'QueryEM2OBA', 'QueryEM2OBB']" onclick="javascript:CP_DoAction('AddEM2OBBInvRefe1', {Id:$('#ReadEM2OBB-ID').text(), RefeId: [$(this).siblings().first().text()]});return false;">Add</a>
+          </li>
+        </ul>
+        <button type="button" class="cp-delete" cp-entity-name="EM2OBB" cp-action-name="DeleteEM2OBB" cp-complete-observer="['CreateEM2OBA', 'CreateEM2OBB', 'ReadEM2OBA', 'ReadEM2OBB', 'UpdateEM2OBA', 'UpdateEM2OBB', 'QueryEM2OBA', 'QueryEM2OBB']" onclick="javascript:CP_DoAction('DeleteEM2OBB', {Id: {{=it.EM2OBBId?it.EM2OBBId:'0'}} });return false;">Delete</button>
+      </form>
+      <h4>Update A</h4>
+      <form class="cp-update" cp-entity-name="EM2OBA" cp-action-name="UpdateEM2OBA" cp-read-action-name="ReadUpdateEM2OBA" cp-read-field="['EM2OBAId','Prop1','Refe1.EM2OBBId', 'Refe1.Prop2']" cp-complete-observer="['CreateEM2OBA', 'CreateEM2OBB', 'ReadEM2OBA', 'ReadEM2OBB', 'UpdateEM2OBA', 'UpdateEM2OBB', 'QueryEM2OBA', 'QueryEM2OBB']">
+        <label>Prop1</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop1" value="{{=it.Prop1||'&nbsp;'}}">
+        </input>
+        <label>Refe1</label>
+        <select id="EM2OB-refe1-select-update" class="cp-many2one-b" cp-refe-name="Refe1" cp-inv-name="InvRefe1" cp-refe-entity="EM2OBB" cp-refe-cand="QueryCandEM2OBARefe1Update">
+          {{if(it.Refe1) { }}
+          <option selected="selected" value="0">&nbsp;</option>
+          <option selected="selected" value="{{=it.Refe1.EM2OBBId}}">{{=it.Refe1.Prop2}}</option>
+          {{ } else { }}
+          <option selected="selected" value="0">&nbsp;</option>
+          {{ } }}
+          <option class="cp-query-ref-candidate" cp-action-name="QueryCandEM2OBARefe1Update" cp-container-id="EM2OB-refe1-select-update" cp-entity-name="EM2OBA" cp-refe-name="Refe1" cp-refe-entity="EM2OBB" cp-field="['EM2OBBId', 'Prop2']" value="{{=it.EM2OBBId}}">{{=it.Prop2||'&nbsp;'}}</option>
+        </select>
+        <button type="button" class="cp-submit">Update</button>
+      </form>
+      <h4>Update B</h4>
+      <form class="cp-update" cp-entity-name="EM2OBB" cp-action-name="UpdateEM2OBB"  cp-read-action-name="ReadUpdateEM2OBB" cp-read-field="['EM2OBBId','Prop2']" cp-complete-observer="[ 'CreateEM2OBA', 'CreateEM2OBB', 'ReadEM2OBA', 'ReadEM2OBB', 'UpdateEM2OBA', 'UpdateEM2OBB', 'QueryEM2OBA', 'QueryEM2OBB']">
+        <label>Prop2</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop2" value="{{=it.Prop2||'&nbsp;'}}">
+        </input>
+        <label>InvRefe1</label>
+        <select  multiple="multiple" row="8" id="EM2OB-invrefe1-select-update" class="cp-many2one-b" cp-inv-refe="true" cp-refe-name="InvRefe1" cp-refe-entity="EM2OBA" cp-refe-cand="QueryCandEM2OBBInvRefe1Update" cp-refe-val="QueryEM2OBBInvRefe1Update">
+          <option selected="selected" class="cp-query-ref" cp-action-name="QueryEM2OBBInvRefe1Update" cp-container-id="EM2OB-invrefe1-select-update" cp-entity-name="EM2OBB" cp-refe-name="InvRefe1" cp-field="['EM2OBAId', 'Prop1']" value="{{=it.EM2OBAId}}">{{=it.Prop1||'&nbsp;'}}</option>
+          <option class="cp-query-ref-candidate" cp-action-name="QueryCandEM2OBBInvRefe1Update" cp-container-id="EM2OB-invrefe1-select-update" cp-entity-name="EM2OBB" cp-refe-name="InvRefe1" cp-field="['EM2OBAId', 'Prop1']" value="{{=it.EM2OBAId}}">{{=it.Prop1||'&nbsp;'}}</option>
+        <select>
+        <button type="button" class="cp-submit">Update</button>
+      </form>
+      <h4>Query A</h4>
+      <ul class="cp-query" cp-entity-name="EM2OBA" cp-action-name="QueryEM2OBA" cp-field="['EM2OBAId', 'Prop1', 'Refe1.EM2OBBId', 'Refe1.Prop2']">
+        <li>
+          <span>{{=it.EM2OBAId||'&nbsp;'}}</span>
+          <span>{{=it.Prop1||'&nbsp;'}}</span>
+          <span>{{=(it.Refe1?(it.Refe1.EM2OBBId||'&nbsp;'):'&nbsp;')}}</span>
+          <span>{{=(it.Refe1?(it.Refe1.Prop2||'&nbsp;'):'&nbsp;')}}</span>
+          <a href="#" onclick="javascript:CP_UpdateView('UpdateEM2OBA', {Id: $(this).siblings().first().text()});return false;">Update</a>
+          <a href="#" onclick="javascript:CP_DoAction('DeleteEM2OBA', {Id: $(this).siblings().first().text()});return false;">Delete</a>
+        </li>
+      </ul>
+      <h4>Query B</h4>
+      <ul class="cp-query" cp-entity-name="EM2OBB" cp-action-name="QueryEM2OBB" cp-field="['EM2OBBId', 'Prop2']">
+        <li>
+          <span>{{=it.EM2OBBId||'&nbsp;'}}</span>
+          <span>{{=it.Prop2||'&nbsp;'}}</span>
+          <a href="#" onclick="javascript:CP_UpdateView('UpdateEM2OBB', {Id: $(this).siblings().first().text()});CP_UpdateView('ReadEM2OBB', {Id: $(this).siblings().first().text()});return false;">Update</a>
+          <a href="#" onclick="javascript:CP_DoAction('DeleteEM2OBB', {Id: $(this).siblings().first().text()});return false;">Delete</a>
+        </li>
+      </ul>
+    <script>
+    window.ShowError = function(msg) {
+      $("#msg").text(msg);
+    }
+    window.ShowActionMsg = window.ShowError;
+    window.ShowMessage = window.ShowError;
+	</script>  
+     	<script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    	<script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+    </body>
+</html>  

@@ -33,12 +33,16 @@
 
 
 <style type="text/css">
-body{
+html,body{
 	margin:0;
 	padding:0;
 	line-height: 1.5em;
+    height: 100%;
 }
 .prettyprint ol.linenums > li { list-style-type: decimal; }
+
+.full { background: #0f0; height: 100% }
+
 pre {
 	word-wrap: normal;
 }
@@ -52,36 +56,16 @@ img {
 
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-default topnav" role="navigation">
-        <div class="container topnav">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand topnav" href="#">clicpilot documentation</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+   
 
 
-    <div class="container" >
+    <div class="fluid-container" >
 	    <div class="row">
 	    	
-	        <div class="col-sm-4" id="target_nav">
+	        <div class="" style="z-index:1000;position:absolute;float:left;height:100%;width:350px;overflow-y:scroll" id="target_nav">
 
 	        </div>
-	        <div class="col-sm-8" id="target_page">
+	        <div class="" style="position:absolute;float:left;overflow:scroll;width:100%;height:100%;overflow:scroll;padding-left:370px;" id="target_page">
 
 	        </div>
 	    </div>
