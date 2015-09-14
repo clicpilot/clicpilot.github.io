@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Time</title>
+  </head>
+  <body>
+    <h1>Time</h1>
+      <pre id="msg"></pre>
+      <h4>Create</h4>
+      <form class="cp-create" cp-entity-name="EntTime" cp-action-name="CreateEntTime" cp-complete-observer="['CreateEntTime', 'ReadEntTime', 'UpdateEntTime', 'QueryEntTime']">
+        <label>Prop1</label>
+        <input type="text" class="cp-time" cp-prop-name="Prop1" value="">
+        </input>
+        <p></p>
+        <label>Prop2 (max 00:06:01)</label>
+        <input type="text" class="cp-time" cp-max="00:06:01" cp-prop-name="Prop2" value="">
+        </input>
+        <p></p>
+        <label>Prop3 (min 00:00:01 max 00:06:01)</label>
+        <input type="text" class="cp-time" cp-min="00:00:01" cp-max="00:06:01" cp-prop-name="Prop3" value="">
+        </input>
+        <p></p>
+        <label>Prop4 (nullable true)</label>
+        <input type="text" class="cp-time" cp-nullable="true" cp-prop-name="Prop4" value="">
+        </input>
+        <p></p>
+        <label>Prop5 (nullable false, default value 00:00:01)</label><p>
+        <input type="hidden" class="cp-time" cp-prop-name="Prop5" cp-nullable="false" cp-exclude="true" cp-default-value="00:00:01" value="">
+        </input>
+        <p></p>
+        <button type="button" class="cp-submit">Create</button>
+      </form>
+      <h4>Read</h4>
+      <form class="cp-read" cp-entity-name="EntTime" cp-action-name="ReadEntTime" cp-field="['EntTimeId','Prop1','Prop2', 'Prop3', 'Prop4', 'Prop5']"  >
+        <label>Prop1</label>
+        <span>{{=it.Prop1?it.Prop1:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop2</label>
+        <span>{{=it.Prop2?it.Prop2:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop3</label>
+        <span>{{=it.Prop3?it.Prop3:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop4</label>
+        <span>{{=it.Prop4?it.Prop4:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop5</label>
+        <span>{{=it.Prop5?it.Prop5:'&nbsp;'}}</span>
+        <p/>
+        <button type="button" class="cp-delete" cp-entity-name="EntTime" cp-action-name="DeleteEntTime"  cp-complete-observer="['CreateEntTime', 'ReadEntTime', 'UpdateEntTime', 'QueryEntTime']" onclick="javascript:CP_DoAction('DeleteEntTime', {Id: {{=it.EntTimeId?it.EntTimeId:'0'}} });return false;">Delete</button>
+      </form>
+      <h4>Update</h4>
+      <form class="cp-update" cp-entity-name="EntTime" cp-action-name="UpdateEntTime" cp-read-action-name="ReadUpdateEntTime" cp-read-field="['EntTimeId','Prop1','Prop2', 'Prop3', 'Prop4', 'Prop5']" cp-complete-observer="['CreateEntTime', 'ReadEntTime', 'UpdateEntTime', 'QueryEntTime']" >
+        <label>Prop1</label>
+        <input type="text" class="cp-time" cp-prop-name="Prop1" value="{{=it.Prop1||''}}">
+        </input>
+        <p></p>
+        <label>Prop2</label>
+        <input type="text" class="cp-time" cp-prop-name="Prop2" value="{{=it.Prop2||''}}">
+        </input>
+        <p></p>
+        <label>Prop3</label>
+        <input type="text" class="cp-time" cp-prop-name="Prop3" value="{{=it.Prop3||''}}">
+        </input>
+        <p></p>
+        <label>Prop4</label>
+        <input type="text" class="cp-time" cp-prop-name="Prop4" value="{{=it.Prop4||''}}">
+        </input>
+        <p></p>
+        <label>Prop5</label>
+        <input type="text" class="cp-time" cp-prop-name="Prop5" value="{{=it.Prop5||''}}">
+        </input>
+        <p></p>
+        <button type="button" class="cp-submit">Update</button>
+      </form>
+      <h4>Query</h4>
+      <ul class="cp-query" cp-entity-name="EntTime" cp-action-name="QueryEntTime" cp-field="['EntTimeId', 'Prop1', 'Prop2', 'Prop3', 'Prop4', 'Prop5']">
+        <li>
+          <span>{{=it.EntTimeId}}</span>
+          <span>{{=it.Prop1}}</span>
+          <span>{{=it.Prop2}}</span>
+          <span>{{=it.Prop3}}</span>
+          <span>{{=it.Prop4}}</span>
+          <span>{{=it.Prop5}}</span>
+          <a href="#" onclick="javascript:CP_UpdateView('UpdateEntTime', {Id: $(this).siblings().first().text()});return false;">Update</a>
+          <a href="#" onclick="javascript:CP_DoAction('DeleteEntTime', {Id: $(this).siblings().first().text()});return false;">Delete</a>
+        </li>
+      </ul>
+    <script>
+    window.ShowError = function(msg) {
+      $("#msg").text(msg);
+    }
+    window.ShowActionMsg = window.ShowError;
+    window.ShowMessage = window.ShowError;
+    </script>
+    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+    </body>
+</html>  

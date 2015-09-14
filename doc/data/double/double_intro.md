@@ -1,0 +1,1 @@
+The example above contains Create, Read, Update, Delete and Query of different of Double properties.

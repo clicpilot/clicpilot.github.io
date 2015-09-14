@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test</title>
+    <meta name="description" content="Test">
+    <meta name="author" content="Powered by Clicpilot Builder http://www.clicpilot.com">
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.18.0.css">
+  </head>
+  <body>
+    <h1>Test Float</h1>
+      <pre id="msg"></pre>
+      <h4>Create</h4>
+      <form class="cp-create" cp-entity-name="EntFloat" cp-action-name="CreateEntFloat" cp-complete-observer="['CreateEntFloat', 'ReadEntFloat', 'UpdateEntFloat', 'QueryEntFloat']">
+        <label>Prop1</label>
+        <input type="text" class="cp-float" cp-prop-name="Prop1" value="">
+        </input>
+        <p></p>
+        <label>Prop2 (max 5.5)</label>
+        <input type="text" class="cp-float" cp-max="5.5" cp-prop-name="Prop2" value="">
+        </input>
+        <p></p>
+        <label>Prop3 (min 1.1 max 5.5)</label>
+        <input type="text" class="cp-float" cp-min="1.1" cp-max="5.5" cp-prop-name="Prop3" value="">
+        </input>
+        <p></p>
+        <label>Prop4 (nullable true)</label>
+        <input type="text" class="cp-float" cp-nullable="true" cp-prop-name="Prop4" value="">
+        </input>
+        <p></p>
+        <label>Prop5 (nullable false, default value 10.01)</label><p>
+        <input type="hidden" class="cp-float" cp-prop-name="Prop5" cp-nullable="false" cp-exclude="true" cp-default-value="10.01" value="">
+        </input>
+        <p></p>
+        <button type="button" class="cp-submit">Create</button>
+      </form>
+      <h4>Read</h4>
+      <form class="cp-read" cp-entity-name="EntFloat" cp-action-name="ReadEntFloat" cp-field="['EntFloatId','Prop1','Prop2', 'Prop3', 'Prop4', 'Prop5']"  >
+        <label>Prop1</label>
+        <span>{{=it.Prop1?it.Prop1:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop2</label>
+        <span>{{=it.Prop2?it.Prop2:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop3</label>
+        <span>{{=it.Prop3?it.Prop3:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop4</label>
+        <span>{{=it.Prop4?it.Prop4:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop5</label>
+        <span>{{=it.Prop5?it.Prop5:'&nbsp;'}}</span>
+        <p/>
+        <button type="button" class="cp-delete" cp-entity-name="EntFloat" cp-action-name="DeleteEntFloat"  cp-complete-observer="['CreateEntFloat', 'ReadEntFloat', 'UpdateEntFloat', 'QueryEntFloat']" onclick="javascript:CP_DoAction('DeleteEntFloat', {Id: {{=it.EntFloatId?it.EntFloatId:'0'}} });return false;">Delete</button>
+      </form>
+      <h4>Update</h4>
+      <form class="cp-update" cp-entity-name="EntFloat" cp-action-name="UpdateEntFloat" cp-read-action-name="ReadUpdateEntFloat" cp-read-field="['EntFloatId','Prop1','Prop2', 'Prop3', 'Prop4', 'Prop5']" cp-complete-observer="['CreateEntFloat', 'ReadEntFloat', 'UpdateEntFloat', 'QueryEntFloat']" >
+        <label>Prop1</label>
+        <input type="text" class="cp-float" cp-prop-name="Prop1" value="{{=it.Prop1||''}}">
+        </input>
+        <p></p>
+        <label>Prop2</label>
+        <input type="text" class="cp-float" cp-prop-name="Prop2" value="{{=it.Prop2||''}}">
+        </input>
+        <p></p>
+        <label>Prop3</label>
+        <input type="text" class="cp-float" cp-prop-name="Prop3" value="{{=it.Prop3||''}}">
+        </input>
+        <p></p>
+        <label>Prop4</label>
+        <input type="text" class="cp-float" cp-prop-name="Prop4" value="{{=it.Prop4||''}}">
+        </input>
+        <p></p>
+        <label>Prop5</label>
+        <input type="text" class="cp-float" cp-prop-name="Prop5" value="{{=it.Prop5||''}}">
+        </input>
+        <p></p>
+        <button type="button" class="cp-submit">Update</button>
+      </form>
+      <h4>Query</h4>
+      <ul class="cp-query" cp-entity-name="EntFloat" cp-action-name="QueryEntFloat" cp-field="['EntFloatId', 'Prop1', 'Prop2', 'Prop3', 'Prop4', 'Prop5']">
+        <li>
+          <span>{{=it.EntFloatId}}</span>
+          <span>{{=it.Prop1}}</span>
+          <span>{{=it.Prop2}}</span>
+          <span>{{=it.Prop3}}</span>
+          <span>{{=it.Prop4}}</span>
+          <span>{{=it.Prop5}}</span>
+          <a href="#" onclick="javascript:CP_UpdateView('UpdateEntFloat', {Id: $(this).siblings().first().text()});return false;">Update</a>
+          <a href="#" onclick="javascript:CP_DoAction('DeleteEntFloat', {Id: $(this).siblings().first().text()});return false;">Delete</a>
+        </li>
+      </ul>
+    <script>
+	    window.ShowError = function(msg) {
+	      $("#msg").text(msg);
+	    }
+	    window.ShowActionMsg = window.ShowError;
+	    window.ShowMessage = window.ShowError;
+    </script>
+    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+    </body>
+</html>  

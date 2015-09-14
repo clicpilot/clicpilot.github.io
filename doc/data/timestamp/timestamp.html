@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TimeStamp</title>
+  </head>
+  <body>
+    <h1>Timestamp</h1>
+      <pre id="msg"></pre>
+      <h4>Create</h4>
+      <form class="cp-create" cp-entity-name="EntTS" cp-action-name="CreateEntTS" cp-complete-observer="['CreateEntTS', 'ReadEntTS',  'QueryEntTS']">
+        <label>Prop1 - (timestamp)</label>
+        <input type="hidden" class="cp-timestamp" cp-current="true" cp-prop-name="Prop1" cp-exclude="true" value="">
+        </input>
+        <p>
+        <label>Prop2</label>
+        <input type="text" class="cp-string"  cp-prop-name="Prop2" value="">
+        </input>
+        <button type="button" class="cp-submit">Create</button>
+      </form>
+      <h4>Read</h4>
+      <form class="cp-read" cp-entity-name="EntTS" cp-action-name="ReadEntTS" cp-field="['EntTSId', 'Prop1', 'Prop2']"  >
+        <label>Prop1</label>
+        <span>{{=it.Prop1?it.Prop1:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop2</label>
+        <span>{{=it.Prop2?it.Prop2:'&nbsp;'}}</span>
+        <p/>
+        <button type="button" class="cp-delete" cp-entity-name="EntTS" cp-action-name="DeleteEntTS"  cp-complete-observer="['CreateEntTS', 'ReadEntTS', 'QueryEntTS']" onclick="javascript:CP_DoAction('DeleteEntTS', {Id: {{=it.EntTSId?it.EntTSId:'0'}} });return false;">Delete</button>
+      </form>
+      <h4>Query</h4>
+      <ul class="cp-query" cp-entity-name="EntTS" cp-action-name="QueryEntTS" cp-field="['EntTSId', 'Prop1', 'Prop2']">
+        <li>
+          <span>{{=it.EntTSId}}</span>
+          <span>{{=it.Prop1}}</span>
+          <span>{{=it.Prop2}}</span>
+          <a href="#" onclick="javascript:CP_DoAction('DeleteEntTS', {Id: $(this).siblings().first().text()});return false;">Delete</a>
+        </li>
+      </ul>
+      	<script>
+	    window.ShowError = function(msg) {
+	      $("#msg").text(msg);
+	    }
+	    window.ShowActionMsg = window.ShowError;
+	    window.ShowMessage = window.ShowError;
+    	</script>
+        <script src="../../../clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    	<script src="http://localhost:8891/js/jquery.js" ></script>
+    </body>
+</html>  

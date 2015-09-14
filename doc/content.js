@@ -79,6 +79,10 @@ var content =
 							"file":["float.html", "float_intro.md"]
 						},
 						{
+							"title":"Double",
+							"file":["double.html", "double_intro.md"]
+						},
+						{
 							"title":"Decimal",
 							"file":["decimal.html", "decimal_intro.md"]
 						},
@@ -105,7 +109,11 @@ var content =
 					"children":[
 						{
 							"title":"One To One",
-							"file":["one2one.html", "one2one_intro.md"]
+							"file":["one2one.html", "one2one_intro.md",
+							"one2one_s.html", "one2one_s_intro.md",
+							"one2one_i.html", "one2one_i_intro.md",
+							"one2one_a.html", "one2one_a_intro.md",
+							"one2one_d.html", "one2one_d_intro.md"]
 						},
 						{
 							"title":"One To One Single-directional",

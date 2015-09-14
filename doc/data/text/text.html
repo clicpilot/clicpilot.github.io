@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Text</title>
+  </head>
+  <body>
+    <h1>Text</h1>
+    <pre id="msg"></pre>
+      <h4>Create</h4>
+      <form class="cp-create" cp-entity-name="EntText" cp-action-name="CreateEntText" cp-complete-observer="['CreateEntText', 'ReadEntText', 'UpdateEntText', 'QueryEntText']">
+        <label>Prop1</label><p>
+        <textarea rows="5" class="cp-text" cp-prop-name="Prop1" value=""></textarea>
+        <p/>
+        <label>Prop2 (max len 5)</label><p>
+        <textarea rows="5"  class="cp-text" cp-prop-name="Prop2" cp-max-len="5" value=""></textarea>
+        <p/>
+        <label>Prop3 (min len 2 ,max len 5)</label><p>
+        <textarea rows="5" class="cp-text" cp-prop-name="Prop3" cp-min-len="2" cp-max-len="5" value=""></textarea>
+        <p/>
+        <label>Prop4 (nullable false)</label><p>
+        <textarea rows="5" class="cp-text" cp-prop-name="Prop4" cp-nullable="true" value=""></textarea>
+        <p/>
+        <button type="button" class="cp-submit">Create</button>
+      </form>
+      <h4>Read</h4>
+      <form class="cp-read" cp-entity-name="EntText" cp-action-name="ReadEntText" cp-field="['EntTextId','Prop1','Prop2','Prop3','Prop4']">
+        <label>Prop1</label>
+        <span>{{=it.Prop1?it.Prop1:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop2</label>
+        <span>{{=it.Prop2?it.Prop2:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop3</label>
+        <span>{{=it.Prop3?it.Prop3:'&nbsp;'}}</span>
+        <p/>
+        <label>Prop4</label>
+        <span>{{=it.Prop4?it.Prop4:'&nbsp;'}}</span>
+        <p/>
+        <button type="button" class="cp-delete" cp-entity-name="EntText" cp-action-name="DeleteEntText" cp-complete-observer="['CreateEntText', 'ReadEntText', 'UpdateEntText', 'QueryEntText']" onclick="javascript:CP_DoAction('DeleteEntText', {Id: {{=it.EntTextId?it.EntTextId:'0'}} });return false;">Delete</button>
+      </form>
+      <h4>Update</h4>
+      <form class="cp-update" cp-entity-name="EntText" cp-action-name="UpdateEntText"  cp-read-action-name="ReadUpdateEntText" cp-read-field="['EntTextId','Prop1','Prop2','Prop3','Prop4']" cp-complete-observer="['CreateEntText', 'ReadEntText', 'UpdateEntText', 'QueryEntText']">
+        <label>Prop1</label>
+        <textarea class="cp-text" cp-prop-name="Prop1" >{{=it.Prop1||''}}</textarea>
+        <p/>
+        <label>Prop2</label>
+        <textarea class="cp-text" cp-prop-name="Prop2" >{{=it.Prop2||''}}</textarea>
+        <p/>
+        <label>Prop3</label>
+        <textarea class="cp-text" cp-prop-name="Prop3" >{{=it.Prop3||''}}</textarea>
+        <p/>
+        <label>Prop4</label>
+        <textarea class="cp-text" cp-prop-name="Prop4" >{{=it.Prop4||''}}</textarea>
+        <p/>
+        <button type="button" class="cp-submit">Update</button>
+      </form>
+      <h4>Query</h4>
+      <ul class="cp-query" cp-entity-name="EntText" cp-action-name="QueryEntText" cp-field="['EntTextId','Prop1','Prop2','Prop3','Prop4']">
+        <li>
+          <span>{{=it.EntTextId}}</span>
+          <span>{{=it.Prop1}}</span>
+          <span>{{=it.Prop2}}</span>
+          <span>{{=it.Prop3}}</span>
+          <span>{{=it.Prop4}}</span>
+          <a href="#" onclick="javascript:CP_UpdateView('UpdateEntText', {Id: $(this).siblings().first().text()});CP_UpdateView('ReadEntText', {Id: $(this).siblings().first().text()});return false;">Update</a>
+          <a href="#" onclick="javascript:CP_DoAction('DeleteEntText', {Id: $(this).siblings().first().text()});return false;">Delete</a>
+        </li>
+      </ul>
+    <script>
+      window.ShowError = function(msg) {
+        $("#msg").text(msg);
+      }
+      window.ShowActionMsg = window.ShowError;
+      window.ShowMessage = window.ShowError;
+    </script>
+    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+    </body>
+</html>  

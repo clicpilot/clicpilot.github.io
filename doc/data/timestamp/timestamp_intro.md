@@ -1,0 +1,1 @@
+The example above contains Create, Read, Delete and Query of different of TimeStamp properties.

@@ -93,7 +93,7 @@ function loadFile(key, file, id) {
 
 	    				}
 	    				if(extname.toLowerCase() == 'html') {
-
+	    					
     						code='<pre style="white-space:pre" class="prettyprint linenums">'+safe_tags_replace(code)+'</pre>';
     						code+='<a href="./data/'+key+'/'+file+'" target="_blank" class="btn btn-success btn-sm" role="button">Run the code</a><p>'
    
