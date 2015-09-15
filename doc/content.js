@@ -1,7 +1,7 @@
 var content = 
 	[
 		{
-			"title":"clicpilot documentation",
+			"title":"About",
 		},
 		{
 			"title":"Overview",
