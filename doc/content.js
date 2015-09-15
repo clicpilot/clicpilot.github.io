@@ -183,6 +183,25 @@ var content =
 		},
 		{
 			"title":"JavaScript",
+			"children":[
+				{
+					"title":"CP_Init",
+					"file":["cp_init.html"],
+				},
+				{
+					"title":"CP_DoAction",
+					"file":["cp_doaction.html"],
+				},
+				{
+					"title":"CP_AfterAction",
+					"file":["cp_afteraction.html"],
+				},
+				{
+					"title":"CP_BeforeAction",
+					"file":["cp_beforeaction.html"],
+				},
+				
+			]
 		},
 		{
 			"title":"Callback",

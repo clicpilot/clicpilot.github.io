@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Create Action</title>
+</head>
+<body>
+	<h4>Create Item</h4>
+	<form class="cp-create" cp-entity-name="Item" cp-action-name="CreateItem">
+		<label>Item</label><p>
+		<input id="ItemName" type="text" class="cp-string" cp-prop-name="Name" value=""></input>
+		<button type="button" class="cp-submit">Create</button>
+	</form>
+	<pre id="msg"></pre>
+	<pre id="log"></pre>
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script>
+    CP_Init(function(){
+    	$("#msg").append("Page loaded!");
+    	$("#ItemName").val("Item 1");
+    	CP_DoAction("CreateItem", {});
+    	$("#ItemName").val("Item 2");
+    	CP_DoAction("CreateItem", {});
+    	$("#ItemName").val("Item 3");
+    	CP_DoAction("CreateItem", {});
+    });
+    CP_AfterAction("CreateItem", function(param){
+    	$("#log").append("CreateItem action execute "+(param.success?"successfully ":"unsuccessfully ")+" item id: "+param.obj.ItemId+"\n");
+    });
+    CP_BeforeAction("CreateItem", function(param){
+    	$("#log").append("CreateItem action start to execute "+param.obj.Name+"\n");
+    });
+   	window.ShowResponse = function(msg) {
+	    $("#msg").text(msg);
+	}
+	window.ShowActionMsg = window.ShowResponse;
+	window.ShowMessage = window.ShowResponse;
+    </script>
+</body>
+</html>

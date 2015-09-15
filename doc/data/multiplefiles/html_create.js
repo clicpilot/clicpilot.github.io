@@ -4,6 +4,6 @@ window.ShowResponse = function(msg) {
 window.ShowActionMsg = window.ShowResponse;
 window.ShowMessage = window.ShowResponse;
 
-CP.Util.AddInitFunc(function(){
+CP_Init(function(){
 	alert("This is Create Page!");
 });
