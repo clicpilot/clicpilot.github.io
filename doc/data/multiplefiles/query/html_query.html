@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<title>Query Action</title>
+	<link href="html_query.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<img src="../clicpilot.jpg">
+	<a href="../html_create.html">Create Item</a>
+	<h4>Query Item</h4>
+	<ul class="cp-query" cp-entity-name="Item" cp-action-name="QueryItem" cp-field="['ItemId','Name']">
+		<li>
+		  <span>{{=it.ItemId}}</span>
+		  <span class="cp-string" cp-prop-name="Name">{{=it.Name}}</span>
+		</li>
+	</ul>
+	<pre id="msg"></pre>
+	 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="../js/html_query.js"></script>
+</body>
+</html>      

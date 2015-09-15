@@ -49,11 +49,16 @@ function drawPageItem(item, html, level) {
     if(item.file) {
 	    for(var j=0;j<item.file.length;j++){
 	    	var file = item.file[j];
-	    	var findex = file.indexOf(".");
+	    	var findex = file.lastIndexOf(".");
 	    	var name = file.substring(0, findex);
+	    	var pindex = file.lastIndexOf("/");
+	    	var fname = name;
+	    	if(pindex!=-1) {
+	    		fname = file.substring(pindex+1, findex);
+	    	}
 	    	var extname = file.substring(findex+1);
-	    	html.push('<div id="'+name+"_"+extname+'"></div>');
-	    	loadFile(key, file, name+"_"+extname);
+	    	html.push('<div id="'+fname+"_"+extname+'"></div>');
+	    	loadFile(key, file, fname+"_"+extname);
 	    }
 	}
     html.push('</div>');
@@ -72,7 +77,7 @@ function drawPageItem(item, html, level) {
 }
 
 
-function loadFile(key, file, id) {
+function loadFile(key, file, id, runnable) {
 	loadfiles.push(
 
 		(function(key, file, id){
@@ -95,10 +100,21 @@ function loadFile(key, file, id) {
 	    				if(extname.toLowerCase() == 'html') {
 	    					
     						code='<pre style="white-space:pre" class="prettyprint linenums">'+safe_tags_replace(code)+'</pre>';
-    						code+='<a href="./data/'+key+'/'+file+'" target="_blank" class="btn btn-success btn-sm" role="button">Run the code</a><p>'
-   
+    						if(file.indexOf("html_")==-1) {
+    							code+='<a href="./data/'+key+'/'+file+'" target="_blank" class="btn btn-success btn-sm" role="button">Run the code</a><p>'
+   							}
 	    				}
-						$("#"+id).html(code);
+	    				if(extname.toLowerCase() == 'js') {
+	    					
+    						code='<pre style="white-space:pre" class="prettyprint linenums">'+safe_tags_replace(code)+'</pre>';
+    						
+	    				}
+	    				if(extname.toLowerCase() == 'css') {
+	    					
+    						code='<pre style="white-space:pre" class="prettyprint linenums">'+safe_tags_replace(code)+'</pre>';
+    						
+	    				}
+						$("#"+id).html(((extname.toLowerCase() == 'md')?'':('<span>'+file+'</span>'))+code);
 						(function () { prettyPrint(); })();
 						$("table").addClass("table").addClass("table-bordered");
 					},

@@ -175,19 +175,17 @@ var content =
 			]
 		},
 		{
-			"title":"HTML",
+			"title":"Multiple Files",
+			"file":["main.html", 
+			"html_create.html",  "query/html_query.html", 
+			"html_create.js", "js/html_query.js", 
+			"html_create.css", "html_query.css"]
 		},
 		{
 			"title":"JavaScript",
 		},
 		{
-			"title":"CSS",
-		},
-		{
 			"title":"Callback",
-		},
-		{
-			"title":"Image",
 		},
 		{
 			"title":"HTTP Session",

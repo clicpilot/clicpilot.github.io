@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Create Action</title>
+	<link href="html_create.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<img src="./img/clicpilot.png">
+	<a href="./query/html_query.html">Items</a>
+	<h4>Create Item</h4>
+	<form class="cp-create" cp-entity-name="Item" cp-action-name="CreateItem">
+		<label>Item</label><p>
+		<input type="text" class="cp-string" cp-prop-name="Name" value=""></input>
+		<button type="button" class="cp-submit">Create</button>
+	</form>
+	<pre id="msg"></pre>
+	 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="./html_create.js"></script>
+</body>
+</html>
