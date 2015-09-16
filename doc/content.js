@@ -232,6 +232,7 @@ var content =
 		},
 		{
 			"title":"HTTP Session",
+			"file":["httpsession_main.html", "httpsession.callback.js", "html_httpsession.html"],
 		},
 		{
 			"title":"Console",
