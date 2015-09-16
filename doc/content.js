@@ -200,11 +200,35 @@ var content =
 					"title":"CP_BeforeAction",
 					"file":["cp_beforeaction.html"],
 				},
+				{
+					"title":"CP_UpdateView",
+					"file":["cp_updateview.html"],
+				},
+				{
+					"title":"CP_AfterUpdateView",
+					"file":["cp_afterupdateview.html"],
+				},
+				{
+					"title":"CP_BeforeUpdateView",
+					"file":["cp_beforeupdateview.html"],
+				},
+				{
+					"title":"JavaScript Summary",
+					
+				},
+				
 				
 			]
 		},
 		{
 			"title":"Callback",
+			"file":["callback_main.html", "mycallback.callback.js", "html_callback.html"],
+			"children":[
+				{
+					"title":"Block Action",
+					"file":["block_main.html", "block.callback.js", "html_block_callback.html"],
+				},
+			]
 		},
 		{
 			"title":"HTTP Session",

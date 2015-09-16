@@ -56,6 +56,7 @@ function drawPageItem(item, html, level) {
 	    	if(pindex!=-1) {
 	    		fname = file.substring(pindex+1, findex);
 	    	}
+	    	fname = fname.replace(/\./g,"_");
 	    	var extname = file.substring(findex+1);
 	    	html.push('<div id="'+fname+"_"+extname+'"></div>');
 	    	loadFile(key, file, fname+"_"+extname);
@@ -82,7 +83,8 @@ function loadFile(key, file, id, runnable) {
 
 		(function(key, file, id){
 			return function() {
-				var findex = file.indexOf(".");
+				
+				var findex = file.lastIndexOf(".");
 	    		var name = file.substring(0, findex);
 	    		var extname = file.substring(findex+1);
 				$.ajax({

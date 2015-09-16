@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Create Action</title>
+</head>
+<body>
+	<h4>Create Item</h4>
+	<form class="cp-create" cp-entity-name="Item" cp-action-name="CreateItem" cp-complete-observer="['QueryItem']">
+		<label>Item</label><p>
+		<input type="text" class="cp-string" cp-prop-name="Name" value=""></input>
+		<button type="button" class="cp-submit">Create</button>
+	</form>
+	<ul class="cp-query" cp-entity-name="Item" cp-action-name="QueryItem" cp-field="['ItemId','Name']">
+		<li>
+		  <span>{{=it.ItemId}}</span>
+		  <span class="cp-string" cp-prop-name="Name">{{=it.Name}}</span>
+		</li>
+	</ul>
+	<pre id="msg"></pre>
+	<script>
+	    window.ShowResponse = function(msg) {
+	      $("#msg").text(msg);
+	    }
+	    window.ShowActionMsg = window.ShowResponse;
+	    window.ShowMessage = window.ShowResponse;
+    </script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+</body>
+</html>
