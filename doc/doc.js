@@ -8,7 +8,7 @@ window.onload=function(){
 		drawPageItem(content[i], html2, 2);
 	}
 
-	$("#target_nav").html( '<ul><li style="">clicpilot documentation</li>'+html1.join("")+'</ul>');
+	$("#target_nav").html( '<ul  style="padding-bottom: 60px;">'+html1.join("")+'</ul>');
 	$("#target_page").html(html2.join(""));
 
 	for(var i=0;i<loadfiles.length;i++) {
@@ -39,7 +39,7 @@ function drawPageItem(item, html, level) {
 
 	var title = item.title;
 	var key = title.replace(/\s/g, "").toLowerCase();
-	html.push('<div id="'+key+'" style="padding-top: 30px;">');
+	html.push('<div id="'+key+'" style="padding-top: 60px;">');
     html.push('<h'+level+'>'+title+'</h'+level+'>');
     
 

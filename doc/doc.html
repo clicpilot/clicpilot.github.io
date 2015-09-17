@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script data-require="bootstrap@*" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+
+<style type="text/css">
+/* Styles go here */
+body {
+  padding-top: 51px;
+}
+
+/* this is only to style the sidebar - you can make the sidebar look any way you want */
+.sidebar {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
+}
+
+.prettyprint ol.linenums > li { list-style-type: decimal; }
+
+.full { background: #0f0; height: 100% }
+
+pre {
+	word-wrap: normal;
+}
+img {
+    border: solid;
+    border-color: #ddd;
+}
+#target_nav {
+	background-color: #fff;
+}
+</style>
+    <link rel="stylesheet" href="../css/sidebar.css" />
+
+    <!-- Custom Fonts -->
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+	<link href="../google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../google-code-prettify/prettify.js"></script>
+	<script type="text/javascript" src="./content.js"></script>
+	<script type="text/javascript" src="./doc.js"></script>
+    <script type="text/javascript" src="./showdown.js"></script>
+
+
+  </head>
+
+  <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-static navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle toggle-left hidden-md hidden-lg" data-toggle="sidebar" data-target=".sidebar-left">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">clicpilot Documentation</a>
+        </div>
+        <!--
+        <button type="button" class="navbar-toggle toggle-right" data-toggle="sidebar" data-target=".sidebar-right">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+    	-->
+      </div>
+    </div>
+    <!-- Begin page content -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-7 col-sm-3 col-md-3 sidebar sidebar-left sidebar-animate sidebar-md-show" id="target_nav">
+
+        </div>
+        <div class="main col-md-9 col-md-offset-3" id="target_page">
+
+        </div>
+        <!--
+        <div class="col-xs-7 col-sm-3 col-md-3 sidebar sidebar-right sidebar-animate">
+          <ul class="nav navbar-stacked">
+            <li class="active">
+              <a href="#">Home</a>
+            </li>
+            <li>
+              <a href="#about">About</a>
+            </li>
+            <li>
+              <a href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+    	-->
+      </div>
+    </div>
+  </body>
+
+</html>
