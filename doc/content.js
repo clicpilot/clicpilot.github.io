@@ -1,7 +1,7 @@
 var content = 
 	[
 		{
-			"title":"About",
+			"title":"Version",
 		},
 		{
 			"title":"Overview",
@@ -31,7 +31,17 @@ var content =
 				},
 				{
 					"title":"Query",
-					"file":["query.html", "query_intro.md"]
+					"file":["query.html", "query_intro.md"],
+					"children":[
+						{
+							"title":"Condition",
+							"file":["condition.html"]
+						},
+						{
+							"title":"Aggregation",
+							"file":["aggregation.html"]
+						},
+					]
 				},
 				{
 					"title":"QueryRef",
@@ -112,7 +122,7 @@ var content =
 					"children":[
 						{
 							"title":"One To One",
-							"file":["one2one.html", "one2one_intro.md"]
+							"file":["one2one.html"]
 						},
 						{
 							"title":"One To One Single-directional",
@@ -247,7 +257,8 @@ var content =
 					"title":"Data"
 				},
 				{
-					"title":"Test"
+					"title":"Test",
+					"file":["test_main.html", "html_test_create.html", "test01.json"],
 				},
 				{
 					"title":"Page"

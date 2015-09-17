@@ -63,7 +63,7 @@ function drawPageItem(item, html, level) {
 	    }
 	}
     html.push('</div>');
-    html.push("<a href='#"+key+"_link'>Back to top</a>");
+    html.push("<a href='#"+key+"'>Back to top</a>");
     html.push('<hr>');
 
 
@@ -106,7 +106,7 @@ function loadFile(key, file, id, runnable) {
     							code+='<a href="./data/'+key+'/'+file+'" target="_blank" class="btn btn-success btn-sm" role="button">Run the code</a><p>'
    							}
 	    				}
-	    				if(extname.toLowerCase() == 'js') {
+	    				if(extname.toLowerCase() == 'js' || extname.toLowerCase() == 'json') {
 	    					
     						code='<pre style="white-space:pre" class="prettyprint linenums">'+safe_tags_replace(code)+'</pre>';
     						

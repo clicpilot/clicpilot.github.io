@@ -1,4 +1,4 @@
-__CP\_AfterUpdateView__ will be invoked before a view updated.
+__CP\_BeforeUpdateView__ will be invoked before a view updated.
 
 	CP_BeforeUpdateView("actionname", function(param){
 		//executed after view updated

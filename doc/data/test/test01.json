@@ -1,0 +1,27 @@
+{
+    "ObjectType": "TestCase",
+    "Name": "test01",
+    "Item": [{
+        "Folder": "Default",
+        "Action": "CreateItem",
+        "In": {
+            "obj": {
+                "Name": "Item 1"
+            }
+        },
+        "Out": {
+            "ItemId": "1"
+        }
+    }, {
+        "Folder": "Default",
+        "Action": "CreateItem",
+        "In": {
+            "obj": {
+                "Name": "Item 2"
+            }
+        },
+        "Out": {
+            "ItemId": "2"
+        }
+    }]
+}

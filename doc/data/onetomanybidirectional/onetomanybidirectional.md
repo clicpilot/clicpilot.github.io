@@ -1,1 +1,1 @@
-Here is an example of __One To Many Bidirectional__
+Here is an example of __One To Many Bidirectional__. And please see the chapter __Reference__ and __One To Many__ for the detailed explaination of this reference type.

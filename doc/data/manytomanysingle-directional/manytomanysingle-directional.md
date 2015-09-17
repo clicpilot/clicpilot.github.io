@@ -1,1 +1,1 @@
-Here is an example of __Many To Many Single-directional__.
+Here is an example of __Many To Many Single-directional__. And please see the chapter __Reference__ and __Many To Many__ for the detailed explaination of this reference type.
