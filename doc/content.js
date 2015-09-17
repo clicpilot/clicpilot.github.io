@@ -38,6 +38,9 @@ var content =
 							"file":["condition.html"]
 						},
 						{
+							"title":"Order",
+						},
+						{
 							"title":"Aggregation",
 							"file":["aggregation.html"]
 						},

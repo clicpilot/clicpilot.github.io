@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Aggregation</title>
+  </head>
+  <body>
+    <h1>Aggregation</h1>
+    <pre id="msg"></pre>
+      <h4>Create</h4>
+      <form class="cp-create" cp-entity-name="EntAggr" cp-action-name="CreateEntAggr">
+        <label>Prop1</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop1" value="">
+        </input>
+        <p>
+        <label>Prop2</label>
+        <input type="text" class="cp-integer" cp-prop-name="Prop2" value="">
+        </input>
+        <p>
+        <button type="button" class="cp-submit">Create</button>
+      </form>
+      <h4>Query</h4>
+      <ul class="cp-query" cp-entity-name="EntAggr" cp-action-name="QueryEntAggr" cp-field="['Prop1', ' Prop2']">
+        <li>
+          <span>{{=it.Prop1}}</span>
+          <span>{{=it.Prop2}}</span>
+        </li>
+      </ul>
+      <h4>Aggregation</h4>
+      <ul class="cp-query" cp-entity-name="EntAggr" cp-action-name="QueryEntAggrAggr" cp-field="['Prop1 P', 'SUM Prop2 SUMProp2']" cp-order-field="['SUMProp2']" cp-order-type="DESC">
+        <li>
+          <span>{{=it.P}}</span>
+          <span>{{=it.SUMProp2}}</span>
+        </li>
+      </ul>
+    <script>
+    window.ShowError = function(msg) {
+      $("#msg").text(msg);
+    }
+
+    window.ShowActionMsg = window.ShowError;
+    window.ShowMessage = window.ShowError;
+
+    CP_Init(function(){
+    	for(var i=0;i<20;i++) {
+          $("INPUT.cp-string").val("a"+(i%3));
+          $("INPUT.cp-integer").val(i);
+          $(".cp-submit").click();
+        }
+        CP_UpdateView('QueryEntAggr');
+        CP_UpdateView('QueryEntAggrAggr');
+    });
+    </script>
+    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+    </body>
+</html>  
