@@ -241,6 +241,9 @@ var content =
 					"title":"Block Action",
 					"file":["block_main.html", "block.callback.js", "html_block_callback.html"],
 				},
+				{
+					"title":"JavaScript White List",
+				},
 			]
 		},
 		{

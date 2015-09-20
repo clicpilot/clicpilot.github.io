@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>clicpilot document</title>
+    <script data-require="jquery@*" data-semver="2.0.3" src="./js/jquery.js"></script>
+    <script data-require="bootstrap@*" data-semver="3.1.1" src="./js/bootstrap.min.js"></script>
+    <script src="./js/sidebar.js"></script>
+    <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="./css/bootstrap.min.css" />
+
+<style type="text/css">
+/* Styles go here */
+body {
+  padding-top: 51px;
+  overflow: hidden
+}
+
+/* this is only to style the sidebar - you can make the sidebar look any way you want */
+.sidebar {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
+}
+
+.prettyprint ol.linenums > li { list-style-type: decimal; }
+
+.full { background: #0f0; height: 100% }
+
+pre {
+  word-wrap: normal;
+}
+img {
+    border: solid;
+    border-color: #ddd;
+}
+#target_nav {
+  background-color: #fff;
+}
+</style>
+    <link rel="stylesheet" href="./css/sidebar.css" />
+
+  </head>
+
+  <body>
+
+
+
+
+
+
+
+<!--
+  <form class="cp-update" cp-entity-name="Item" cp-action-name="UpdateItem" cp-read-action-name="ReadUpdateItem" cp-read-field="['ItemId','Name']">
+    <label>Item</label><p>
+    <input type="text" class="cp-string" cp-prop-name="Name" value="{{=it.Name||''}}"></input>
+    <button type="button" class="cp-submit">Update</button>
+  </form>
+-->
+      
+
+
+
+
+          <form class="cp-update" cp-entity-name="ItemA" cp-action-name="UpdateItemA" cp-read-action-name="ReadUpdateItemA" cp-read-field="['ItemAId','Name']">
+            <label>ItemA</label><p>
+            <input type="text" class="cp-string" cp-prop-name="Name" value="{{=it.Name||''}}">
+            <button type="button" class="cp-submit">Update</button>
+          </form>
+
+
+
+  <script type="text/javascript" src='./clicpilot-js-1.0.3.js' class="clicpilot-js"></script>
+
+
+  </body>
+
+</html>

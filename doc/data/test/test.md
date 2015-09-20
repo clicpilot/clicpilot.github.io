@@ -20,7 +20,7 @@ Here is an instructions of how to use __Test__ view.
 
 7. Click "Export" button to export the testcases in a zip file. the zip file can be imported by clicking "Import" button.
 
-8. If you want to include the testcases in your web application. Please see the chapter __Mutiple Files__.
+8. If you want to include the testcases in your web application. Please see the chapter __Multiple Files__.
 
 Here is an example of a web application which has a testcase with it.
 

@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>clicpilot document</title>
+    <script data-require="jquery@*" data-semver="2.0.3" src="./js/jquery.js"></script>
+    <script data-require="bootstrap@*" data-semver="3.1.1" src="./js/bootstrap.min.js"></script>
+    <script src="./js/sidebar.js"></script>
+    <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="./css/bootstrap.min.css" />
+
+<style type="text/css">
+/* Styles go here */
+body {
+  padding-top: 51px;
+  overflow: hidden
+}
+
+/* this is only to style the sidebar - you can make the sidebar look any way you want */
+.sidebar {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
+}
+
+.prettyprint ol.linenums > li { list-style-type: decimal; }
+
+.full { background: #0f0; height: 100% }
+
+pre {
+	word-wrap: normal;
+}
+img {
+    border: solid;
+    border-color: #ddd;
+}
+#target_nav {
+	background-color: #fff;
+}
+</style>
+    <link rel="stylesheet" href="./css/sidebar.css" />
+
+  </head>
+
+  <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-static navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle toggle-left hidden-md hidden-lg" data-toggle="sidebar" data-target=".sidebar-left">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">clicpilot builder</a>
+        </div>
+        
+        <button type="button" class="navbar-toggle toggle-right" data-toggle="sidebar" data-target=".sidebar-right">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+    	
+      </div>
+    </div>
+    <!-- Begin page content -->
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-xs-10 col-sm-3 col-md-3 sidebar sidebar-left sidebar-animate sidebar-md-show">
+
+
+
+
+          <ul class="cp-read" cp-entity-name="App" cp-action-name="ReadApp" cp-field="['AppId', 'Name']">
+            <li>{{=it.Name?it.Name:""}}</li>
+            <ul id="file_nav">
+            </ul>
+          </ul>
+
+
+
+          
+
+        </div>
+        <div class="main col-md-9 col-md-offset-3" id="file_editor" style="padding:1px">
+        	<div id="file-code-editor" style="padding:0px;margin:0px;width:100%;height:100%;overflow:hidden;border: 1px solid black; border-color: #ccc;">
+          </div>
+        </div>
+        
+        <div class="col-xs-7 col-sm-3 col-md-3 sidebar sidebar-right sidebar-animate">
+          <ul class="nav navbar-stacked">
+            <li class="cp-create" cp-entity-name="App" cp-action-name="CreateApp">
+              <input type="hidden" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="app-name">
+              <a href="#" onclick="javascript:createApp(); return false;">Create Application</a>
+            </li>
+            <li class="cp-create" cp-entity-name="File" cp-action-name="CreateFile">
+              <input type="hidden" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="file-name">
+              <input type="hidden" class="cp-text" cp-prop-name="Code" cp-nullable="true" id="file-code">
+              <input type="hidden" class="cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-inv-name="File" id="file-folder-id">
+              <input type="hidden" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" cp-inv-name="File" id="file-app-id">
+              <a href="#" onclick="javascript:createFile(); return false;">Create File</a>
+            </li>
+            <li class="cp-create" cp-entity-name="Folder" cp-action-name="CreateFolder">
+              <input type="hidden" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="folder-name">
+              <input type="hidden" class="cp-many2one-aw" cp-refe-name="Parent" cp-refe-entity="Folder" cp-inv-name="SubFolder" id="folder-parent-id">
+              <input type="hidden" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" cp-inv-name="Folder"  id="folder-app-id">
+              <a href="#" onclick="javascript:createFolder(); return false;">Create Folder</a>
+            </li>
+          </ul>
+        </div>
+
+
+    	
+      </div>
+    </div>
+
+
+
+          <div class="cp-query" cp-entity-name="Folder" cp-action-name="QueryFolder" cp-field="['FolderId', 'Name', 'Parent.FolderId ParentId', 'Parent.Name ParentName', 'App.AppId AppId', 'App.Name AppName']" style="display:none">
+            <input class="FolderItem" type="hidden" value="{{=it.FolderId}}, {{=it.Name}}, {{=it.ParentId}}, {{=it.ParentName}}, {{=it.AppId}}, {{=it.AppName}}">
+          </div>
+
+          <div class="cp-query" cp-entity-name="File" cp-action-name="QueryFile" cp-field="['FileId', 'Name FileName', 'Folder.FolderId FolderId', 'Folder.Name FolderName', 'App.AppId AppId', 'App.Name AppName']"  style="display:none">
+            <input class="FileItem" type="hidden" value="{{=it.FileId}}, {{=it.FileName}}, {{=it.FolderId}}, {{=it.FolderName}}, {{=it.AppId}}, {{=it.AppName}}">
+          </div>
+
+          <div class="cp-read" cp-entity-name="File" cp-action-name="ReadFile" cp-field="['FileId', 'Name', 'Code', 'Folder.FolderId', 'Folder.Name FolderName', 'App.AppId', 'App.Name AppName']"  style="display:none">
+          </div>
+
+          <div class="cp-update" cp-entity-name="File" cp-action-name="UpdateFileCode" cp-read-action-name="ReadUpdateFileCode" cp-read-field="['FileId','Code']"  style="display:none">
+            <input type="hidden" class="cp-text" cp-prop-name="Code">
+            <button type="button" class="cp-submit">Update</button>
+          </div>
+
+
+	<script type="text/javascript" src='./builder.js'></script>
+	<script type="text/javascript" src='./clicpilot-js-1.0.3.js' class="clicpilot-js"></script>
+	<script type="text/javascript" src="./ace/ace.js" charset="utf-8"></script>
+
+  </body>
+
+</html>
