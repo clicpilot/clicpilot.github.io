@@ -42,6 +42,60 @@ img {
 #target_nav {
 	background-color: #fff;
 }
+
+
+/*
+ Tree structure using CSS:
+ http://stackoverflow.com/questions/14922247/how-to-get-a-tree-in-html-using-pure-css
+*/
+
+.tree, .tree ul{
+  font: normal normal 14px/20px Helvetica, Arial, sans-serif;  
+  list-style-type: none;
+  margin-left: 0 0 0 10px;
+  padding: 0;
+  position: relative;   
+  overflow:hidden;    
+}
+
+.tree li{
+  margin: 0;
+  padding: 0 12px;  
+  position: relative;   
+}
+  
+.tree li::before, .tree li::after{
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+/* horizontal line on inner list items */
+.tree li::before{
+  border-top: 1px solid #999;
+  top: 10px;
+  width: 10px;
+  height: 0;    
+}
+
+/* vertical line on list items */   
+.tree li:after{
+  border-left: 1px solid #999;
+  height: 100%;
+  width: 0px;
+  top: -10px; 
+}
+
+/* lower line on list items from the first level because they don't have parents */
+.tree > li::after{
+  top: 10px;
+}
+
+/* hide line from the last of the first level list items */
+.tree > li:last-child::after{
+  display: none;
+}
+
 </style>
     <link rel="stylesheet" href="./css/sidebar.css" />
 
@@ -75,13 +129,11 @@ img {
         <div class="col-xs-10 col-sm-3 col-md-3 sidebar sidebar-left sidebar-animate sidebar-md-show">
 
 
-
-
-          <ul class="cp-read" cp-entity-name="App" cp-action-name="ReadApp" cp-field="['AppId', 'Name']">
-            <li>{{=it.Name?it.Name:""}}</li>
-            <ul id="file_nav">
-            </ul>
+          <input type="hidden" id="selectedAppId">
+          <ul id="app_nav" class="tree">
           </ul>
+
+          
 
 
 
@@ -90,6 +142,8 @@ img {
         </div>
         <div class="main col-md-9 col-md-offset-3" id="file_editor" style="padding:1px">
         	<div id="file-code-editor" style="padding:0px;margin:0px;width:100%;height:100%;overflow:hidden;border: 1px solid black; border-color: #ccc;">
+          </div>
+          <div id="preview-div" style="display:none;padding:0px;margin:0px;width:100%;height:100%;overflow:hidden;border: 1px solid black; border-color: #ccc;">
           </div>
         </div>
         
@@ -104,23 +158,35 @@ img {
               <input type="hidden" class="cp-text" cp-prop-name="Code" cp-nullable="true" id="file-code">
               <input type="hidden" class="cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-inv-name="File" id="file-folder-id">
               <input type="hidden" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" cp-inv-name="File" id="file-app-id">
-              <a href="#" onclick="javascript:createFile(); return false;">Create File</a>
+              <a href="#" onclick="javascript:CP_UpdateView('CreateFile2');$('#create-file-modal').modal('show');return false;">Create File</a>
             </li>
             <li class="cp-create" cp-entity-name="Folder" cp-action-name="CreateFolder">
               <input type="hidden" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="folder-name">
               <input type="hidden" class="cp-many2one-aw" cp-refe-name="Parent" cp-refe-entity="Folder" cp-inv-name="SubFolder" id="folder-parent-id">
               <input type="hidden" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" cp-inv-name="Folder"  id="folder-app-id">
-              <a href="#" onclick="javascript:createFolder(); return false;">Create Folder</a>
+              <a href="#" onclick="javascript:CP_UpdateView('CreateFolder2');$('#create-folder-modal').modal('show'); return false;">Create Folder</a>
             </li>
+            
+            <li class="cp-delete" cp-entity-name="File" cp-action-name="DeleteFile"><a href="#" onclick="javascript:if(window.confirm('Delete File?'))CP_DoAction('DeleteFile', {Id:window.SelectedFileId}); return false;">Delete File</a></li>
+            <li class="cp-delete" cp-entity-name="Folder" cp-action-name="DeleteFolder"><a href="#" onclick="javascript:debugger;if(window.confirm('Delete Folder?'))CP_DoAction('DeleteFolder', {Id:window.SelectedFolderId}); return false;">Delete Folder</a></li>
+            <li class="cp-delete" cp-entity-name="App" cp-action-name="DeleteApp"><a href="#" onclick="javascript:if(window.confirm('Delete Application?'))CP_DoAction('DeleteApp', {Id:window.SelectedAppId}); return false;">Delete Application</a></li>
+
+            <li ><a href="#" onclick="javascript:CP_UpdateView('RenameFile', {Id:window.SelectedFileId});$('#rename-file-modal').modal('show'); return false;">Rename File</a></li>
+            <li ><a href="#" onclick="javascript:CP_UpdateView('RenameFolder', {Id:window.SelectedFolderId});$('#rename-folder-modal').modal('show'); return false;">Rename Folder</a></li>
+            <li ><a href="#" onclick="javascript:CP_UpdateView('RenameApp', {Id:window.SelectedAppId});$('#rename-app-modal').modal('show'); return false;">Rename Application</a></li>
+
+            <li ><a href="#" onclick="javascript:previewInWin();return false;">Preview Application</a></li>
+            <li ><a href="#" onclick="javascript:closePreviewFrame();return false;">Close Preview</a></li>
+
           </ul>
         </div>
-
-
-    	
       </div>
     </div>
 
 
+          <div class="cp-query" cp-entity-name="App" cp-action-name="QueryApp" cp-field="['AppId', 'Name']" style="display:none">
+            <input class="AppItem" type="hidden" value="{{=it.AppId}}, {{=it.Name}}">
+          </div>
 
           <div class="cp-query" cp-entity-name="Folder" cp-action-name="QueryFolder" cp-field="['FolderId', 'Name', 'Parent.FolderId ParentId', 'Parent.Name ParentName', 'App.AppId AppId', 'App.Name AppName']" style="display:none">
             <input class="FolderItem" type="hidden" value="{{=it.FolderId}}, {{=it.Name}}, {{=it.ParentId}}, {{=it.ParentName}}, {{=it.AppId}}, {{=it.AppName}}">
@@ -135,9 +201,143 @@ img {
 
           <div class="cp-update" cp-entity-name="File" cp-action-name="UpdateFileCode" cp-read-action-name="ReadUpdateFileCode" cp-read-field="['FileId','Code']"  style="display:none">
             <input type="hidden" class="cp-text" cp-prop-name="Code">
-            <button type="button" class="cp-submit">Update</button>
           </div>
 
+
+          
+
+          <div class="modal fade" id="create-file-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Create File</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="cp-create" cp-entity-name="File" cp-action-name="CreateFile2">
+                    <div class="form-group">
+                    <label>File Name</label>
+                    <input type="text" class="form-control cp-string" cp-prop-name="Name" value="">
+                    <input type="hidden" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" id="file-app-id2" value="">
+                    </div>
+
+                    <div class="form-group">
+                    <label>Folder</label>
+                    <select id="file-folder-select" class="form-control cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-refe-cand="QueryCandFileFolder">
+                      <option class="cp-query-ref-candidate" cp-action-name="QueryCandFileFolder" cp-container-id="file-folder-select" cp-entity-name="File" cp-refe-name="Folder" cp-refe-entity="Folder" cp-field="['FolderId', 'Name', 'App.AppId AppId', 'App.Name AppName']" cp-condition="App.AppId=#selectedAppId" value="{{=it.FolderId}}">{{=it.AppName}} &gt; {{=it.Name}}</option>
+                    <select>
+                    </div>
+                    
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="javascript:$('#file-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFile2'); $('#create-file-modal').modal('hide');">OK</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="create-folder-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Create Folder</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="cp-create" cp-entity-name="Folder" cp-action-name="CreateFolder2">
+                    <div class="form-group">
+                    <label>Folder Name</label>
+                    <input type="text" class="form-control cp-string" cp-prop-name="Name" value="">
+                    <input type="hidden" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" id="folder-app-id2" value="">
+                    </div>
+                    <div class="form-group">
+                    <label>Parent</label>
+                    <select id="folder-parent-select" class="form-control cp-many2one-aw" cp-refe-name="Parent" cp-refe-entity="Folder" cp-refe-cand="QueryCandFolderParent">
+                      <option value="">Root</option>
+                      <option class="cp-query-ref-candidate" cp-action-name="QueryCandFolderParent" cp-container-id="folder-parent-select" cp-entity-name="Folder" cp-refe-name="Parent" cp-refe-entity="Folder" cp-field="['FolderId', 'Name', 'App.AppId AppId', 'App.Name AppName']" cp-condition="App.AppId=#selectedAppId" value="{{=it.FolderId}}">{{=it.AppName}} &gt; {{=it.Name}}</option>
+                    <select>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">OK</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="rename-file-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Rename File</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="cp-update" cp-entity-name="File" cp-action-name="RenameFile" cp-read-action-name="RenameFileRead" cp-read-field="['FileId','Name']">
+                    <div class="form-group">
+                    <label>File Name</label>
+                    <input type="text" class="form-control cp-string" cp-prop-name="Name" value="{{=it.Name}}">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="javascript:CP_DoAction('RenameFile'); $('#rename-file-modal').modal('hide');">OK</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="rename-folder-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Rename Folder</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="cp-update" cp-entity-name="Folder" cp-action-name="RenameFolder" cp-read-action-name="RenameFolderRead" cp-read-field="['FolderId','Name']">
+                    <div class="form-group">
+                    <label>Folder Name</label>
+                    <input type="text" class="form-control cp-string" cp-prop-name="Name" value="{{=it.Name}}">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="javascript:CP_DoAction('RenameFolder'); $('#rename-folder-modal').modal('hide');">OK</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="modal fade" id="rename-app-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Rename Application</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="cp-update" cp-entity-name="App" cp-action-name="RenameApp" cp-read-action-name="RenameAppRead" cp-read-field="['AppId','Name']">
+                    <div class="form-group">
+                    <label>Application Name</label>
+                    <input type="text" class="form-control cp-string" cp-prop-name="Name" value="{{=it.Name}}">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="javascript:CP_DoAction('RenameApp'); $('#rename-app-modal').modal('hide');">OK</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
 	<script type="text/javascript" src='./builder.js'></script>
 	<script type="text/javascript" src='./clicpilot-js-1.0.3.js' class="clicpilot-js"></script>
