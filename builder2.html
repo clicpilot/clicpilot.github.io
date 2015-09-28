@@ -11,17 +11,21 @@
 		  	font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
         }
         #wrapper {
+
 		  margin-left: 220px;
 		  height: 100%;
 		}
+
+
+
+
 		#content {
 		  float: right;
 		  width: 100%;
 		  height: 100%;
 		  background-color: #FFF;
 		  padding:0;
-        	margin:0;
-        	overflow:hidden;
+          overflow:hidden;
 		}
 		#sidebar {
 		  float: left;
@@ -33,6 +37,7 @@
 		#cleared {
 		  clear: both;
 		}
+
 		.text {
 		    display:block;
 		    float:left;
@@ -64,7 +69,11 @@
 			border: 1px solid black; border-color: #ccc;
 		}
 
-
+		button {
+			margin-top:5px;
+			margin-bottom:5px;
+			margin-left:5px;
+		}
 		/*
 		 Tree structure using CSS:
 		 http://stackoverflow.com/questions/14922247/how-to-get-a-tree-in-html-using-pure-css
@@ -76,13 +85,17 @@
 		  margin-left: 0 0 0 10px;
 		  padding: 0;
 		  position: relative;   
-		  overflow:hidden;    
+		  overflow:hidden; 
+		  ont-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+		  font-size:12px;   
 		}
 
 		.tree li{
 		  margin: 0;
 		  padding: 0 12px;  
-		  position: relative;   
+		  position: relative; 
+		  ont-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+		  font-size:12px;  
 		}
 		  
 		.tree li::before, .tree li::after{
@@ -124,6 +137,7 @@
         </script>
   	</head>
   	<body>
+
 		<div class="cp-query" cp-entity-name="App" cp-action-name="QueryApp" cp-field="['AppId', 'Name']" style="display:none">
 			<input class="AppItem" type="hidden" value="{{=it.AppId}}, {{=it.Name}}">
 		</div>
@@ -147,118 +161,196 @@
 		  	<div id="content">
 			  	<div id="configcontent" class="contentpane" style="float:left;clear:left;border: 1px solid black; border-color: #ccc;">
 					
-					<span style="float:left; width:200px" class="text">Create Application</span>
-                  	<form class="cp-create" cp-entity-name="App" cp-action-name="CreateApp">
-              			<input type="text" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="app-name">
-			            <button type="button" class="btn btn-primary" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Create</button>   	
+					<span style="float:left; width:200px" class="text">Application Management</span>
+                  	<form class="cp-create" cp-entity-name="App" cp-action-name="CreateApp" style="float:left;clear:left;">
+                  		<input style="float:left; " type="hidden" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="app-name">
+			            <button style="float:left; lear:left;" type="button"  class="cp-submit" onclick="createApp();return false;">Create Application </button>   	
+
+			            <label style="float:left;clear:left;width:200px" class="text">Current Application</label>
+			            <span style="float:left; width:200px" id="selectedAppName" class="text">N/A</span>
+			            <input type="hidden" id="selectedAppId">
+			            <!--
+                  		<select id="appId3" style="float:left; width:200px" class="cp-query" cp-entity-name="App" cp-action-name="QueryApp3" cp-field="['AppId', 'Name']">
+							<option value="{{=it.AppId}}">{{=it.Name}}</option>
+	                    <select>
+	                    -->
+	                    <button type="button" style="clear:left;float:left;" onclick="javascript:debugger;renameApp();return false;">Rename</button> 
+	                    <button type="button" style="float:left;" class="cp-delete" cp-entity-name="App" cp-action-name="DeleteApp" onclick="javascript:if(window.confirm('Delete App?'))CP_DoAction('DeleteApp', {Id:$('#selectedAppId').val()});return false;">Delete</button>  
+	                    <div style="float:left;clear:left;"></div>
                 	</form>
-
-
-					<span style="float:left; width:200px" class="text">Create Folder</span>
-                  	<form class="cp-create" cp-entity-name="Folder" cp-action-name="CreateFolder2">
-                  		<label>Folder Name</label>
-                    	<input type="text" class="form-control cp-string" cp-prop-name="Name" value="">
-                    	<input type="hidden" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" id="folder-app-id2" value="">
-
-                    	<label>Parent</label>
-	                    <select id="folder-parent-select" class="form-control cp-many2one-aw" cp-refe-name="Parent" cp-refe-entity="Folder" cp-refe-cand="QueryCandFolderParent">
+                	<form class="cp-update" cp-entity-name="App" cp-action-name="RenameApp" cp-read-action-name="RenameAppRead" cp-read-field="['AppId','Name']" style="display:none">
+                    <input type="text" class="cp-string" cp-prop-name="Name" value="{{=it.Name}}" id="rename_app_name">
+                  	</form>
+                	
+                	<hr style="float:left;clear:left; width:100%; color:#ddd">
+					<span style="float:left;clear:left; width:200px" class="text">Folder Management</span>
+                  	<form class="cp-create" cp-entity-name="Folder" cp-action-name="CreateFolder" style="float:left;clear:left;">
+                  		<!--
+                  		<label style="float:left; width:200px" class="text">Application</label>
+                  		<select style="float:left; width:200px" id="folder-app-select" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" cp-refe-cand="QueryCandFolderApp">
+							<option class="cp-query-ref-candidate" cp-action-name="QueryCandFolderApp" cp-container-id="folder-app-select" cp-entity-name="Folder" cp-refe-name="App" cp-refe-entity="App" cp-field="['AppId', 'Name']" value="{{=it.AppId}}">{{=it.Name}}</option>
+	                    <select>
+	                    <div style="float:left;clear:left;"></div>
+	                    <label style="float:left; clear:left; width:200px" class="text">Folder</label>
+	                    <select style="float:left; width:200px" id="folder-parent-select" class="cp-many2one-aw" cp-refe-name="Parent" cp-refe-entity="Folder" cp-refe-cand="QueryCandFolderParent">
 							<option value="">Root</option>
-							<option class="cp-query-ref-candidate" cp-action-name="QueryCandFolderParent" cp-container-id="folder-parent-select" cp-entity-name="Folder" cp-refe-name="Parent" cp-refe-entity="Folder" cp-field="['FolderId', 'Name', 'App.AppId AppId', 'App.Name AppName']" cp-condition="App.AppId=#selectedAppId" value="{{=it.FolderId}}">{{=it.AppName}} &gt; {{=it.Name}}</option>
+							<option class="cp-query-ref-candidate" cp-action-name="QueryCandFolderParent" cp-container-id="folder-parent-select" cp-entity-name="Folder" cp-refe-name="Parent" cp-refe-entity="Folder" cp-field="['FolderId', 'Name', 'App.AppId AppId', 'App.Name AppName']" cp-condition="App.AppId=#folder-app-select" value="{{=it.FolderId}}">{{=it.Name}}</option>
 	                    <select>
-			            <button type="button" class="btn btn-primary" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Create</button>   	
-                	</form>
+	                    <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Rename</button> 
+	                    <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Delete</button>   		
+	                    <div style="float:left;clear:left;"></div>
+                  		<label style="float:left; clear:left; width:200px" class="text">New Subfolder Name</label>
+                    	<input style="float:left; width:200px" type="text" class="cp-string" cp-prop-name="Name" value="" cp-prop-name="Name" cp-max-len="24" cp-nullable="false">
+                    	
+                    	-->
+                    	<button type="button" style="float:left;clear:left" onclick="javascript:createFolder();return false;">Create Folder</button>  
 
-                	<span style="float:left; width:200px" class="text">Create File</span>
-					<form class="cp-create" cp-entity-name="File" cp-action-name="CreateFile2">
-	                   
-	                    <label>File Name</label>
-	                    <input type="text" class="fcp-string" cp-prop-name="Name" value="">
-	                    <input type="hidden" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" id="file-app-id2" value="">
-	                    
-	                    <label>Folder</label>
-	                    <select id="file-folder-select" class="cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-refe-cand="QueryCandFileFolder">
-	                      <option class="cp-query-ref-candidate" cp-action-name="QueryCandFileFolder" cp-container-id="file-folder-select" cp-entity-name="File" cp-refe-name="Folder" cp-refe-entity="Folder" cp-field="['FolderId', 'Name', 'App.AppId AppId', 'App.Name AppName']" cp-condition="App.AppId=#selectedAppId" value="{{=it.FolderId}}">{{=it.AppName}} &gt; {{=it.Name}}</option>
-	                    <select>
-	                    
-	                    <button type="button" onclick="javascript:$('#file-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFile2'); ">Create</button>
+                    	<label style="float:left; clear:left; width:200px" class="text">Current Folder</label>
+                    	<span style="float:left; width:200px" class="text" id="selectedFolderName">N/A</span>
+                    	<button type="button" style="float:left;clear:left" onclick="javascript:renameFolder();return false;">Rename</button> 
+	                    <button type="button" style="float:left;" class="cp-delete" cp-entity-name="Folder" cp-action-name="DeleteFolder" onclick="javascript:debugger;if(!$('#selectedFolderId').val()){alert('Cannot delete root folder.');return;}if(window.confirm('Delete Folder?'))CP_DoAction('DeleteFolder', {Id:$('#selectedFolderId').val()});return false;">Delete</button>  
+
+                    	<input type="hidden" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="folder-name">
+
+              			
+              			<input type="hidden" class="cp-many2one-aw" cp-refe-name="Parent" cp-refe-entity="Folder" cp-inv-name="SubFolder" id="folder-parent-id">
+              			<input type="hidden" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" cp-inv-name="Folder"  id="folder-app-id">
+			             	
+			            <div style="float:left;clear:left;"></div>
+                	</form>
+                	<form class="cp-update" cp-entity-name="Folder" cp-action-name="RenameFolder" cp-read-action-name="RenameFolderRead" cp-read-field="['FolderId','Name']" style="display:none">
+                    <input type="text" class="cp-string" cp-prop-name="Name" value="{{=it.Name}}" id="rename_folder_name">
                   	</form>
 
-                  	
+                  	<hr style="float:left;clear:left; width:100%; color:#ddd">
+					<span style="float:left;clear:left; width:200px" class="text">File Management</span>
+                  	<form class="cp-create" cp-entity-name="File" cp-action-name="CreateFile" style="float:left;clear:left;">
+                  		<!--
+                  		<label style="float:left; width:200px" class="text">Application</label>
+                  		<select style="float:left; width:200px" id="folder-app-select" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" cp-refe-cand="QueryCandFolderApp">
+							<option class="cp-query-ref-candidate" cp-action-name="QueryCandFolderApp" cp-container-id="folder-app-select" cp-entity-name="Folder" cp-refe-name="App" cp-refe-entity="App" cp-field="['AppId', 'Name']" value="{{=it.AppId}}">{{=it.Name}}</option>
+	                    <select>
+	                    <div style="float:left;clear:left;"></div>
+	                    <label style="float:left; clear:left; width:200px" class="text">Folder</label>
+	                    <select style="float:left; width:200px" id="folder-parent-select" class="cp-many2one-aw" cp-refe-name="Parent" cp-refe-entity="Folder" cp-refe-cand="QueryCandFolderParent">
+							<option value="">Root</option>
+							<option class="cp-query-ref-candidate" cp-action-name="QueryCandFolderParent" cp-container-id="folder-parent-select" cp-entity-name="Folder" cp-refe-name="Parent" cp-refe-entity="Folder" cp-field="['FolderId', 'Name', 'App.AppId AppId', 'App.Name AppName']" cp-condition="App.AppId=#folder-app-select" value="{{=it.FolderId}}">{{=it.Name}}</option>
+	                    <select>
+	                    <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Rename</button> 
+	                    <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Delete</button>   		
+	                    <div style="float:left;clear:left;"></div>
+                  		<label style="float:left; clear:left; width:200px" class="text">New Subfolder Name</label>
+                    	<input style="float:left; width:200px" type="text" class="cp-string" cp-prop-name="Name" value="" cp-prop-name="Name" cp-max-len="24" cp-nullable="false">
+                    	
+                    	-->
+                    	<button type="button" style="float:left;clear:left" onclick="javascript:createFile('html');return false;">Create HTML File</button>
+                    	<button type="button" style="float:left;" onclick="javascript:createFile('js');return false;">Create JavaScript File</button>
+                    	<button type="button" style="float:left;" onclick="javascript:createFile('css');return false;">Create CSS File</button>
+                    	<button type="button" style="float:left;" onclick="javascript:createFile('json');return false;">Create JSON File</button>
+                    	<button type="button" style="float:left;" onclick="javascript:createFile('callback');return false;">Create Callback File</button>  
+
+                    	<button type="button" style="float:left;clear:left" onclick="javascript:openLocalImageFile();return false;">Import Local Image File</button>  
+
+                    	<button type="button" style="float:left;" onclick="javascript:openRemoteImageFile();return false;">Import Remote Image File</button>  
+
+                    	<label style="float:left; clear:left; width:200px" class="text">Current File</label>
+                    	<span style="float:left; width:200px" class="text" id="selectedFileName">N/A</span>
+                    	<button type="button" style="float:left;clear:left" onclick="javascript:renameFile();return false;">Rename</button> 
+	                    <button type="button" style="float:left;" class="cp-delete" cp-entity-name="File" cp-action-name="DeleteFile" onclick="javascript:if(!$('#selectedFileId').val()){return;}if(window.confirm('Delete File?'))CP_DoAction('DeleteFile', {Id:$('#selectedFileId').val()});return false;">Delete</button>  
+
+                    	<input type="hidden" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="file-name">
+                    	<input type="hidden" class="cp-text" cp-prop-name="Code" id="folder-code" cp-nullable="true" value="">
+              			<input type="hidden" class="cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-inv-name="File" id="file-folder-id">
+              			<input type="hidden" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" cp-inv-name="Folder"  id="file-app-id">
+			             	
+			            <div style="float:left;clear:left;"></div>
+                	</form>
+                	<form class="cp-update" cp-entity-name="File" cp-action-name="RenameFile" cp-read-action-name="RenameFileRead" cp-read-field="['FileId','Name']" style="display:none">
+                    <input type="text" class="cp-string" cp-prop-name="Name" value="{{=it.Name}}" id="rename_file_name">
+                  	</form>
+
+                	<!--
+                	<hr style="float:left;clear:left; width:100%; color:#ddd">
+					<span style="float:left;clear:left; width:200px" class="text">File</span>
+                  	<form class="cp-create" cp-entity-name="File" cp-action-name="CreateFile" style="float:left;clear:left;">
+                  		<label style="float:left; width:200px" class="text">Application</label>
+                  		<select style="float:left; width:200px" id="file-app-select" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" cp-refe-cand="QueryCandFileApp">
+							<option class="cp-query-ref-candidate" cp-action-name="QueryCandFileApp" cp-container-id="folder-app-select" cp-entity-name="File" cp-refe-name="App" cp-refe-entity="App" cp-field="['AppId', 'Name']" value="{{=it.AppId}}">{{=it.Name}}</option>
+	                    <select>
+	                    	<div style="float:left;clear:left;"></div>
+	                    <label style="float:left; clear:left; width:200px" class="text">Folder</label>
+	                    <select style="float:left; width:200px" id="file-folder-select" class="cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-refe-cand="QueryCandFileFolder">
+							<option value="">Root</option>
+							<option class="cp-query-ref-candidate" cp-action-name="QueryCandFileFolder" cp-container-id="file-folder-select" cp-entity-name="File" cp-refe-name="Folder" cp-refe-entity="Folder" cp-field="['FolderId', 'Name', 'App.AppId AppId', 'App.Name AppName']" cp-condition="App.AppId=#file-app-select" value="{{=it.FolderId}}"> {{=it.Name}}</option>
+	                    <select>
+	                    	
+	                    	<div style="float:left;clear:left;"></div>
+	                    <label style="float:left; clear:left; width:200px" class="text">File</label>
+	                    <select style="float:left; width:200px" id="file-folder-select" class="cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-refe-cand="QueryCandFileFolder">
+							
+	                    <select>
+
+	                    <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Rename</button> 
+	                    <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Delete</button>   		
+	                    <div style="float:left;clear:left;"></div>
+                  		<label style="float:left; clear:left; width:200px" class="text cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false">New File Name</label>
+                    	<input style="float:left; width:200px" type="text" class="cp-string" cp-prop-name="Name" value="">
+                    	
+                    	<select style="float:left; width:80px" id="file-ftype">
+							<option value="html">.html</option>
+							<option value="js">.js</option>
+							<option value="css">.css</option>
+							<option value="json">.json</option>
+							<option value="callback.js">.callback.js</option>
+	                    <select>
+
+			            <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Create</button> 
+			            <div style="float:left;clear:left;"></div>  	
+                	</form>
+
+                	<hr style="float:left;clear:left; width:100%; color:#ddd">
+					<span style="float:left;clear:left; width:200px" class="text">Image</span>
+                  	<form class="cp-create" cp-entity-name="File" cp-action-name="CreateFile" style="float:left;clear:left;">
+                  		<label style="float:left; width:200px" class="text">Application</label>
+                  		<select style="float:left; width:200px" id="file-app-select" class="cp-many2one-aw" cp-refe-name="App" cp-refe-entity="App" cp-refe-cand="QueryCandFileApp">
+							<option class="cp-query-ref-candidate" cp-action-name="QueryCandFileApp" cp-container-id="folder-app-select" cp-entity-name="File" cp-refe-name="App" cp-refe-entity="App" cp-field="['AppId', 'Name']" value="{{=it.AppId}}">{{=it.Name}}</option>
+	                    <select>
+	                    	<div style="float:left;clear:left;"></div>
+	                    <label style="float:left; clear:left; width:200px" class="text">Folder</label>
+	                    <select style="float:left; width:200px" id="file-folder-select" class="cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-refe-cand="QueryCandFileFolder">
+							<option value="">Root</option>
+							<option class="cp-query-ref-candidate" cp-action-name="QueryCandFileFolder" cp-container-id="file-folder-select" cp-entity-name="File" cp-refe-name="Folder" cp-refe-entity="Folder" cp-field="['FolderId', 'Name', 'App.AppId AppId', 'App.Name AppName']" cp-condition="App.AppId=#file-app-select" value="{{=it.FolderId}}"> {{=it.Name}}</option>
+	                    <select>
+
+	                    	<div style="float:left;clear:left;"></div>
+	                    <label style="float:left; clear:left; width:200px" class="text">Image</label>
+	                    <select style="float:left; width:200px" id="file-folder-select" class="cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-refe-cand="QueryCandFileFolder">
+							
+	                    <select>
+
+	                    <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Rename</button> 
+	                    <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Delete</button>   		
+	                    <div style="float:left;clear:left;"></div>
+                  		<label style="float:left; clear:left; width:200px" class="text cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false">Image URL</label>
+                    	<input style="float:left; width:200px" type="text" class="cp-string" cp-prop-name="Name" value="">
+                    	
+                    	
+
+			            <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Open URL</button> 
+			            <button type="button" style="float:left;" onclick="javascript:$('#folder-app-id2').val(window.SelectedAppId);CP_DoAction('CreateFolder2'); $('#create-folder-modal').modal('hide');">Open Local Image</button> 
+			            <div style="float:left;clear:left;"></div>  	
+                	</form>
+
+                  	-->
+                	<hr style="float:left;clear:left; width:100%; color:#ddd">
 
 
-
-			          <div class="modal fade" id="rename-file-modal" tabindex="-1" role="dialog">
-			            <div class="modal-dialog" role="document">
-			              <div class="modal-content">
-			                <div class="modal-header">
-			                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			                  <h4 class="modal-title">Rename File</h4>
-			                </div>
-			                <div class="modal-body">
-			                  <form class="cp-update" cp-entity-name="File" cp-action-name="RenameFile" cp-read-action-name="RenameFileRead" cp-read-field="['FileId','Name']">
-			                    <div class="form-group">
-			                    <label>File Name</label>
-			                    <input type="text" class="form-control cp-string" cp-prop-name="Name" value="{{=it.Name}}">
-			                    </div>
-			                  </form>
-			                </div>
-			                <div class="modal-footer">
-			                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			                  <button type="button" class="btn btn-primary" onclick="javascript:CP_DoAction('RenameFile'); $('#rename-file-modal').modal('hide');">OK</button>
-			                </div>
-			              </div>
-			            </div>
-			          </div>
-
-			          <div class="modal fade" id="rename-folder-modal" tabindex="-1" role="dialog">
-			            <div class="modal-dialog" role="document">
-			              <div class="modal-content">
-			                <div class="modal-header">
-			                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			                  <h4 class="modal-title">Rename Folder</h4>
-			                </div>
-			                <div class="modal-body">
-			                  <form class="cp-update" cp-entity-name="Folder" cp-action-name="RenameFolder" cp-read-action-name="RenameFolderRead" cp-read-field="['FolderId','Name']">
-			                    <div class="form-group">
-			                    <label>Folder Name</label>
-			                    <input type="text" class="form-control cp-string" cp-prop-name="Name" value="{{=it.Name}}">
-			                    </div>
-			                  </form>
-			                </div>
-			                <div class="modal-footer">
-			                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			                  <button type="button" class="btn btn-primary" onclick="javascript:CP_DoAction('RenameFolder'); $('#rename-folder-modal').modal('hide');">OK</button>
-			                </div>
-			              </div>
-			            </div>
-			          </div>
-
-
-			          <div class="modal fade" id="rename-app-modal" tabindex="-1" role="dialog">
-			            <div class="modal-dialog" role="document">
-			              <div class="modal-content">
-			                <div class="modal-header">
-			                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			                  <h4 class="modal-title">Rename Application</h4>
-			                </div>
-			                <div class="modal-body">
-			                  <form class="cp-update" cp-entity-name="App" cp-action-name="RenameApp" cp-read-action-name="RenameAppRead" cp-read-field="['AppId','Name']">
-			                    <div class="form-group">
-			                    <label>Application Name</label>
-			                    <input type="text" class="form-control cp-string" cp-prop-name="Name" value="{{=it.Name}}">
-			                    </div>
-			                  </form>
-			                </div>
-			                <div class="modal-footer">
-			                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			                  <button type="button" class="btn btn-primary" onclick="javascript:CP_DoAction('RenameApp'); $('#rename-app-modal').modal('hide');">OK</button>
-			                </div>
-			              </div>
-			            </div>
-			          </div>
+			          
 				</div>
 
 				<div id="editorcontent" class="contentpane" style="float:left;clear:left;border: 1px solid black; border-color: #ccc;">
+					<div id="editorbar" style="width:100%;height:30px"></div>
+					<div id="editorpanel" style="width:100%"></div>
 
 				</div>
 
@@ -267,14 +359,16 @@
 		  	<div id="sidebar">
 			
 		  	<form style="float:left;clear:left;margin:5px;min-width:100px">
-			  	<label style="float:left;min-width:100px" class="text">Menu</label>
-			  	<select style="float:left;margin:5px;min-width:100px" id="apps-list">
-			  		
-			  	</select>
-			  	<button style="float:left;clear:left;margin:5px;" id="manageApp" type="button">Manage Application</button>
-			  	<button style="float:left;clear:left;margin:5px;" id="previewApp" type="button">Preview Application</button>
+			  	<label style="float:left;min-width:100px;width:200px" class="text">clicpilot builder lite</label>
+			  	<select id="applist">
+					
+	            <select>
+			  	<button style="float:left;margin:5px;" id="manageApp" type="button">Manage</button>
+			  	<button style="float:left;clear:left;margin:5px;" id="previewApp" onclick="previewInWin()" type="button">Preview</button>
 			  	<input type="hidden" id="selectedAppId">
-          		<ul id="app_nav" class="tree">
+			  	<input type="hidden" id="selectedFolderId">
+			  	<input type="hidden" id="selectedFileId">
+          		<ul style="float:left;clear:left;margin:5px;" id="app_nav" class="tree">
           		</ul>
 		  	</form>
 		  	</div>
@@ -282,16 +376,82 @@
 		  	</div>
 		</div>
 		<script>
-		CP_Init(function(){
-			$("#manageApp").click(function(){
-				$(".contentpane").hide();
-				$(".configcontent").show();
-			})
-		});
-		
+		window.renameApp = function() {
+			var selectedAppId = $("#selectedAppId").val();
+			if(eval(selectedAppId)) {
+				var oldname=$('#selectedAppName').text();
+				var name = window.prompt('New Application Name', oldname);
+				if(name && name.trim().length>0){
+					CP_RequestAction('RenameApp', 
+						{obj:{AppId:selectedAppId, Name:name}}, 
+						function(){
+							updateView();
+							SelectApp(selectedAppId);
+						}, 
+						function(e){alert(e.message)}
+					);
+				}
+			} else {
+				alert("Application not exist!");
+			}
+		}
+
+		window.renameFolder = function() {
+			var selectedFolderId = $("#selectedFolderId").val();
+			if(eval(selectedFolderId)) {
+				var oldname=$('#selectedFolderName').text();
+				var name = window.prompt('New Folder Name', oldname);
+				if(name && name.trim().length>0){
+					CP_RequestAction('RenameFolder', 
+						{obj:{FolderId:selectedFolderId, Name:name}}, 
+						function(){
+							updateView();
+							SelectFolder(selectedFolderId);
+						}, 
+						function(e){alert(e.message)}
+					);
+				}
+			} else {
+				alert("Folder not exist or cannot rename the root folder!");
+			}
+		}
+
+		window.renameFile = function() {
+			var selectedFileId = $("#selectedFileId").val();
+			if(eval(selectedFileId)) {
+				var oldname=$('#selectedFileName').text();
+				var name = window.prompt('New File Name', oldname);
+				if(name && name.trim().length>0){
+					CP_RequestAction('RenameFile', 
+						{obj:{FileId:selectedFileId, Name:name}}, 
+						function(){
+							updateView();
+							SelectFile(selectedFileId);
+						}, 
+						function(e){alert(e.message)}
+					);
+				}
+			} else {
+				alert("File not exist!");
+			}
+		}
+		/*
+		window.createApp = function() {
+			window.appcount = window.appcount || 1; 
+			var name = window.prompt('New Application Name?', "App"+(window.appcount++);
+			if(name && name.trim().length>0){
+				CP_RequestAction('CreateApp', 
+					{obj:{Name:name}}, 
+					function(){CP_UpdateView('QueryApp');CP_UpdateView('QueryApp2');CP_UpdateView('QueryApp3');}, 
+					function(e){alert(e.message)}
+				);
+			}
+		}
+		*/
 		</script>
+
 		<script type="text/javascript" src="./js/jquery.js"></script>
-		<script type="text/javascript" src='./builder.js'></script>
+		<script type="text/javascript" src='./builder2.js'></script>
 		<script type="text/javascript" src='./clicpilot-js-1.0.3.js' class="clicpilot-js"></script>
 		<script type="text/javascript" src="./ace/ace.js" charset="utf-8"></script>
   	</body>
