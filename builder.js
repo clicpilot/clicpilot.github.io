@@ -520,9 +520,30 @@ function importApp() {
 						}
 						var fname = names[names.length-1];
 						var code = null;
-						debugger;
+						
 						if(fname.lastIndexOf(".jpg")==fname.length-4 || fname.lastIndexOf(".png")==fname.length-4) {
-							code = f.asBinary();
+              debugger;
+              /*
+              var blob = null;
+              if(fname.lastIndexOf(".jpg")==fname.length-4) {
+                blob = new Blob( [ f.asArrayBuffer() ], { type: "image/jpg" } );
+              }	else if (fname.lastIndexOf(".png")==fname.length-4) {
+                blob = new Blob( [ f.asArrayBuffer() ], { type: "image/png" } );
+              }
+              alert(blob);
+              var imageUrl = URL.createObjectURL(blob);
+              alert(imageUrl);
+              //var urlCreator = window.URL || window.webkitURL;
+              //var imageUrl = urlCreator.createObjectURL( blob );
+              */
+              
+              if(fname.lastIndexOf(".jpg")==fname.length-4) {
+                code = "data:image/jpg;base64,"+toBase64(f.asUint8Array())
+              } else if (fname.lastIndexOf(".png")==fname.length-4) {
+                code = "data:image/png;base64,"+toBase64(f.asUint8Array())
+              }
+              alert(code);
+              //code = imageUrl;
 						} else {
 							code = f.asText();
 						}
@@ -552,6 +573,29 @@ function importApp() {
 
 }
 
+function toBase64(input) {
+  var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  var output = "";
+  var i=0;
+  while (i < input.length) {
+    chr1 = input[i++];
+    chr2 = input[i++];
+    chr3 = input[i++];
+    enc1 = chr1 >> 2;
+    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+    enc4 = chr3 & 63;
+    if (isNaN(chr2)) {
+        enc3 = enc4 = 64;
+    } else if (isNaN(chr3)) {
+        enc4 = 64;
+    }
+    output = output +
+    _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+    _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
+  }
+  return output;
+}
 function importFile() {
 	$("#hiddendiv").append('<input type="file" id="fileInput" class="input-file">');
 	$("#fileInput").hide();

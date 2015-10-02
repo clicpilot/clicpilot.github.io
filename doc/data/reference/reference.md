@@ -48,6 +48,16 @@ __Descendant__
 
 The object of the Foreign Entity cannot exist without the object of the Owner Entity.
 
+__Ancestry Weak__
+
+The object of the Owner Entity can exist without the object of the Foreign Entity.
+When deleting the object of the Owner Entity, the object of the Foreign Entity will be removed as well.
+
+__Descendant Weak__
+
+The object of the Foreign Entity can exist without the object of the Owner Entity.
+When deleting the object of the Owner Entity, the object of the Foreign Entity will be removed as well.
+
 
 
 CSS class name mapping to reference type as below.
@@ -58,15 +68,19 @@ CSS class name mapping to reference type as below.
 |cp-one2one-s|__One To One Single-directional__|
 |cp-one2one-i|__One To One Bidirectional__|
 |cp-one2one-a|__One To One Ancestry__|
+|cp-one2one-aw|__One To One Ancestry Weak__|
 |cp-one2one-d|__One To One Descendant__|
+|cp-one2one-dw|__One To One Descendant Weak__|
 |cp-one2many|__One To Many__|
 |cp-one2many-s|__One To Many Single-directional__|
 |cp-one2many-i|__One To Many Bidirectional__|
 |cp-one2many-d|__One To Many Descendant__|
+|cp-one2many-dw|__One To Many Descendant Weak__|
 |cp-many2one|__Many To One__|
 |cp-many2one-s|__Many To One Single-directional__|
 |cp-many2one-b|__Many To One Bidirectional__|
 |cp-many2one-a|__Many To One Ancestry__|
+|cp-many2one-aw|__Many To One Ancestry Weak__|
 |cp-many2many|__Many To Many__|
 |cp-many2many-s|__Many To Many Single-directional__|
 
