@@ -140,6 +140,10 @@ var content =
 							"file":["one2one_a.html"]
 						},
 						{
+							"title":"One To One Ancestry Weak",
+							"file":["one2one_aw.html"]
+						},
+						{
 							"title":"One To One Descendant",
 							"file":["one2one_d.html"]
 						},

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>One To One Ancestry Weak</title>
+  </head>
+  <body>
+    <h1>One To One Ancestry Weak</h1>
+      <pre id="msg"></pre>
+      <h4>Create A</h4>
+      <form class="cp-create" cp-entity-name="EO2OAWA" cp-action-name="CreateEO2OAWA" cp-complete-observer="['CreateEO2OAWA', 'CreateEO2OAWB', 'ReadEO2OAWA', 'ReadEO2OAWB', 'UpdateEO2OAWA', 'UpdateEO2OAWB', 'QueryEO2OAWA', 'QueryEO2OAWB']">
+        <label>Prop1</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop1" value="">
+        </input>
+        <label>Refe1</label>
+        <select id="EO2OAW-refe1-select" class="cp-one2one-aw" cp-refe-name="Refe1" cp-inv-name="InvRefe1" cp-refe-entity="EO2OAWB" cp-refe-cand="QueryCandEO2OAWARefe1">
+          <option value="0">&nbsp;</option>
+          <option class="cp-query-ref-candidate" cp-action-name="QueryCandEO2OAWARefe1" cp-container-id="EO2OAW-refe1-select" cp-entity-name="EO2OAWA" cp-refe-name="Refe1" cp-refe-entity="EO2OAWB" cp-field="['EO2OAWBId', 'Prop2']" value="{{=it.EO2OAWBId}}">{{=it.Prop2}}</option>
+        <select>
+        <button type="button" class="cp-submit">Create</button>
+      </form>
+      <h4>Create B</h4>
+      <form class="cp-create" cp-entity-name="EO2OAWB" cp-action-name="CreateEO2OAWB" cp-complete-observer="['CreateEO2OAWA', 'CreateEO2OAWB', 'ReadEO2OAWA', 'ReadEO2OAWB', 'UpdateEO2OAWA', 'UpdateEO2OAWB', 'QueryEO2OAWA', 'QueryEO2OAWB']">
+        <label>Prop2</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop2" value="">
+        </input>
+        <label>InvRefe1</label>
+        <select id="EO2OAW-invrefe1-select" class="cp-one2one-aw" cp-inv-refe="true" cp-refe-name="InvRefe1" cp-refe-entity="EO2OAWA" cp-refe-cand="QueryCandEO2OAWBInvRefe1">
+          <option value="0">&nbsp;</option>
+          <option class="cp-query-ref-candidate" cp-action-name="QueryCandEO2OAWBInvRefe1" cp-container-id="EO2OAW-invrefe1-select" cp-entity-name="EO2OAWB" cp-refe-name="InvRefe1" cp-field="['EO2OAWAId', 'Prop1']" value="{{=it.EO2OAWAId}}">{{=it.Prop1||'&nbsp;'}}</option>
+        <select>
+        <button type="button" class="cp-submit">Create</button>
+      </form>
+      <h4>Read A</h4>
+      <form class="cp-read" cp-entity-name="EO2OAWA" cp-action-name="ReadEO2OAWA" cp-field="['EO2OAWAId','Prop1', 'Refe1.EO2OAWBId', 'Refe1.Prop2']">
+        <label>Prop1</label>
+        <span>{{=it.Prop1?it.Prop1:'&nbsp;'}}</span>
+        <label>Prop2</label>
+        <span>{{=it.Refe1?it.Refe1.Prop2:'&nbsp;'}}</span>
+        <button type="button" class="cp-delete" cp-entity-name="EO2OAWA" cp-action-name="DeleteEO2OAWA" onclick="javascript:CP_DoAction('DeleteEO2OAWA', {Id: {{=it.EO2OAWAId?it.EO2OAWAId:'0'}} });return false;" cp-complete-observer="['CreateEO2OAWA', 'CreateEO2OAWB', 'ReadEO2OAWA', 'ReadEO2OAWB', 'UpdateEO2OAWA', 'UpdateEO2OAWB', 'QueryEO2OAWA', 'QueryEO2OAWB']">Delete</button>
+      </form>
+      <h4>Read B</h4>
+      <form class="cp-read" cp-entity-name="EO2OAWB" cp-action-name="ReadEO2OAWB" cp-field="['EO2OAWBId','Prop2', 'InvRefe1.EO2OAWAId', 'InvRefe1.Prop1']">
+        <label>Prop2</label>
+        <span>{{=it.Prop2?it.Prop2:'&nbsp;'}}</span>
+        <label>Prop1</label>
+        <span>{{=it.InvRefe1?it.InvRefe1.Prop1:'&nbsp;'}}</span>
+        <button type="button" class="cp-delete" cp-entity-name="EO2OAWB" cp-action-name="DeleteEO2OAWB" onclick="javascript:CP_DoAction('DeleteEO2OAWB', {Id: {{=it.EO2OAWBId?it.EO2OAWBId:'0'}} });return false;" cp-complete-observer="['CreateEO2OAWA', 'CreateEO2OAWB', 'ReadEO2OAWA', 'ReadEO2OAWB', 'UpdateEO2OAWA', 'UpdateEO2OAWB', 'QueryEO2OAWA', 'QueryEO2OAWB']">Delete</button>
+      </form>
+      <h4>Update A</h4>
+      <form class="cp-update" cp-entity-name="EO2OAWA" cp-action-name="UpdateEO2OAWA" cp-read-action-name="ReadUpdateEO2OAWA" cp-read-field="['EO2OAWAId','Prop1','Refe1.EO2OAWBId', 'Refe1.Prop2']" cp-complete-observer="['CreateEO2OAWA', 'CreateEO2OAWB', 'ReadEO2OAWA', 'ReadEO2OAWB', 'UpdateEO2OAWA', 'UpdateEO2OAWB', 'QueryEO2OAWA', 'QueryEO2OAWB']">
+        <label>Prop1</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop1" value="{{=it.Prop1||'&nbsp;'}}">
+        </input>
+        <label>Refe1</label>
+        <select id="EO2OAW-refe1-select-update" class="cp-one2one-aw" cp-refe-name="Refe1" cp-inv-name="InvRefe1" cp-refe-entity="EO2OAWB" cp-refe-cand="QueryCandEO2OAWARefe1Update">
+          {{if(it.Refe1) { }}
+          <option selected="selected" value="0">&nbsp;</option>
+          <option selected="selected" value="{{=it.Refe1.EO2OAWBId}}">{{=it.Refe1.Prop2}}</option>
+          {{ } else { }}
+          <option selected="selected" value="0">&nbsp;</option>
+          {{ } }}
+          <option class="cp-query-ref-candidate" cp-action-name="QueryCandEO2OAWARefe1Update" cp-container-id="EO2OAW-refe1-select-update" cp-entity-name="EO2OAWA" cp-refe-name="Refe1" cp-refe-entity="EO2OAWB" cp-field="['EO2OAWBId', 'Prop2']" value="{{=it.EO2OAWBId}}">{{=it.Prop2||'&nbsp;'}}</option>
+        </select>
+        <button type="button" class="cp-submit">Update</button>
+      </form>
+      <h4>Update B</h4>
+      <form class="cp-update" cp-entity-name="EO2OAWB" cp-action-name="UpdateEO2OAWB"  cp-read-action-name="ReadUpdateEO2OAWB" cp-read-field="['EO2OAWBId','Prop2','InvRefe1.EO2OAWAId', 'InvRefe1.Prop1']" cp-complete-observer="['CreateEO2OAWA', 'CreateEO2OAWB', 'ReadEO2OAWA', 'ReadEO2OAWB', 'UpdateEO2OAWA', 'UpdateEO2OAWB', 'QueryEO2OAWA', 'QueryEO2OAWB']">
+        <label>Prop2</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop2" value="{{=it.Prop2||'&nbsp;'}}">
+        </input>
+        <label>InvRefe1</label>
+        <select id="EO2OAW-invrefe1-select-update" class="cp-one2one-aw" cp-inv-refe="true" cp-refe-name="InvRefe1" cp-refe-entity="EO2OAWA" cp-refe-cand="QueryCandEO2OAWBInvRefe1Update">
+          {{if(it.InvRefe1) { }}
+          <option selected="selected" value="0">&nbsp;</option>
+          <option selected="selected" value="{{=it.InvRefe1.EO2OAWAId}}">{{=it.InvRefe1.Prop1}}</option>
+          {{ } else { }}
+          <option selected="selected" value="0">&nbsp;</option>
+          {{ } }}
+          <option class="cp-query-ref-candidate" cp-action-name="QueryCandEO2OAWBInvRefe1Update" cp-container-id="EO2OAW-invrefe1-select-update" cp-entity-name="EO2OAWB" cp-refe-name="InvRefe1" cp-field="['EO2OAWAId', 'Prop1']" value="{{=it.EO2OAWAId}}">{{=it.Prop1||'&nbsp;'}}</option>
+        <select>
+        <button type="button" class="cp-submit">Update</button>
+      </form>
+      <h4>Query A</h4>
+      <ul class="cp-query" cp-entity-name="EO2OAWA" cp-action-name="QueryEO2OAWA" cp-field="['EO2OAWAId', 'Prop1', 'Refe1.EO2OAWBId', 'Refe1.Prop2']">
+        <li>
+          <span>{{=it.EO2OAWAId||'&nbsp;'}}</span>
+          <span>{{=it.Prop1||'&nbsp;'}}</span>
+          <span>{{=(it.Refe1?(it.Refe1.EO2OAWBId||'&nbsp;'):'&nbsp;')}}</span>
+          <span>{{=(it.Refe1?(it.Refe1.Prop2||'&nbsp;'):'&nbsp;')}}</span>
+          <a href="#" onclick="javascript:CP_UpdateView('UpdateEO2OAWA', {Id: $(this).siblings().first().text()});return false;">Update</a>
+          <a href="#" onclick="javascript:CP_DoAction('DeleteEO2OAWA', {Id: $(this).siblings().first().text()});return false;">Delete</a>
+        </li>
+      </ul>
+      <h4>Query B</h4>
+      <ul class="cp-query" cp-entity-name="EO2OAWB" cp-action-name="QueryEO2OAWB" cp-field="['EO2OAWBId', 'Prop2', 'InvRefe1.EO2OAWAId', 'InvRefe1.Prop1']">
+        <li>
+          <span>{{=it.EO2OAWBId||'&nbsp;'}}</span>
+          <span>{{=it.Prop2||'&nbsp;'}}</span>
+          <span>{{=(it.InvRefe1?(it.InvRefe1.EO2OAWAId||'&nbsp;'):'&nbsp;')}}</span>
+          <span>{{=(it.InvRefe1?(it.InvRefe1.Prop1||'&nbsp;'):'&nbsp;')}}</span>
+          <a href="#" onclick="javascript:CP_UpdateView('UpdateEO2OAWB', {Id: $(this).siblings().first().text()});return false;">Update</a>
+          <a href="#" onclick="javascript:CP_DoAction('DeleteEO2OAWB', {Id: $(this).siblings().first().text()});return false;">Delete</a>
+        </li>
+      </ul>
+    <script>
+    window.ShowError = function(msg) {
+      $("#msg").text(msg);
+    }
+    window.ShowActionMsg = window.ShowError;
+    window.ShowMessage = window.ShowError;
+	</script>  
+      <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+      <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+    </body>
+</html>  
