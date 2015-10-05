@@ -148,6 +148,10 @@ var content =
 							"file":["one2one_d.html"]
 						},
 						{
+							"title":"One To One Descendant Weak",
+							"file":["one2one_dw.html"]
+						},
+						{
 							"title":"One To Many",
 							"file":["one2many.html"]
 						},
@@ -164,6 +168,10 @@ var content =
 							"file":["one2many_d.html"]
 						},
 						{
+							"title":"One To Many Descendant Weak",
+							"file":["one2many_dw.html"]
+						},
+						{
 							"title":"Many To One",
 							"file":["many2one.html"]
 						},
@@ -178,6 +186,10 @@ var content =
 						{
 							"title":"Many To One Ancestry",
 							"file":["many2one_a.html"]
+						},
+						{
+							"title":"Many To One Ancestry Weak",
+							"file":["many2one_aw.html"]
 						},
 						{
 							"title":"Many To Many",

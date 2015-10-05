@@ -1,18 +1,22 @@
-__Reference__ is to define a relationship between two entities(Owner entity and Foreign entity). There are 15 kinds of references, 
+__Reference__ is to define a relationship between two entities(Owner entity and Foreign entity). There are all the kinds of references, 
 
 * __One To One__
 * __One To One Single-directional__
 * __One To One Bidirectional__
 * __One To One Ancestry__
 * __One To One Descendant__
+* __One To One Ancestry Weak__
+* __One To One Descendant Weak__
 * __One To Many__
 * __One To Many Single-directional__
 * __One To Many Bidirectional__
 * __One To Many Descendant__
+* __One To Many Descendant Weak__
 * __Many To One__
 * __Many To One Single-directional__
 * __Many To One Bidirectional__
 * __Many To One Ancestry__
+* __Many To One Ancestry Weak__
 * __Many To Many__
 * __Many To Many Single-directional__
 
@@ -43,10 +47,12 @@ Both the object of the Owner Entity and the object of the Foreign Entity can cre
 __Ancestry__
 
 The object of the Owner Entity cannot exist without the object of the Foreign Entity.
+When deleting the object of the Owner Entity, the object of the Foreign Entity will be removed as well.
 
 __Descendant__
 
 The object of the Foreign Entity cannot exist without the object of the Owner Entity.
+When deleting the object of the Owner Entity, the object of the Foreign Entity will be removed as well.
 
 __Ancestry Weak__
 

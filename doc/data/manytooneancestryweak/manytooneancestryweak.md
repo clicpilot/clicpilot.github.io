@@ -1,0 +1,1 @@
+Here is an example of __Many To One Ancestry Weak__. And please see the chapter __Reference__ and __Many To One__ for the detailed explaination of this reference type.

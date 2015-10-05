@@ -17,7 +17,7 @@ Here is a list of One To One features.
 |When reading the Foreign Entity object, the Owner Entity object can be included.	|NO	|YES	|YES	|YES	|YES|YES|YES|
 |When updating the Foreign Entity object, the Owner Entity object can be included.	|NO	|YES	|YES	|NO	|YES|YES|YES|
 |When deleting the Foreign Entity object, the Owner Entity object will be deleted together.	|NO	|NO	|NO	|YES	|NO|YES|NO|
-|Not deleting the Foreign Entity object, if any Owner Entity object uses it.	|YES	|NO	|YES	|NO	|NO|NO|NO|NO|
+|Not deleting the Foreign Entity object, if any Owner Entity object uses it.	|YES	|NO	|YES	|NO	|NO|NO|NO|
 
 Below is 5 examples of 
 * One To One 
