@@ -242,6 +242,10 @@ var content =
 					"file":["cp_beforeupdateview.html"],
 				},
 				{
+					"title":"CP_RequestAction",
+					"file":["cp_requestaction.html"],
+				},
+				{
 					"title":"JavaScript Summary",
 					
 				},
