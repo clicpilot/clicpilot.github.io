@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CP_RequestAction</title>
+  </head>
+  <body>
+    <h1>Many To Many</h1>
+
+      <h4>Create A</h4>
+      <form class="cp-create" cp-entity-name="EM2MA" cp-action-name="CreateEM2MA">
+        <label>Prop1</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop1" value="">
+        </input>
+        <label>Refe1</label>
+        <select multiple="multiple" row="8" id="EM2M-refe1-select" class="cp-many2many" cp-refe-name="Refe1" cp-inv-name="InvRefe1" cp-refe-entity="EM2MB" cp-refe-cand="QueryCandEM2MARefe1">
+          <option class="cp-query-ref-candidate" cp-action-name="QueryCandEM2MARefe1" cp-container-id="EM2M-refe1-select" cp-entity-name="EM2MA" cp-refe-name="Refe1" cp-refe-entity="EM2MB" cp-field="['EM2MBId', 'Prop2']" value="{{=it.EM2MBId}}">{{=it.Prop2}}</option>
+        <select>
+
+      </form>
+      <h4>Create B</h4>
+      <form class="cp-create" cp-entity-name="EM2MB" cp-action-name="CreateEM2MB">
+        <label>Prop2</label>
+        <input type="text" class="cp-string" cp-prop-name="Prop2" value="">
+        </input>
+        <label>InvRefe1</label>
+        <select multiple="multiple" row="8" id="EM2M-invrefe1-select" class="cp-many2many" cp-inv-refe="true" cp-refe-name="InvRefe1" cp-refe-entity="EM2MA" cp-refe-cand="QueryCandEM2MBInvRefe1">
+          <option class="cp-query-ref-candidate" cp-action-name="QueryCandEM2MBInvRefe1" cp-container-id="EM2M-invrefe1-select" cp-entity-name="EM2MB" cp-refe-name="InvRefe1" cp-field="['EM2MAId', 'Prop1']" value="{{=it.EM2MAId}}">{{=it.Prop1||'&nbsp;'}}</option>
+        <select>
+
+      </form>
+      <h4>Read A</h4>
+      <form >
+        <div class="cp-read" cp-entity-name="EM2MA" cp-action-name="ReadEM2MA" cp-field="['EM2MAId','Prop1']">
+        <label>EM2MAId</label>
+        <span id="ReadEM2MA-ID">{{=it.EM2MAId?it.EM2MAId:'&nbsp;'}}</span>
+        <label>Prop1</label>
+        <span>{{=it.Prop1?it.Prop1:'&nbsp;'}}</span>
+        </div>
+        <label>Refe1</label>
+        <ul class="cp-query-ref" cp-action-name="QueryEM2MARefe1Read" cp-entity-name="EM2MA" cp-refe-name="Refe1" cp-refe-entity="EM2MB" cp-field="['EM2MBId', 'Prop2']">
+          <li>
+            <span>{{=it.EM2MBId}}</span>
+            <span>{{=it.Prop2}}</span>
+            <a href="#" class="cp-remove-ref" cp-action-name="RemoveEM2MARefe1" cp-entity-name="EM2MA" cp-refe-name="Refe1" cp-refe-entity="EM2MB" onclick="javascript:CP_DoAction('RemoveEM2MARefe1', {Id:$('#ReadEM2MA-ID').text(), RefeId: [$(this).siblings().first().text()]});return false;">Remove</a>
+          </li>
+        </ul>
+        <ul class="cp-query-ref-candidate" cp-action-name="QueryCandEM2MARefe1Read" cp-entity-name="EM2MA" cp-refe-name="Refe1" cp-refe-entity="EM2MB" cp-field="['EM2MBId', 'Prop2']">
+          <li>
+            <span>{{=it.EM2MBId}}</span>
+            <span>{{=it.Prop2}}</span>
+            <a href="#" class="cp-add-ref" cp-action-name="AddEM2MARefe1" cp-entity-name="EM2MA" cp-refe-name="Refe1" cp-refe-entity="EM2MB" onclick="javascript:CP_DoAction('AddEM2MARefe1', {Id:$('#ReadEM2MA-ID').text(), RefeId: [$(this).siblings().first().text()]});return false;">Add</a>
+          </li>
+        </ul>
+
+      </form>
+      <h4>Read B</h4>
+      <form >
+        <div class="cp-read" cp-entity-name="EM2MB" cp-action-name="ReadEM2MB" cp-field="['EM2MBId','Prop2']">
+        <label>EM2MBId</label>
+        <span id="ReadEM2MB-ID">{{=it.EM2MBId?it.EM2MBId:'&nbsp;'}}</span>
+        <label>Prop2</label>
+        <span>{{=it.Prop2?it.Prop2:'&nbsp;'}}</span>
+        </div>
+        <label>InvRefe1</label>
+        <ul class="cp-query-ref" cp-action-name="QueryEM2MBInvRefe1Read" cp-entity-name="EM2MB" cp-refe-name="InvRefe1" cp-field="['EM2MAId', 'Prop1']" >
+          <li>
+            <span>{{=it.EM2MAId}}</span>
+            <span>{{=it.Prop1}}</span>
+            <a href="#" class="cp-remove-ref" cp-action-name="RemoveEM2MBInvRefe1" cp-entity-name="EM2MB" cp-refe-name="InvRefe1" cp-refe-entity="EM2MA" onclick="javascript:CP_DoAction('RemoveEM2MBInvRefe1', {Id:$('#ReadEM2MB-ID').text(), RefeId: [$(this).siblings().first().text()]});return false;" >Remove</a>
+          </li>
+        </ul>
+        <ul class="cp-query-ref-candidate" cp-action-name="QueryCandEM2MBInvRefe1Read" cp-entity-name="EM2MB" cp-refe-name="InvRefe1" cp-field="['EM2MAId', 'Prop1']" >
+          <li>
+            <span>{{=it.EM2MAId}}</span>
+            <span>{{=it.Prop1}}</span>
+            <a href="#" class="cp-add-ref" cp-action-name="AddEM2MBInvRefe1" cp-entity-name="EM2MB" cp-refe-name="InvRefe1" cp-refe-entity="EM2MA" onclick="javascript:CP_DoAction('AddEM2MBInvRefe1', {Id:$('#ReadEM2MB-ID').text(), RefeId: [$(this).siblings().first().text()]});return false;">Add</a>
+          </li>
+        </ul>
+      </form>
+          <pre id="msg"></pre>
+    <script>
+    if(window.CP_Init) {
+    CP_Init(function(){
+      $("#msg").append("Page loaded!<br/>");
+      for(var i=0;i<10;i++) {
+        CP_RequestAction("CreateEM2MA", {obj:{"Prop1":"a"+(i+1)}}, function(res) {
+          $("#msg").append("CreateEM2MA: Execute successfully. EM2MAId:"+res.obj.EM2MAId+"<br/>");
+        }, function(e){
+          $("#msg").append("CreateEM2MA: Error occurred. "+e.message+"\n");
+        });
+      }
+
+      for(var i=0;i<10;i++) {
+        CP_RequestAction("CreateEM2MB", {obj:{"Prop2":"b"+(i+1)}}, function(res) {
+          $("#msg").append("CreateEM2MB: Execute successfully. EM2MBId:"+res.obj.EM2MBId+"<br/>");
+        }, function(e){
+          $("#msg").append("CreateEM2MB: Error occurred. "+e.message+"\n");
+        });
+      }
+
+      CP_RequestAction("CreateEM2MA", {obj:{"Prop1":"ax", "Refe1":[{EM2MBId:1},{EM2MBId:2},{EM2MBId:3},{EM2MBId:4},{EM2MBId:5},]}}, function(res) {
+          $("#msg").append("CreateEM2MA: Execute successfully. EM2MAId:"+res.obj.EM2MAId+"<br/>");
+        }, function(e){
+          $("#msg").append("CreateEM2MA: Error occurred. "+e.message+"\n");
+        });
+
+      CP_RequestAction("CreateEM2MB", {obj:{"Prop2":"bx", "InvRefe1":[{EM2MAId:1},{EM2MAId:2},{EM2MAId:3},{EM2MAId:4},{EM2MAId:5},]}}, function(res) {
+          $("#msg").append("CreateEM2MB: Execute successfully. EM2MBId:"+res.obj.EM2MBId+"<br/>");
+        }, function(e){
+          $("#msg").append("CreateEM2MB: Error occurred. "+e.message+"\n");
+        });
+
+      CP_RequestAction("QueryEM2MARefe1Read", {id:11}, function(res) {
+        
+        $("#msg").append("QueryEM2MARefe1Read: Execute successfully. Count:"+res.obj.count+"<br/>");
+        for(var i=0;i<res.obj.data.length;i++) {
+          $("#msg").append("Id: "+res.obj.data[i].EM2MBId+"/");
+          $("#msg").append("Prop2: "+res.obj.data[i].Prop2);
+          $("#msg").append("<br/>");
+        }
+      }, function(e){
+        $("#msg").append("QueryEM2MARefe1Read: Error occurred. "+e.message+"\n");
+      });
+
+      CP_RequestAction("QueryEM2MBInvRefe1Read", {id:11}, function(res) {
+        $("#msg").append("QueryEM2MARefe1Read: Execute successfully. Count:"+res.obj.count+"<br/>");
+        for(var i=0;i<res.obj.data.length;i++) {
+          $("#msg").append("Id: "+res.obj.data[i].EM2MAId+"/");
+          $("#msg").append("Prop1: "+res.obj.data[i].Prop1);
+          $("#msg").append("<br/>");
+        }
+      }, function(e){
+        $("#msg").append("QueryEM2MBInvRefe1Read: Error occurred. "+e.message+"\n");
+      });
+
+      CP_RequestAction("QueryCandEM2MARefe1", {id:11}, function(res) {
+        
+        $("#msg").append("QueryCandEM2MARefe1: Execute successfully. Count:"+res.obj.count+"<br/>");
+        for(var i=0;i<res.obj.data.length;i++) {
+          $("#msg").append("Id: "+res.obj.data[i].EM2MBId+"/");
+          $("#msg").append("Prop2: "+res.obj.data[i].Prop2);
+          $("#msg").append("<br/>");
+        }
+      }, function(e){
+        $("#msg").append("QueryCandEM2MARefe1: Error occurred. "+e.message+"\n");
+      });
+
+      CP_RequestAction("QueryCandEM2MBInvRefe1", {id:11}, function(res) {
+        $("#msg").append("QueryCandEM2MBInvRefe1: Execute successfully. Count:"+res.obj.count+"<br/>");
+        for(var i=0;i<res.obj.data.length;i++) {
+          $("#msg").append("Id: "+res.obj.data[i].EM2MAId+"/");
+          $("#msg").append("Prop1: "+res.obj.data[i].Prop1);
+          $("#msg").append("<br/>");
+        }
+      }, function(e){
+        $("#msg").append("QueryCandEM2MBInvRefe1: Error occurred. "+e.message+"\n");
+      });
+
+
+      CP_RequestAction("RemoveEM2MARefe1", {obj:{ EM2MAId:11, "Refe1":[{EM2MBId:1},{EM2MBId:2},{EM2MBId:3},{EM2MBId:4},{EM2MBId:5}]}}, function(res) {
+        $("#msg").append("RemoveEM2MARefe1: Execute successfully. <br/>");
+      }, function(e){
+        $("#msg").append("RemoveEM2MARefe1: Error occurred. "+e.message+"\n");
+      });
+
+      CP_RequestAction("AddEM2MARefe1", {obj:{ EM2MAId:11, "Refe1":[{EM2MBId:6},{EM2MBId:7},{EM2MBId:8},{EM2MBId:9},{EM2MBId:10}]}}, function(res) {
+        $("#msg").append("AddEM2MARefe1: Execute successfully. <br/>");
+      }, function(e){
+        $("#msg").append("AddEM2MARefe1: Error occurred. "+e.message+"\n");
+      });
+
+      CP_RequestAction("RemoveEM2MBInvRefe1", {obj:{ EM2MBId:11, "InvRefe1":[{EM2MAId:1},{EM2MAId:2},{EM2MAId:3},{EM2MAId:4},{EM2MAId:5}]}}, function(res) {
+        $("#msg").append("RemoveEM2MBInvRefe1: Execute successfully. <br/>");
+      }, function(e){
+        $("#msg").append("RemoveEM2MBInvRefe1: Error occurred. "+e.message+"\n");
+      });
+
+      CP_RequestAction("AddEM2MBInvRefe1", {obj:{ EM2MBId:11, "InvRefe1":[{EM2MAId:6},{EM2MAId:7},{EM2MAId:8},{EM2MAId:9},{EM2MAId:10}]}}, function(res) {
+        $("#msg").append("AddEM2MBInvRefe1: Execute successfully. <br/>");
+      }, function(e){
+        $("#msg").append("AddEM2MBInvRefe1: Error occurred. "+e.message+"\n");
+      });
+      
+      CP_RequestAction("QueryEM2MARefe1Read", {id:11}, function(res) {
+        
+        $("#msg").append("QueryEM2MARefe1Read: Execute successfully. Count:"+res.obj.count+"<br/>");
+        for(var i=0;i<res.obj.data.length;i++) {
+          $("#msg").append("Id: "+res.obj.data[i].EM2MBId+"/");
+          $("#msg").append("Prop2: "+res.obj.data[i].Prop2);
+          $("#msg").append("<br/>");
+        }
+      }, function(e){
+        $("#msg").append("QueryEM2MARefe1Read: Error occurred. "+e.message+"\n");
+      });
+
+      CP_RequestAction("QueryEM2MBInvRefe1Read", {id:11}, function(res) {
+        $("#msg").append("QueryEM2MARefe1Read: Execute successfully. Count:"+res.obj.count+"<br/>");
+        for(var i=0;i<res.obj.data.length;i++) {
+          $("#msg").append("Id: "+res.obj.data[i].EM2MAId+"/");
+          $("#msg").append("Prop1: "+res.obj.data[i].Prop1);
+          $("#msg").append("<br/>");
+        }
+      }, function(e){
+        $("#msg").append("QueryEM2MBInvRefe1Read: Error occurred. "+e.message+"\n");
+      });
+
+    });
+    }
+    window.ShowError = function(msg) {
+      $("#msg").text(msg);
+    }
+    window.ShowActionMsg = window.ShowError;
+    window.ShowMessage = window.ShowError;
+	</script>  
+     	<script src="/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    	<script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+    </body>
+</html>  

@@ -243,7 +243,9 @@ var content =
 				},
 				{
 					"title":"CP_RequestAction",
-					"file":["cp_requestaction.html"],
+					"file":["cp_requestaction.html", 
+					"cp_requestaction_querycondition.md", "cp_requestaction_querycondition.html",
+					"cp_requestaction_reference.md", "cp_requestaction_reference.html"],
 				},
 				{
 					"title":"JavaScript Summary",

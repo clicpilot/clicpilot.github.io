@@ -1,4 +1,4 @@
-__CP\_DoAction__ is function to invoke an action.
+__CP\_DoAction__ is function to invoke an action with javascript and it still need the html elements to get inputs.
 
 	CP_DoAction("actionname", parameter);
 

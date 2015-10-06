@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>CP_RequestAction</title>
+</head>
+<body>
+	<h4> CP_RequestAction </h4>
+	<form class="cp-create" cp-entity-name="Item" cp-action-name="CreateItem">
+		<label>Item</label><p>
+		<input id="ItemName" type="text" class="cp-string" cp-prop-name="Name" value=""></input>
+		<button type="button" class="cp-submit">Create</button>
+	</form>
+	
+
+	<form class="cp-query" cp-entity-name="Item" cp-action-name="QueryItem" cp-field="['ItemId Id', 'Name']" cp-condition="ItemId>#p1 && Name Contains #p2">
+		
+	</form>
+
+	<pre id="msg"></pre>
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script>
+    CP_Init(function(){
+    	$("#msg").append("Page loaded!<br/>");
+    	for(var i=0;i<30;i++) {
+	    	CP_RequestAction("CreateItem", {obj:{"Name":"Item"+i}}, function(res) {
+	    		$("#msg").append("CreateItem: Execute successfully. ItemId:"+res.obj.ItemId+"<br/>");
+	    	}, function(e){
+	    		$("#msg").append("CreateItem: Error occurred. "+e.message+"\n");
+	    	});
+    	}
+    	debugger;
+    	CP_RequestAction("QueryItem", {conditions:{ItemId_1:10, Name_2:"0"}}, function(res) {
+    		$("#msg").append("QueryItem: Execute successfully. Count:"+res.obj.count+"<br/>");
+    		for(var i=0;i<res.obj.data.length;i++) {
+    			$("#msg").append("ItemId: "+res.obj.data[i].Id+"/");
+    			$("#msg").append("ItemName: "+res.obj.data[i].Name);
+    			$("#msg").append("<br/>");
+    		}
+    	}, function(e){
+    		$("#msg").append("QueryItem: Error occurred. "+e.message+"\n");
+    	});
+    });
+   	window.ShowResponse = function(msg) {
+	    $("#msg").text(msg);
+	}
+	window.ShowActionMsg = window.ShowResponse;
+	window.ShowMessage = window.ShowResponse;
+    </script>
+</body>
+</html>
