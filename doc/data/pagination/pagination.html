@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Pagination</title>
+  </head>
+  <body>
+
+    <h1>Pagination</h1>
+    <pre id="msg"></pre>
+      <h4>Create</h4>
+      <form class="cp-create" cp-entity-name="EntPage" cp-action-name="CreateEntPage" cp-complete-observer="['CreateEntPage', 'QueryEntPage']">
+        <label>Prop1</label><p>
+        <input type="text" class="cp-string" cp-prop-name="Prop1" value="">
+        </input>
+        <button type="button" class="cp-submit">Create</button>
+      </form>
+      
+      <h4>Query</h4>
+      <ul class="cp-query" cp-entity-name="EntPage" cp-action-name="QueryEntPage" cp-field="['EntPageId','Prop1']" cp-pagesize="4" cp-page-container="EntPage_Page">
+        <li>
+          <span>{{=it.EntPageId}}</span>
+          <span>{{=it.Prop1}}</span>
+          <a href="#" class="cp-delete" cp-entity-name="EntPage" cp-action-name="DeleteEntPage" cp-complete-observer="[ 'QueryEntPage']" onclick="javascript:CP_DoAction('DeleteEntPage', {Id: $(this).siblings().first().text()});return false;">Delete</a>
+        </li>
+      </ul>
+
+      <div id="EntPage_Page">
+      {{~it.Pages :val :idx}}
+      {{ if(it.PageNum==val.pagenum) { }}
+      {{=val.pagenum}}&nbsp;
+      {{ } else { }}
+      <a href="#" onclick="CP_DoAction('QueryEntPage', {From: {{=val.from}} });return false;">{{=val.pagenum}}</a>&nbsp;
+      {{ } }}
+      {{~}}
+      </div>
+          <script>
+    window.ShowError = function(msg) {
+      $("#msg").text(msg);
+    }
+
+    window.ShowActionMsg = window.ShowError;
+    window.ShowMessage = window.ShowError;
+
+    if(CP_Init) {
+	    CP_Init(function(){
+	    	for(var i=0;i<31;i++) {
+
+	          $("INPUT.cp-string").val("a"+i);
+	          $(".cp-submit").click();
+	        }
+	    });
+	}
+    
+
+    </script>
+      <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+          <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    </body>
+
+</html>  

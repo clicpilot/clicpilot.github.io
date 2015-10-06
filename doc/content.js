@@ -41,6 +41,10 @@ var content =
 							"title":"Order",
 						},
 						{
+							"title":"Pagination",
+							"file":["pagination.html"]
+						},
+						{
 							"title":"Aggregation",
 							"file":["aggregation.html"]
 						},
@@ -245,6 +249,7 @@ var content =
 					"title":"CP_RequestAction",
 					"file":["cp_requestaction.html", 
 					"cp_requestaction_querycondition.md", "cp_requestaction_querycondition.html",
+					"cp_requestaction_querypagination.md", "cp_requestaction_querypagination.html",
 					"cp_requestaction_reference.md", "cp_requestaction_reference.html"],
 				},
 				{

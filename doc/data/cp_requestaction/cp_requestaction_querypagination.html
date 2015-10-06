@@ -12,13 +12,15 @@
 	</form>
 	
 
-	<form class="cp-query" cp-entity-name="Item" cp-action-name="QueryItem" cp-field="['ItemId Id', 'Name']" cp-condition="ItemId>#p1 && Name Contains #p2">
+	<form class="cp-query" cp-entity-name="Item" cp-action-name="QueryItem" cp-field="['ItemId Id', 'Name']" cp-pagesize="10" cp-page-container="p_container">
 		
 	</form>
+	<div id="p_container">
+	</div>
 
 	<pre id="msg"></pre>
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script src="/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
     <script>
     CP_Init(function(){
     	$("#msg").append("Page loaded!<br/>");
@@ -30,7 +32,7 @@
 	    	});
     	}
     	
-    	CP_RequestAction("QueryItem", {conditions:{ItemId_1:10, Name_2:"0"}}, function(res) {
+    	CP_RequestAction("QueryItem", {from:5}, function(res) {
     		$("#msg").append("QueryItem: Execute successfully. Count:"+res.obj.count+"<br/>");
     		for(var i=0;i<res.obj.data.length;i++) {
     			$("#msg").append("ItemId: "+res.obj.data[i].Id+"/");
@@ -40,6 +42,8 @@
     	}, function(e){
     		$("#msg").append("QueryItem: Error occurred. "+e.message+"\n");
     	});
+
+
     });
    	window.ShowResponse = function(msg) {
 	    $("#msg").text(msg);
