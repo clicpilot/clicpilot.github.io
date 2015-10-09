@@ -1,7 +1,7 @@
 var content = 
 	[
 		{
-			"title":"Version",
+			"title":"clicpilot document",
 		},
 		{
 			"title":"Overview",
@@ -276,6 +276,10 @@ var content =
 		{
 			"title":"HTTP Session",
 			"file":["httpsession_main.html", "httpsession.callback.js", "html_httpsession.html"],
+		},
+		{
+			"title":"Database Extension",
+			"file":["databaseextension.html"],
 		},
 		{
 			"title":"Console",
