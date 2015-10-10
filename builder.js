@@ -127,6 +127,66 @@ if(window.CP_Init) {
   });
 }
 
+window.renameApp = function() {
+	var selectedAppId = $("#selectedAppId").val();
+	if(eval(selectedAppId)) {
+		var oldname=$('#selectedAppName').text();
+		var name = window.prompt('New Application Name', oldname);
+		if(name && name.trim().length>0){
+			CP_RequestAction('RenameApp', 
+				{obj:{AppId:selectedAppId, Name:name}}, 
+				function(){
+					updateView();
+					SelectApp(selectedAppId);
+				}, 
+				function(e){alert(e.message)}
+			);
+		}
+	} else {
+		alert("Application not exist!");
+	}
+}
+
+window.renameFolder = function() {
+	var selectedFolderId = $("#selectedFolderId").val();
+	if(eval(selectedFolderId)) {
+		var oldname=$('#selectedFolderName').text();
+		var name = window.prompt('New Folder Name', oldname);
+		if(name && name.trim().length>0){
+			CP_RequestAction('RenameFolder', 
+				{obj:{FolderId:selectedFolderId, Name:name}}, 
+				function(){
+					updateView();
+					SelectFolder(selectedFolderId);
+				}, 
+				function(e){alert(e.message)}
+			);
+		}
+	} else {
+		alert("Folder not exist or cannot rename the root folder!");
+	}
+}
+
+window.renameFile = function() {
+	var selectedFileId = $("#selectedFileId").val();
+	if(eval(selectedFileId)) {
+		var oldname=$('#selectedFileName').text();
+		var name = window.prompt('New File Name', oldname);
+		if(name && name.trim().length>0){
+			CP_RequestAction('RenameFile', 
+				{obj:{FileId:selectedFileId, Name:name}}, 
+				function(){
+					updateView();
+					SelectFile(selectedFileId);
+				}, 
+				function(e){alert(e.message)}
+			);
+		}
+	} else {
+		alert("File not exist!");
+	}
+}
+
 function initUI() {
 	var winHeight = "innerHeight" in window 
            ? window.innerHeight
@@ -285,20 +345,7 @@ function drawTree() {
   });
 	
 }
-function SelectFolder(id) {
-  	window.SelectedFolderId = id;
-  	if(id) {
-		window.SelectedFolderId = id;
-		$("#selectedFolderId").val(id);
-		$("#selectedFolderName").text(apps["app_"+SelectedAppId]["folder"]["folderobj_"+id].name);
 
-	} else {
-		window.SelectedFolderId = 0;
-		$("#selectedFolderId").val(0);
-		$("#selectedFolderName").text(SelectedAppId?(apps["app_"+SelectedAppId].name+" Root"):"N/A");
-	}
-	SelectFile();
-}
 
 function SelectApp(id) {
 	if(id) {
@@ -313,6 +360,27 @@ function SelectApp(id) {
 	}
 
 	SelectFolder();
+
+	$("#configcontent").show();
+  	$("#editorcontent").hide();
+}
+
+function SelectFolder(id) {
+  	window.SelectedFolderId = id;
+  	if(id) {
+		window.SelectedFolderId = id;
+		$("#selectedFolderId").val(id);
+		$("#selectedFolderName").text(apps["app_"+SelectedAppId]["folder"]["folderobj_"+id].name);
+
+	} else {
+		window.SelectedFolderId = 0;
+		$("#selectedFolderId").val(0);
+		$("#selectedFolderName").text(SelectedAppId?(apps["app_"+SelectedAppId].name+" Root"):"N/A");
+	}
+	SelectFile();
+
+	$("#configcontent").show();
+  	$("#editorcontent").hide();
 }
 
 function SelectFile(id) {
@@ -329,7 +397,7 @@ function SelectFile(id) {
   		return;
 	}
 
-	$("#editorbar").html("<span class='text'>"+apps["app_"+SelectedAppId]["file"]["file_"+id]+"</span>");
+	$("#filenamebar").html(apps["app_"+SelectedAppId]["file"]["file_"+id]);
 
 
 	if(apps["app_"+SelectedAppId]["file"]["fileobj_"+id].editor) {
@@ -399,6 +467,9 @@ function SelectFile(id) {
 		  	});
 		}
 	}
+
+	$("#configcontent").hide();
+  	$("#editorcontent").show();
 
 }
 

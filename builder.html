@@ -222,12 +222,13 @@
                     	<button type="button" style="float:left;" onclick="javascript:importImageFile();return false;">Import Local Image File</button>  
 
 
-
+                    	<!--
                     	<label style="float:left; clear:left; width:200px" class="text">Current File</label>
                     	<span style="float:left; width:200px" class="text" id="selectedFileName">N/A</span>
+                    	
                     	<button type="button" style="float:left;clear:left" onclick="javascript:renameFile();return false;">Rename</button> 
 	                    <button type="button" style="float:left;" class="cp-delete" cp-entity-name="File" cp-action-name="DeleteFile" onclick="javascript:if(!$('#selectedFileId').val()){return;}if(window.confirm('Delete File?'))CP_DoAction('DeleteFile', {Id:$('#selectedFileId').val()});return false;">Delete</button>  
-
+						-->
                     	<input type="hidden" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="file-name">
                     	<input type="hidden" class="cp-text" cp-prop-name="Code" cp-nullable="true" value="" id="file-code">
               			<input type="hidden" class="cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-inv-name="File" id="file-folder-id">
@@ -247,7 +248,11 @@
 				</div>
 
 				<div id="editorcontent" class="contentpane" style="float:left;clear:left;border: 1px solid black; border-color: #ccc;">
-					<div id="editorbar" style="width:100%;height:30px"></div>
+					<div id="editorbar" style="width:100%;height:30px">
+						<span class='text' id="filenamebar" style="float:left;"></span>
+                    	<button type="button" style="float:left;" onclick="javascript:renameFile();return false;">Rename</button> 
+	                    <button type="button" style="float:left;" class="cp-delete" cp-entity-name="File" cp-action-name="DeleteFile" onclick="javascript:if(!$('#selectedFileId').val()){return;}if(window.confirm('Delete File?'))CP_DoAction('DeleteFile', {Id:$('#selectedFileId').val()});return false;">Delete</button>  
+					</div>
 					<div id="editorpanel" style="width:100%"></div>
 
 				</div>
@@ -257,12 +262,15 @@
 		  	<div id="sidebar">
 			
 		  	<form style="float:left;clear:left;margin:5px;min-width:100px">
-			  	<label style="float:left;min-width:100px;width:200px" class="text">clicpilot builder lite</label>
+			  	<label style="float:left;min-width:100px;width:200px" class="text">clicpilot builder</label>
 			  	<select id="applist">
 					
 	            <select>
+	            	<!--
 			  	<button style="float:left;margin:5px;" id="manageApp" type="button">Manage</button>
+			  	 -->
 			  	<button style="float:left;clear:left;margin:5px;" id="previewApp" onclick="previewInWin()" type="button">Preview</button>
+			 
 			  	<input type="hidden" id="selectedAppId">
 			  	<input type="hidden" id="selectedFolderId">
 			  	<input type="hidden" id="selectedFileId">
@@ -274,65 +282,7 @@
 		  	</div>
 		</div>
 		<script>
-		window.renameApp = function() {
-			var selectedAppId = $("#selectedAppId").val();
-			if(eval(selectedAppId)) {
-				var oldname=$('#selectedAppName').text();
-				var name = window.prompt('New Application Name', oldname);
-				if(name && name.trim().length>0){
-					CP_RequestAction('RenameApp', 
-						{obj:{AppId:selectedAppId, Name:name}}, 
-						function(){
-							updateView();
-							SelectApp(selectedAppId);
-						}, 
-						function(e){alert(e.message)}
-					);
-				}
-			} else {
-				alert("Application not exist!");
-			}
-		}
 
-		window.renameFolder = function() {
-			var selectedFolderId = $("#selectedFolderId").val();
-			if(eval(selectedFolderId)) {
-				var oldname=$('#selectedFolderName').text();
-				var name = window.prompt('New Folder Name', oldname);
-				if(name && name.trim().length>0){
-					CP_RequestAction('RenameFolder', 
-						{obj:{FolderId:selectedFolderId, Name:name}}, 
-						function(){
-							updateView();
-							SelectFolder(selectedFolderId);
-						}, 
-						function(e){alert(e.message)}
-					);
-				}
-			} else {
-				alert("Folder not exist or cannot rename the root folder!");
-			}
-		}
-
-		window.renameFile = function() {
-			var selectedFileId = $("#selectedFileId").val();
-			if(eval(selectedFileId)) {
-				var oldname=$('#selectedFileName').text();
-				var name = window.prompt('New File Name', oldname);
-				if(name && name.trim().length>0){
-					CP_RequestAction('RenameFile', 
-						{obj:{FileId:selectedFileId, Name:name}}, 
-						function(){
-							updateView();
-							SelectFile(selectedFileId);
-						}, 
-						function(e){alert(e.message)}
-					);
-				}
-			} else {
-				alert("File not exist!");
-			}
-		}
 
 		</script>
 
