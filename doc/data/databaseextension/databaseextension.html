@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Database Extension</title>
+</head>
+<body>
+	<h4>Create Message</h4>
+	<form class="cp-create" cp-entity-name="Msg" cp-action-name="CreateMsg" cp-complete-observer="['QueryMsg']">
+		<label>MsgText</label><p>
+		<input type="text" class="cp-string" cp-prop-name="MsgText" value=""></input>
+		<button type="button" class="cp-submit">Create</button>
+	</form>
+	<pre id="msg"></pre>
+	<h4>Messages</h4>
+	<ul class="cp-query" cp-entity-name="Msg" cp-action-name="QueryMsg" cp-field="['MsgId','MsgText']">
+		<li>
+			<span>{{=it.MsgId}}</span><span>{{=it.MsgText}}</span>
+		</li>
+	</ul>
+    <script>
+	    window.ShowResponse = function(msg) {
+	      $("#msg").text(msg);
+	    }
+	    window.ShowActionMsg = window.ShowResponse;
+	    window.ShowMessage = window.ShowResponse;
+    </script>
+    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+    <script>
+      	CP.AddSQLMap("HSQLDB", [
+		  {
+		    "Name":"MySQL2",
+		    "Type":"Database",
+
+		    "Value" : {
+		    	"Language":["JSP", "NodeJS"],
+		      "NodeJS_Module_Name":"",
+		      "JDBC_Driver":"org.hsqldb.jdbc.JDBCDriver",
+		      "JDBC_URL":"jdbc;hsqldb:hsql://localhost/mydb;default_schema=true ",
+		      "JDBC_URL_Params":"",
+		      "Support_ForeignKey":"true",
+		      "Type_Boolean":" SMALLINT",
+		      "Type_Date":" DATE",
+		      "Type_DateTime":" DateTime",
+		      "Type_Double":" DOUBLE",
+		      "Type_Float":" FLOAT",
+		      "Type_Decimal":" DECIMAL",
+		      "Type_Integer":" INT",
+		      "Type_Id":" BIGINT",
+		      "Type_FKId":" BIGINT",
+		      "Type_Long":" BIGINT",
+		      "Type_Short":" SMALLINT",
+		      "Type_String":" VARCHAR",
+		      "Type_Text":" LONG VARCHAR",
+		      "Type_Time":" TIME",
+		      "Type_TimeStamp":" TIMESTAMP",
+		      "CreateTable":"CREATE TABLE ",
+		      "CreateIndex":"CREATE INDEX ",
+		      "AlterTable":"ALTER TABLE ",
+		      "Add":" ADD ",
+		      "Constraint":" CONSTRAINT ",
+		      "PrimaryKey":" PRIMARY KEY ",
+		      "ForeignKey":" FOREIGN KEY ",
+		      "References":" REFERENCES ",
+		      "Unique":" UNIQUE",
+		      "ColumnsBlockStart":"(",
+		      "ColumnsBlockEnd":") ENGINE=InnoDB ",
+		      "OnDelete":" ON DELETE",
+		      "OnUpdate":" ON UPDATE",
+		      "NoAction":" NO ACTION ",
+		      "Restrict":" RESTRICT ",
+		      "SetNull":" SET NULL ",
+		      "Cascade":" CASCADE ",
+		      "Default":" DEFAULT ",
+		      "NotNull":" NOT NULL",
+		      "Increment":" AUTO_INCREMENT ",
+		      "PrimaryKeyIncrement":" AUTO_INCREMENT ",
+		      "CurrentDate":" CURRENT_DATE ",
+		      "CurrentTime":" CURRENT_TIME ",
+		      "CurrentTimeStamp":" CURRENT_TIMESTAMP ",
+		      "DateTime":" DATETIME ",
+		      "Insert":"INSERT INTO ",
+		      "Update":"UPDATE ",
+		      "Delete":"DELETE FROM ",
+		      "Values":"VALUES ",
+		      "Set":" SET ",
+		      "Select":"SELECT ",
+		      "Count":"COUNT",
+		      "From":" FROM ",
+		      "As":" AS ",
+		      "LeftJoin":" LEFT OUTER JOIN ",
+		      "InnerJoin":" INNER JOIN ",
+		      "Where":" WHERE ",
+		      "OrderBy":" ORDER BY ",
+		      "Asc":" ASC ",
+		      "Desc":" DESC ",
+		      "On":" ON ",
+		      "And":" AND ",
+		      "Or":" OR ",
+		      "Not":" NOT IN ",
+		      "In":" IN ",
+		      "Distinct":" DISTINCT ",
+		      "ColumnSeperator":",",
+		      "IsNull":" IS NULL ",
+		      "RowNumColumn":"",
+		      "PagingSQLHeader":"",
+		      "PagingSQLTail":" LIMIT %SIZE% OFFSET %FROM%",
+		      "DropTable":"drop table ",
+		      "DropIndex":"drop index ",
+		      "IfExists":" if exists ",
+		      "FK_Check":true,
+		      "Enable_FK_Check":"SET foreign_key_checks = 1",
+		      "Disable_FK_Check":"SET foreign_key_checks = 0",
+		      "DROP_CASCADE":"",
+		      "Groupby":" GROUP BY ",
+		      "NotAllowTextDefaultValue":true,
+		      "TrueValue":"1",
+		      "FalseValue":"0"
+		    }
+		  },
+		]
+		);
+      	</script>
+</body>
+</html>
