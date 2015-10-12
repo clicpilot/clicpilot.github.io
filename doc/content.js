@@ -282,6 +282,10 @@ var content =
 			"file":["databaseextension.html"],
 		},
 		{
+			"title":"Template",
+			"file":["template.html", "item.html"],
+		},
+		{
 			"title":"Console",
 			"children":[
 				{

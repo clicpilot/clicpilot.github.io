@@ -1,0 +1,1 @@
+Template is a way to resue HTML code in HTML files. Here is an example.
