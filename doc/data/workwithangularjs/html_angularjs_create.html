@@ -1,0 +1,6 @@
+<p>{{ message }}</p>
+<form class="cp-create" cp-entity-name="Msg" cp-action-name="CreateMsg" cp-complete-observer="['QueryMsg']">
+<label>MsgText</label><p>
+<input type="text" class="cp-string" cp-prop-name="MsgText" value=""></input>
+<button type="button" class="cp-submit" onclick="CP_DoAction('CreateMsg');">Create</button>
+</form> 

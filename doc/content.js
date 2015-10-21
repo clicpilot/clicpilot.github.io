@@ -286,6 +286,10 @@ var content =
 			"file":["template.html", "item.html"],
 		},
 		{
+			"title":"Work With AngularJS",
+			"file":["angularjs_main.html", "html_angularjs_create.html", "html_angularjs_query.html", "angularjs_script.js"],
+		},
+		{
 			"title":"Console",
 			"children":[
 				{

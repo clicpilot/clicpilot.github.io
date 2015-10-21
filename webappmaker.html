@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+        <style>
+        html, body {
+        	padding:0;
+        	margin:0;
+        	width: 100%;
+		  	height: 100%;
+		  	font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+        }
+        #wrapper {
+
+		  margin-left: 220px;
+		  height: 100%;
+		}
+		#content {
+		  float: right;
+		  width: 100%;
+		  height: 100%;
+		  background-color: #FFF;
+		  padding:0;
+          overflow:hidden;
+		}
+		#sidebar {
+		  float: left;
+		  width: 220px;
+		  height: 100%;
+		  margin-left: -220px;
+		  background-color: #FFF;
+		}
+		#cleared {
+		  clear: both;
+		}
+
+		.text {
+		    display:block;
+		    float:left;
+		    margin:0 7px 0 0;
+		    font-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+		    font-size:12px;
+		    line-height:130%;
+		    text-decoration:none;
+		    font-weight:bold;
+		    color:#565656;
+		    cursor:pointer;
+		    padding:5px 10px 6px 7px; /* Links */
+		    width:60px;
+
+		}
+		select {
+			 width: 200px;
+			 font-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+		     font-size:12px;
+		}
+		.menupane, .contentpane {
+			width: 100%;
+		  	height: 100%;
+		  	padding:0;
+        	margin:0;
+        	overflow:hidden;
+		}
+		textarea {
+			border: 1px solid black; border-color: #ccc;
+		}
+
+		button {
+			margin-top:5px;
+			margin-bottom:5px;
+			margin-left:5px;
+		}
+		/*
+		 Tree structure using CSS:
+		 http://stackoverflow.com/questions/14922247/how-to-get-a-tree-in-html-using-pure-css
+		*/
+
+		.tree, .tree ul{
+		  font: normal normal 14px/20px Helvetica, Arial, sans-serif;  
+		  list-style-type: none;
+		  margin-left: 0 0 0 10px;
+		  padding: 0;
+		  position: relative;   
+		  overflow:hidden; 
+		  ont-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+		  font-size:12px;   
+		}
+
+		.tree li{
+		  margin: 0;
+		  padding: 0 12px;  
+		  position: relative; 
+		  ont-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+		  font-size:12px;  
+		}
+		  
+		.tree li::before, .tree li::after{
+		  content: '';
+		  position: absolute;
+		  left: 0;
+		}
+
+		/* horizontal line on inner list items */
+		.tree li::before{
+		  border-top: 1px solid #999;
+		  top: 10px;
+		  width: 10px;
+		  height: 0;    
+		}
+
+		/* vertical line on list items */   
+		.tree li:after{
+		  border-left: 1px solid #999;
+		  height: 100%;
+		  width: 0px;
+		  top: -10px; 
+		}
+
+		/* lower line on list items from the first level because they don't have parents */
+		.tree > li::after{
+		  top: 10px;
+		}
+
+		/* hide line from the last of the first level list items */
+		.tree > li:last-child::after{
+		  display: none;
+		}
+
+		.label-150 {
+			float:left;
+			clear:left;
+			width:150px
+		}
+
+		.input-150 {
+			margin:5px;
+			float:left;
+			width:150px
+		}
+
+		#loading-mask {
+		    background-color: white;
+		    height: 100%;
+		    left: 0;
+		    position: fixed;
+		    top: 0;
+		    width: 100%;
+		    z-index: 9999;
+		}
+        </style>
+        <script>
+        
+        
+        </script>
+  	</head>
+  	<body>
+  		<div id="loading-mask"></div>
+		<div class="cp-query" cp-entity-name="App" cp-action-name="QueryApp" cp-field="['AppId', 'Name']" style="display:none">
+			<input class="AppItem" type="hidden" value="{{=it.AppId}}, {{=it.Name}}">
+		</div>
+		<!--
+		<div class="cp-query" cp-entity-name="Page" cp-action-name="QueryPage" cp-field="['PageId', 'Name', 'App.AppId AppId', 'App.Name AppName']" style="display:none">
+			<input class="PageItem" type="hidden" value="{{=it.PageId}}, {{=it.Name}}, {{=it.AppId}}, {{=it.AppName}}">
+		</div>
+
+		<div class="cp-query" cp-entity-name="Layout" cp-action-name="QueryLayout" cp-field="['LayoutId', 'Name', 'App.AppId AppId', 'App.Name AppName']" style="display:none">
+			<input class="LayoutItem" type="hidden" value="{{=it.LayoutId}}, {{=it.Name}}, {{=it.AppId}}, {{=it.AppName}}">
+		</div>
+
+		<div class="cp-query" cp-entity-name="Form" cp-action-name="QueryForm" cp-field="['FormId', 'Name', 'App.AppId AppId', 'App.Name AppName']" style="display:none">
+			<input class="FormItem" type="hidden" value="{{=it.FormId}}, {{=it.Name}}, {{=it.AppId}}, {{=it.AppName}}">
+		</div>
+
+		<div class="cp-query" cp-entity-name="List" cp-action-name="QueryList" cp-field="['ListId', 'Name', 'App.AppId AppId', 'App.Name AppName']" style="display:none">
+			<input class="ListItem" type="hidden" value="{{=it.ListId}}, {{=it.Name}}, {{=it.AppId}}, {{=it.AppName}}">
+		</div>
+
+		<div class="cp-query" cp-entity-name="Menu" cp-action-name="QueryMenu" cp-field="['MenuId', 'Name', 'App.AppId AppId', 'App.Name AppName']" style="display:none">
+			<input class="MenuItem" type="hidden" value="{{=it.MenuId}}, {{=it.Name}}, {{=it.AppId}}, {{=it.AppName}}">
+		</div>
+
+		<div class="cp-query" cp-entity-name="Field" cp-action-name="QueryField" cp-field="['FieldId', 'Name', 'App.AppId AppId', 'App.Name AppName']" style="display:none">
+			<input class="FieldItem" type="hidden" value="{{=it.FieldId}}, {{=it.Name}}, {{=it.AppId}}, {{=it.AppName}}">
+		</div>
+
+		<div class="cp-query" cp-entity-name="JS" cp-action-name="QueryJS" cp-field="['JSId', 'Name', 'App.AppId AppId', 'App.Name AppName']" style="display:none">
+			<input class="JSItem" type="hidden" value="{{=it.JSId}}, {{=it.Name}}, {{=it.AppId}}, {{=it.AppName}}">
+		</div>
+
+		<div class="cp-query" cp-entity-name="CSS" cp-action-name="QueryCSS" cp-field="['CSSId', 'Name', 'App.AppId AppId', 'App.Name AppName']" style="display:none">
+			<input class="CSSItem" type="hidden" value="{{=it.CSSId}}, {{=it.Name}}, {{=it.AppId}}, {{=it.AppName}}">
+		</div>
+		-->
+
+
+
+	  	<div id="wrapper">
+		  	<div id="content">
+			  	<div id="configcontent" class="contentpane" style="float:left;clear:left;border: 1px solid black; border-color: #ccc;">
+					<div id="app-panel" class="contentitempane"  style="float:left;clear:left;">
+						<span style="float:left; width:200px" class="text">Application Management</span>
+	                  	<form class="cp-create" cp-entity-name="App" cp-action-name="CreateApp" style="float:left;clear:left;">
+	                  		<input style="float:left; " type="hidden" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="app-name">
+				            <button style="float:left;clear:left;" type="button"  class="cp-submit" onclick="createApp();return false;">Create Application </button>  
+				            <button style="float:left; " type="button"   onclick="importApp();return false;">Import Application </button>   	
+
+				            <label style="float:left;clear:left;width:200px" class="text">Current Application</label>
+				            <span style="float:left; width:200px" id="selectedAppName" class="text">N/A</span>
+				            <input type="hidden" id="selectedAppId">
+		                    <button type="button" style="clear:left;float:left;" onclick="javascript:debugger;renameApp();return false;">Rename</button> 
+		                    <button type="button" style="float:left;" class="cp-delete" cp-entity-name="App" cp-action-name="DeleteApp" onclick="javascript:if(window.confirm('Delete App?'))CP_DoAction('DeleteApp', {Id:$('#selectedAppId').val()});return false;">Delete</button>  
+		                    <button style="float:left;" type="button"  onclick="exportApp();return false;">Export Application </button> 
+		                    <div style="float:left;clear:left;"></div>
+	                	</form>
+	                	<form class="cp-update" cp-entity-name="App" cp-action-name="RenameApp" cp-read-action-name="RenameAppRead" cp-read-field="['AppId','Name']" style="display:none">
+	                    <input type="text" class="cp-string" cp-prop-name="Name" value="{{=it.Name}}" id="rename_app_name">
+	                  	</form>
+	                	
+	                	<hr style="float:left;clear:left; width:100%; color:#ddd">
+						
+	                	    <button type="button" style="float:left;" onclick="javascript:createPage();return false;">New Page</button>
+	                	    <button type="button" style="float:left;" onclick="javascript:createForm('Create');return false;">New Create Form</button>
+	                	    <button type="button" style="float:left;" onclick="javascript:createForm('Update');return false;">New Update Form</button>
+	                	    <button type="button" style="float:left;" onclick="javascript:createForm('Read');return false;">New Detail Form</button>
+	                	    <button type="button" style="float:left;" onclick="javascript:createList();return false;">New List</button>
+	                	    <button type="button" style="float:left;" onclick="javascript:createMenu();return false;">New Menu</button>
+	                	    <button type="button" style="float:left;" onclick="javascript:createPropField();return false;">Create Property Field</button>
+	                	    <button type="button" style="float:left;" onclick="javascript:createRefeField();return false;">Create Reference Field</button>
+                    </div>
+
+                    <div id="prop-panel"  class="contentitempane"  style="float:left;clear:left;">
+                    	<span style="float:left; width:200px" class="text">Field Management</span>
+                    	<form class="cp-create" cp-entity-name="Field" cp-action-name="CreatePropField" style="display:none">
+                    		<input type="hidden" id="create-prop-name" class="cp-string" cp-prop-name="PropName" cp-max-len="16"></input>
+						    <input type="hidden" id="create-prop-storage-name" class="cp-string" cp-prop-name="StorageName" cp-max-len="16"></input>
+						    <input type="hidden" id="create-prop-nullable" class="cp-boolean" cp-prop-name="Nullable"></input>
+						</form>
+                    	<form class="cp-update" cp-entity-name="Field" cp-action-name="UpdatePropField" cp-read-action-name="UpdateReadPropField" cp-read-field="['PropName', 'StorageName', 'PropType', 'Label', 'MaxLen', 'MinLen', 'Max', 'Min', 'RegExpr', 'Nullable', 'DefaultVal', 'Scale', 'Precision']" style="float:left;clear:left;">
+              				<label id="prop-name-label" class="text label-150">Name</label>
+						    <input type="text" id="prop-name"  class="cp-string input-150" cp-prop-name="PropName" cp-max-len="16" value="{{= (it.PropName?it.PropName:'') }}"></input>
+						    <label id="prop-storage-name-label" class="text label-150">Storage Name</label>
+						    <input type="text" id="prop-storage-name"  class="cp-string input-150" cp-prop-name="StorageName" cp-max-len="16" value="{{= (it.StorageName?it.StorageName:'') }}"></input>
+			                <label class="text label-150">Type</label>
+						    <select id="prop-type" class="cp-string input-150" cp-prop-name="PropType" cp-nullable="true">
+						    {{? ('cp-string'==it.PropType) }}
+						      	<option value="cp-string" selected="selected">String</option>
+						    {{??}}
+						    	<option value="cp-string">String</option>
+						    {{?}} 
+
+						    {{? ('cp-text'==it.PropType) }}
+						      	<option value="cp-text" selected="selected">Text</option>
+						    {{??}}
+						    	<option value="cp-text">Text</option>
+						    {{?}} 
+
+						    {{? ('cp-integer'==it.PropType) }}
+						      	<option value="cp-integer" selected="selected">Integer</option>
+						    {{??}}
+						    	<option value="cp-integer">Integer</option>
+						    {{?}} 
+
+						    {{? ('cp-long'==it.PropType) }}
+						      	<option value="cp-long" selected="selected">Long</option>
+						    {{??}}
+						    	<option value="cp-long">Long</option>
+						    {{?}}
+
+						    {{? ('cp-float'==it.PropType) }}
+						      	<option value="cp-float" selected="selected">Long</option>
+						    {{??}}
+						    	<option value="cp-float">Long</option>
+						    {{?}} 
+
+						    {{? ('cp-double'==it.PropType) }}
+						      	<option value="cp-double" selected="selected">Double</option>
+						    {{??}}
+						    	<option value="cp-double">Double</option>
+						    {{?}} 
+
+						    {{? ('cp-decimal'==it.PropType) }}
+						      	<option value="cp-decimal" selected="selected">Decimal</option>
+						    {{??}}
+						    	<option value="cp-decimal">Decimal</option>
+						    {{?}} 
+
+						    {{? ('cp-boolean'==it.PropType) }}
+						      	<option value="cp-boolean" selected="selected">Boolean</option>
+						    {{??}}
+						    	<option value="cp-boolean">Boolean</option>
+						    {{?}} 
+
+						    {{? ('cp-date'==it.PropType) }}
+						      	<option value="cp-date" selected="selected">Date</option>
+						    {{??}}
+						    	<option value="cp-date">Date</option>
+						    {{?}} 
+
+						    {{? ('cp-time'==it.PropType) }}
+						      	<option value="cp-time" selected="selected">Time</option>
+						    {{??}}
+						    	<option value="cp-time">Time</option>
+						    {{?}} 
+
+						    {{? ('cp-datetime'==it.PropType) }}
+						      	<option value="cp-datetime" selected="selected">Datetime</option>
+						    {{??}}
+						    	<option value="cp-datetime">Datetime</option>
+						    {{?}} 
+
+						    {{? ('cp-timestamp'==it.PropType) }}
+						      	<option value="cp-timestamp" selected="selected">Timestamp</option>
+						    {{??}}
+						    	<option value="cp-timestamp">Timestamp</option>
+						    {{?}} 
+
+						    </select>
+
+						    <label id="prop-label-label" class="text label-150">Label</label>
+						    <input type="text" id="prop-label"  class="cp-string input-150" cp-prop-name="Label" cp-max-len="128" cp-nullable="true" value="{{= (it.Label?it.Label:'') }}"></input>
+
+						    <label id="prop-max-len-label" class="text label-150">Max Length</label>
+						    <input type="text" id="prop-max-len"  class="cp-integer input-150" cp-min="1" cp-prop-name="MaxLen" cp-nullable="true" value="{{= (it.MaxLen?it.MaxLen:'') }}"></input>
+
+						    <label id="prop-min-len-label" class="text label-150">Min Length</label>
+						    <input type="text" id="prop-min-len"  class="cp-integer input-150" cp-prop-name="MinLen" cp-nullable="true" value="{{= (it.MinLen?it.MinLen:'') }}"></input>
+
+						    <label id="prop-max-label" class="text label-150">Max</label>
+						    <input type="text" id="prop-max"  class="cp-string input-150" cp-prop-name="Max" cp-nullable="true" value="{{= (it.Max?it.Max:'') }}"></input>
+
+						    <label id="prop-min-label" class="text label-150">Min</label>
+						    <input type="text" id="prop-min"  class="cp-string input-150" cp-prop-name="Min" cp-nullable="true" value="{{= (it.Min?it.Min:'') }}"></input>
+
+						    <label id="prop-reg-expr-label" class="text label-150">Regular Expression</label>
+						    <input type="text" id="prop-reg-expr"  class="cp-string input-150" cp-prop-name="RegExpr" cp-nullable="true" value="{{= (it.RegExpr?it.RegExpr:'') }}"></input>
+
+						    <label id="prop-nullable-label" class="text label-150">Nullable</label>
+						    <select id="prop-nullable" class="cp-boolean input-150" cp-prop-name="Nullable" cp-nullable="true">
+						    	{{? (it.Nullable=='true') }}
+							      	<option value="true" selected='selected'>Yes</option>
+							      	<option value="false">No</option>
+							    {{??}}
+							    	<option value="true">Yes</option>
+							    	<option value="false" selected='selected'>No</option>
+							    {{?}} 
+						    </select>
+
+						    <label id="prop-default-val-label" class="text label-150">Default Value</label>
+						    <input type="text" id="prop-default-val"  class="cp-string input-150" cp-prop-name="DefaultVal" cp-max-len="128" cp-nullable="true" value="{{= (it.DefaultVal?it.DefaultVal:'') }}"></input>
+
+						    <label id="prop-scale-label" class="text label-150">Scale</label>
+						    <input type="text" id="prop-scale"  class="cp-integer input-150" cp-prop-name="Scale" cp-nullable="true" value="{{= (it.Scale?it.Scale:'') }}"></input>
+
+						    <label id="prop-precision-label" class="text label-150">Precision</label>
+						    <input type="text" id="prop-precision"  class="cp-integer input-150" cp-prop-name="Precision" cp-nullable="true" value="{{= (it.Precision?it.Precision:'') }}"></input>
+
+
+						    <button type="button" style="clear:left;float:left;" class="cp-submit">Apply</button> 
+
+		                    <div style="float:left;clear:left;"></div>
+	                	</form>
+                    </div>
+
+                    <div id="form-panel"  class="contentitempane"  style="float:left;clear:left;">
+                    	<span style="float:left; width:200px" class="text">Form Management</span>
+                    	<form class="cp-create" cp-entity-name="Form" cp-action-name="CreateForm" style="display:none">
+                    		<input type="hidden" id="create-form-name" class="cp-string" cp-prop-name="Name" cp-max-len="32"></input>
+						    <input type="hidden" id="create-form-entity-name" class="cp-string" cp-prop-name="EntityName" cp-max-len="16"></input><input type="hidden" id="create-form-type" class="cp-string" cp-prop-name="Type" cp-max-len="16"></input>
+						    <input type="hidden" id="create-form-label" class="cp-string" cp-prop-name="Label" cp-max-len="128"></input>
+						</form>
+                    	<form class="cp-update" cp-entity-name="Form" cp-action-name="UpdateForm" cp-read-action-name="UpdateReadForm" cp-read-field="['Name', 'EntityName', 'Type', 'Label']" style="float:left;clear:left;">
+              				<label id="create-form-name-label" class="text label-150">Name</label>
+						    <input type="text" id="create-form-name"  class="cp-string input-150" cp-prop-name="Name" cp-max-len="32" value="{{= (it.Name?it.Name:'') }}"></input>
+						    <label id="create-form-entity-name-label" class="text label-150">Entity Name</label>
+						    <input type="text" id="create-form-entity-name"  class="cp-string input-150" cp-prop-name="EntityName" cp-max-len="16" value="{{= (it.EntityName?it.EntityName:'') }}"></input>
+			                <label id="create-form-type-label" class="text label-150">Type</label>
+						    <select id="create-form-type" class="cp-string input-150" cp-prop-name="Type" cp-nullable="true">
+						    	{{? 'Create'==it.Type }}
+							      	<option value="Create" selected='selected'>Create</option>
+							    {{??}}
+							    	<option value="Create">Create</option>
+							    {{?}} 
+
+							    {{? 'Read'==it.Type }}
+							      	<option value="Read" selected='selected'>Read</option>
+							    {{??}}
+							    	<option value="Read">Read</option>
+							    {{?}} 
+						      	
+						      	{{? 'Update'==it.Type }}
+							      	<option value="Update" selected='selected'>Update</option>
+							    {{??}}
+							    	<option value="Update">Update</option>
+							    {{?}} 
+						    </select>
+
+						    <label id="form-label-label" class="text label-150">Label</label>
+						    <input type="text" id="form-label"  class="cp-string input-150" cp-prop-name="Label" cp-max-len="128" cp-nullable="true" value="{{= (it.Label?it.Label:'') }}"></input>
+
+						    
+
+
+						    <button type="button" style="clear:left;float:left;" class="cp-submit">Apply</button> 
+
+		                    <div style="float:left;clear:left;"></div>
+	                	</form>
+                    </div>
+			          
+				</div>
+
+
+
+			
+		  	</div>
+		  	<div id="sidebar">
+			  	<form style="float:left;clear:left;margin:5px;min-width:100px">
+				  	<label style="float:left;min-width:100px;width:200px" class="text">clicpilot webapp maker</label>
+				  	<select id="applist">
+						
+		            <select>
+		            	<!--
+				  	<button style="float:left;margin:5px;" id="manageApp" type="button">Manage</button>
+				  	 -->
+				  	<button style="float:left;clear:left;margin:5px;" id="previewApp" onclick="previewInWin()" type="button">Preview</button>
+				 
+				  	<input type="hidden" id="selectedAppId">
+				  	<input type="hidden" id="selectedFolderId">
+				  	<input type="hidden" id="selectedFileId">
+	          		<ul style="float:left;clear:left;margin:5px;" id="app_nav" class="tree">
+	          		</ul>
+			  	</form>
+		  	</div>
+		  	<div id="cleared">
+		  	</div>
+		</div>
+		<script>
+
+
+		</script>
+
+		<script type="text/javascript" src="./js/jquery.js"></script>
+		<script type="text/javascript" src="./js/FileSaver.min.js"></script>
+		<script type="text/javascript" src="./js/Blob.js"></script>
+		<script type="text/javascript" src="./js/jszip.min.js"></script>
+		<script type="text/javascript" src='./webappmaker.js'></script>
+		<script type="text/javascript" src='./clicpilot-js-1.0.3.js' class="clicpilot-js"></script>
+		<script type="text/javascript" src="./ace/ace.js" charset="utf-8"></script>
+		<div id="hiddendiv" style="display:none"></div>
+  	</body>
+</html>

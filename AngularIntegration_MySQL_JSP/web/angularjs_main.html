@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="testApp">
+<head>
+<script>var CP_PageName = 'angularjs_main';</script>
+<script src='./cp-js/jquery-1.11.1.min.js'></script>
+<script src='./cp-js/cp.util.1.0.js'></script>
+<script src='./cp-js/cp.util.ajax.1.0.js'></script>
+</head>
+<body ng-controller="createController">
+    <h2>Angular Integration Example</h2>
+    <ul >
+        <li><a href="#"> Create Message</a></li>
+        <li><a href="#query"> Query Message</a></li>
+    </ul>
+    <div id="main">
+        <div ng-view></div>
+    </div>
+  <script>
+	window.CP_APP = {
+		"name":"AngularIntegration",
+        "entry":"./angularjs_main.html",
+		"file":[
+			"./angularjs_main.html",
+			"./html_angularjs_create.html",
+			"./html_angularjs_query.html",
+		],
+        "lib":[
+            "./angularjs_script.js",
+            "./angular.min.js",
+            "./angular-route.min.js",
+        ]
+	}      
+  </script>
+    <script src="./angular.min.js"></script>
+    <script src="./angular-route.min.js"></script>
+    <script src="./angularjs_script.js"></script>        
+    <script src="../../../js/jquery.js"></script>
+    <script src="../../../clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+</body>
+</html>

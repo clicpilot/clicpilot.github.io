@@ -2,139 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-        <style>
-        html, body {
-        	padding:0;
-        	margin:0;
-        	width: 100%;
-		  	height: 100%;
-		  	font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
-        }
-        #wrapper {
-
-		  margin-left: 220px;
-		  height: 100%;
-		}
-
-
-
-
-		#content {
-		  float: right;
-		  width: 100%;
-		  height: 100%;
-		  background-color: #FFF;
-		  padding:0;
-          overflow:hidden;
-		}
-		#sidebar {
-		  float: left;
-		  width: 220px;
-		  height: 100%;
-		  margin-left: -220px;
-		  background-color: #FFF;
-		}
-		#cleared {
-		  clear: both;
-		}
-
-		.text {
-		    display:block;
-		    float:left;
-		    margin:0 7px 0 0;
-		    font-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
-		    font-size:12px;
-		    line-height:130%;
-		    text-decoration:none;
-		    font-weight:bold;
-		    color:#565656;
-		    cursor:pointer;
-		    padding:5px 10px 6px 7px; /* Links */
-		    width:60px;
-
-		}
-		select {
-			 width: 200px;
-			 font-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
-		     font-size:12px;
-		}
-		.menupane, .contentpane {
-			width: 100%;
-		  	height: 100%;
-		  	padding:0;
-        	margin:0;
-        	overflow:hidden;
-		}
-		textarea {
-			border: 1px solid black; border-color: #ccc;
-		}
-
-		button {
-			margin-top:5px;
-			margin-bottom:5px;
-			margin-left:5px;
-		}
-		/*
-		 Tree structure using CSS:
-		 http://stackoverflow.com/questions/14922247/how-to-get-a-tree-in-html-using-pure-css
-		*/
-
-		.tree, .tree ul{
-		  font: normal normal 14px/20px Helvetica, Arial, sans-serif;  
-		  list-style-type: none;
-		  margin-left: 0 0 0 10px;
-		  padding: 0;
-		  position: relative;   
-		  overflow:hidden; 
-		  ont-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
-		  font-size:12px;   
-		}
-
-		.tree li{
-		  margin: 0;
-		  padding: 0 12px;  
-		  position: relative; 
-		  ont-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
-		  font-size:12px;  
-		}
-		  
-		.tree li::before, .tree li::after{
-		  content: '';
-		  position: absolute;
-		  left: 0;
-		}
-
-		/* horizontal line on inner list items */
-		.tree li::before{
-		  border-top: 1px solid #999;
-		  top: 10px;
-		  width: 10px;
-		  height: 0;    
-		}
-
-		/* vertical line on list items */   
-		.tree li:after{
-		  border-left: 1px solid #999;
-		  height: 100%;
-		  width: 0px;
-		  top: -10px; 
-		}
-
-		/* lower line on list items from the first level because they don't have parents */
-		.tree > li::after{
-		  top: 10px;
-		}
-
-		/* hide line from the last of the first level list items */
-		.tree > li:last-child::after{
-		  display: none;
-		}
-
-        </style>
-        <script>
         
-        
-        </script>
+        <link href="builder.css" rel="stylesheet" type="text/css">
   	</head>
   	<body>
 
@@ -220,15 +89,6 @@
                     	<button type="button" style="float:left;clear:left" onclick="javascript:importFile();return false;">Import File</button>  
 
                     	<button type="button" style="float:left;" onclick="javascript:importImageFile();return false;">Import Local Image File</button>  
-
-
-                    	<!--
-                    	<label style="float:left; clear:left; width:200px" class="text">Current File</label>
-                    	<span style="float:left; width:200px" class="text" id="selectedFileName">N/A</span>
-                    	
-                    	<button type="button" style="float:left;clear:left" onclick="javascript:renameFile();return false;">Rename</button> 
-	                    <button type="button" style="float:left;" class="cp-delete" cp-entity-name="File" cp-action-name="DeleteFile" onclick="javascript:if(!$('#selectedFileId').val()){return;}if(window.confirm('Delete File?'))CP_DoAction('DeleteFile', {Id:$('#selectedFileId').val()});return false;">Delete</button>  
-						-->
                     	<input type="hidden" class="cp-string" cp-prop-name="Name" cp-max-len="24" cp-nullable="false" id="file-name">
                     	<input type="hidden" class="cp-text" cp-prop-name="Code" cp-nullable="true" value="" id="file-code">
               			<input type="hidden" class="cp-many2one-aw" cp-refe-name="Folder" cp-refe-entity="Folder" cp-inv-name="File" id="file-folder-id">
@@ -239,6 +99,25 @@
                 	<form class="cp-update" cp-entity-name="File" cp-action-name="RenameFile" cp-read-action-name="RenameFileRead" cp-read-field="['FileId','Name']" style="display:none">
                     <input type="text" class="cp-string" cp-prop-name="Name" value="{{=it.Name}}" id="rename_file_name">
                   	</form>
+
+                  	<hr style="float:left;clear:left; width:100%; color:#ddd">
+					<span style="float:left;clear:left; width:200px" class="text">Wizard</span>
+                  	<form style="float:left;clear:left;">
+                  		<select style="float:left;clear:left">
+                  			<optgroup label="Bootstrap">
+	                  			<option value="bootstrap-single-page">Single Page</option>
+	                  			<option value="bootstrap-leftbar-page">Left Side Bar Page</option>
+	                  			<option value="bootstrap-rightbar-page">Right Side Bar Page</option>
+	                  			<option value="bootstrap-tabpanel-page">Tab Panel Page</option>
+                  			</optgroup>
+                  		</select>
+                    	<button type="button" style="float:left;" onclick="javascript:createHTMLTemplateFile();return false;">Create Page HTML File</button>
+                    	<div style="float:left;clear:left;"></div>
+                	</form>
+
+
+                  	
+                	
 
 
                 	<hr style="float:left;clear:left; width:100%; color:#ddd">

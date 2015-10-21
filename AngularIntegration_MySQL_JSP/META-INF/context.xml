@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+<!-- Specify a JDBC datasource -->
+<Resource name="jdbc/AngularIntegration_MySQL"
+  auth="Container"
+  type="javax.sql.DataSource"
+  username="root"
+  password="root"
+  driverClassName="com.mysql.jdbc.Driver"
+  url="jdbc:mysql://localhost:3306/AngularIntegration?createDatabaseIfNotExist=true&amp;zeroDateTimeBehavior=convertToNull"
+  maxActive="30"
+  maxIdle="15"
+  maxWait="10000"/>  
+
+<Resource name="jdbc/AngularIntegration_PostgreSQL"
+    auth="Container"
+    type="javax.sql.DataSource"
+    username="postgres"
+    password="root"
+    driverClassName="org.postgresql.Driver"
+    url="jdbc:postgresql://localhost:5432/AngularIntegration"
+    maxActive="30"
+    maxIdle="15"
+    maxWait="10000"/>   
+</Context>

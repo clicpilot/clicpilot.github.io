@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+        
+        <link href="wizard.css" rel="stylesheet" type="text/css">
+  	</head>
+  	<body>
+
+
+
+	  	<div id="wrapper">
+		  	<div id="content">
+			  	<div id="configcontent" class="contentpane" style="float:left;clear:left;border: 1px solid black; border-color: #ccc;">
+					
+
+
+
+			          
+				</div>
+
+				<div id="editorcontent" class="contentpane" style="float:left;clear:left;border: 1px solid black; border-color: #ccc;">
+					<div id="editorbar" style="width:100%;height:30px">
+						<span class='text' id="filenamebar" style="float:left;"></span>
+                    	<button type="button" style="float:left;" onclick="javascript:renameFile();return false;">Rename</button> 
+	                    <button type="button" style="float:left;" class="cp-delete" cp-entity-name="File" cp-action-name="DeleteFile" onclick="javascript:if(!$('#selectedFileId').val()){return;}if(window.confirm('Delete File?'))CP_DoAction('DeleteFile', {Id:$('#selectedFileId').val()});return false;">Delete</button>  
+					</div>
+					<div id="editorpanel" style="width:100%"></div>
+
+				</div>
+
+			
+		  	</div>
+		  	<div id="sidebar">
+			
+			  	<form style="float:left;clear:left;margin:5px;min-width:100px">
+				  	<label style="float:left;min-width:100px;width:200px" class="text">clicpilot wizard</label>
+				  	<select style="float:left;clear:left" class="input-150" id="contentlist">
+				  		<optgroup label="Form" class="cp-query" cp-entity-name="Form" cp-action-name="QueryForm" cp-field="['FormId', 'Name']">
+				  			<option value="Form,{{=it.FormId}}">{{=it.Name}}</option>
+				  		</optgroup>
+
+				  	</select>
+				  	<button type="button" style="float:left;clear:left;" onclick="javascript:createForm();return false;">Create Form</button> 
+			  	</form>
+			  	
+			  	<div id="update-form" style="display:none">
+			  	<form class="cp-create" cp-action-name="CreateForm" cp-entity-name="Form" style="display:none">
+			  		<input type="hidden" cp-prop-name="Name" class="cp-string">
+			  		<input type="hidden" cp-prop-name="Label" class="cp-string">
+			  		<input type="hidden" cp-prop-name="EntityName" class="cp-string">
+			  		<input type="hidden" cp-prop-name="Type" class="cp-string">
+			  	</form>
+
+			  	<form class="cp-create" cp-action-name="CreatePropField" cp-entity-name="PropField" style="display:none">
+			  		<input type="hidden" cp-prop-name="Label" class="cp-string">
+			  		<input type="hidden" cp-prop-name="PropName" class="cp-string">
+			  		<input type="hidden" cp-prop-name="PropType" class="cp-string">
+			  		<input type="hidden" class="cp-many2one-a" cp-refe-name="Form" cp-inv-name="PropField" cp-refe-entity="Form">
+			  	</form>
+
+			  	<form class="cp-create" cp-action-name="CreateRefeField" cp-entity-name="RefeField" style="display:none">
+			  		<input type="hidden" cp-prop-name="Label" class="cp-string">
+			  		<input type="hidden" cp-prop-name="RefeName" class="cp-string">
+			  		<input type="hidden" cp-prop-name="RefeType" class="cp-string">
+			  		<input type="hidden" class="cp-many2one-a" cp-refe-name="Form" cp-inv-name="RefeField" cp-refe-entity="Form">
+			  	</form>
+
+
+			  	<form style="float:left;clear:left;margin:5px;min-width:100px" class="cp-update" cp-action-name="UpdateForm" cp-entity-name="Form" cp-read-action-name="UpdateReadForm" cp-read-field="['Label', 'EntityName', 'Type', 'Name', 'IncludeDelete']">
+				  	<label style="float:left;min-width:100px;width:200px" class="text">Form Wizard</label>
+				  	<label style="" class="text label-150">Form Label</label>
+				  	<input style="float:left;" type="text" class="cp-string input-150" cp-prop-name="Label" cp-max-len="64" value="{{= (it.Label?it.Label:'') }}"></input>
+				  	<label style="" class="text label-150">Entity Name</label>
+					<input style="float:left;" type="text" class="cp-string input-150" cp-prop-name="EntityName" cp-max-len="16" value="{{= (it.EntityName?it.EntityName:'') }}"></input>
+					<label style="" class="text label-150">Action Type</label>
+					<select style="" class="cp-string input-150" cp-prop-name="Type" cp-max-len="32">
+
+						{{? ('Create'==it.Type) }}
+					      	<option value="Create" selected="selected">Create</option>
+					    {{??}}
+					    	<option value="Create">Create</option>
+					    {{?}} 
+
+					    {{? ('Update'==it.Type) }}
+					      	<option value="Update" selected="selected">Update</option>
+					    {{??}}
+					    	<option value="Update">Update</option>
+					    {{?}} 
+
+					    {{? ('Read'==it.Type) }}
+					      	<option value="Read" selected="selected">Read</option>
+					    {{??}}
+					    	<option value="Read">Read</option>
+					    {{?}} 
+
+					    {{? ('Add Reference'==it.Type) }}
+					      	<option value="Add Reference" selected="selected">Add Reference</option>
+					    {{??}}
+					    	<option value="Add Reference">Add Reference</option>
+					    {{?}} 
+
+					    {{? ('Remove Reference'==it.Type) }}
+					      	<option value="Remove Reference" selected="selected">Remove Reference</option>
+					    {{??}}
+					    	<option value="Remove Reference">Remove Reference</option>
+					    {{?}} 
+
+				  	</select>
+					<label style="" class="text label-150">Form Name</label>
+					<input style="float:left;" type="text" class="cp-string input-150" cp-prop-name="Name" cp-max-len="32" value="{{= (it.Name?it.Name:'') }}"></input>
+
+					<label style="" class="text label-150">Include Delete Action</label>
+					<select id="prop-includedelete" class="cp-boolean input-150" cp-prop-name="IncludeDelete" cp-nullable="true">
+				    	{{? (it.IncludeDelete=='true') }}
+					      	<option value="true" selected='selected'>Yes</option>
+					      	<option value="false">No</option>
+					    {{??}}
+					    	<option value="true">Yes</option>
+					    	<option value="false" selected='selected'>No</option>
+					    {{?}} 
+				    </select>
+
+					
+
+					<button type="button" style="float:left;clear:left;" class="cp-submit">Save Form</button> 
+					
+
+			  	</form>
+			  	<form style="float:left;clear:left;margin:5px;min-width:100px">
+				  	<label style="float:left;clear:left" class="text label-150">Fields</label>
+					<select style="float:left;"  class="input-150" id="fieldlist">
+				  		<optgroup label="Property" class="cp-query-ref" cp-refe-name="PropField" cp-action-name="QueryFormPropField" cp-entity-name="Form" cp-field="['PropFieldId', 'PropName']">
+							<option value="Prop,{{=it.PropFieldId}}">{{=it.PropName}}</option>
+						</optgroup>
+						<optgroup label="Reference" class="cp-query-ref" cp-refe-name="RefeField" cp-action-name="QueryFormRefeField" cp-entity-name="Form" cp-field="['RefeFieldId', 'RefeName']">
+							<option value="Refe,{{=it.RefeFieldId}}">{{=it.RefeName}}</option>
+						</optgroup>
+				  	</select>
+			  	</form>
+
+			  	<button type="button" style="float:left;clear:left" onclick="javascript:createPropField();return false;">Add Property Field</button> 
+				<button type="button" style="float:left;" onclick="javascript:createRefeField();return false;">Add Reference Field</button> 
+
+					
+
+			  	<form class="cp-update" cp-entity-name="PropField" cp-action-name="UpdatePropField" cp-read-action-name="UpdateReadPropField" cp-read-field="['PropName', 'PropType', 'Label', 'MaxLen', 'MinLen', 'Max', 'Min', 'RegExpr', 'Nullable', 'DefaultVal', 'Scale', 'Precision']" style="float:left;clear:left;margin:5px;display:none" id="update-prop-field">
+	  				<label id="prop-name-label" class="text label-150" >Name</label>
+				    <input type="text" id="prop-name"  class="cp-string input-150" cp-prop-name="PropName" cp-max-len="16" value="{{= (it.PropName?it.PropName:'') }}"></input>
+	                <label class="text label-150">Type</label>
+				    <select id="prop-type" class="cp-string input-150" cp-prop-name="PropType" cp-nullable="true">
+				    {{? ('cp-string'==it.PropType) }}
+				      	<option value="cp-string" selected="selected">String</option>
+				    {{??}}
+				    	<option value="cp-string">String</option>
+				    {{?}} 
+
+				    {{? ('cp-text'==it.PropType) }}
+				      	<option value="cp-text" selected="selected">Text</option>
+				    {{??}}
+				    	<option value="cp-text">Text</option>
+				    {{?}} 
+
+				    {{? ('cp-integer'==it.PropType) }}
+				      	<option value="cp-integer" selected="selected">Integer</option>
+				    {{??}}
+				    	<option value="cp-integer">Integer</option>
+				    {{?}} 
+
+				    {{? ('cp-long'==it.PropType) }}
+				      	<option value="cp-long" selected="selected">Long</option>
+				    {{??}}
+				    	<option value="cp-long">Long</option>
+				    {{?}}
+
+				    {{? ('cp-float'==it.PropType) }}
+				      	<option value="cp-float" selected="selected">Long</option>
+				    {{??}}
+				    	<option value="cp-float">Long</option>
+				    {{?}} 
+
+				    {{? ('cp-double'==it.PropType) }}
+				      	<option value="cp-double" selected="selected">Double</option>
+				    {{??}}
+				    	<option value="cp-double">Double</option>
+				    {{?}} 
+
+				    {{? ('cp-decimal'==it.PropType) }}
+				      	<option value="cp-decimal" selected="selected">Decimal</option>
+				    {{??}}
+				    	<option value="cp-decimal">Decimal</option>
+				    {{?}} 
+
+				    {{? ('cp-boolean'==it.PropType) }}
+				      	<option value="cp-boolean" selected="selected">Boolean</option>
+				    {{??}}
+				    	<option value="cp-boolean">Boolean</option>
+				    {{?}} 
+
+				    {{? ('cp-date'==it.PropType) }}
+				      	<option value="cp-date" selected="selected">Date</option>
+				    {{??}}
+				    	<option value="cp-date">Date</option>
+				    {{?}} 
+
+				    {{? ('cp-time'==it.PropType) }}
+				      	<option value="cp-time" selected="selected">Time</option>
+				    {{??}}
+				    	<option value="cp-time">Time</option>
+				    {{?}} 
+
+				    {{? ('cp-datetime'==it.PropType) }}
+				      	<option value="cp-datetime" selected="selected">Datetime</option>
+				    {{??}}
+				    	<option value="cp-datetime">Datetime</option>
+				    {{?}} 
+
+				    {{? ('cp-timestamp'==it.PropType) }}
+				      	<option value="cp-timestamp" selected="selected">Timestamp</option>
+				    {{??}}
+				    	<option value="cp-timestamp">Timestamp</option>
+				    {{?}} 
+
+				    </select>
+
+				    <label id="prop-label-label" class="text label-150">Label</label>
+				    <input type="text" id="prop-label"  class="cp-string input-150" cp-prop-name="Label" cp-max-len="128" cp-nullable="true" value="{{= (it.Label?it.Label:'') }}"></input>
+
+				    <label id="prop-max-len-label" class="text label-150">Max Length</label>
+				    <input type="text" id="prop-max-len"  class="cp-integer input-150" cp-min="1" cp-prop-name="MaxLen" cp-nullable="true" value="{{= (it.MaxLen?it.MaxLen:'') }}"></input>
+
+				    <label id="prop-min-len-label" class="text label-150">Min Length</label>
+				    <input type="text" id="prop-min-len"  class="cp-integer input-150" cp-prop-name="MinLen" cp-nullable="true" value="{{= (it.MinLen?it.MinLen:'') }}"></input>
+
+				    <label id="prop-max-label" class="text label-150">Max</label>
+				    <input type="text" id="prop-max"  class="cp-string input-150" cp-prop-name="Max" cp-nullable="true" value="{{= (it.Max?it.Max:'') }}"></input>
+
+				    <label id="prop-min-label" class="text label-150">Min</label>
+				    <input type="text" id="prop-min"  class="cp-string input-150" cp-prop-name="Min" cp-nullable="true" value="{{= (it.Min?it.Min:'') }}"></input>
+
+				    <label id="prop-reg-expr-label" class="text label-150">Regular Expression</label>
+				    <input type="text" id="prop-reg-expr"  class="cp-string input-150" cp-prop-name="RegExpr" cp-nullable="true" value="{{= (it.RegExpr?it.RegExpr:'') }}"></input>
+
+				    <label id="prop-nullable-label" class="text label-150">Nullable</label>
+				    <select id="prop-nullable" class="cp-boolean input-150" cp-prop-name="Nullable" cp-nullable="true">
+				    	{{? (it.Nullable=='true') }}
+					      	<option value="true" selected='selected'>Yes</option>
+					      	<option value="false">No</option>
+					    {{??}}
+					    	<option value="true">Yes</option>
+					    	<option value="false" selected='selected'>No</option>
+					    {{?}} 
+				    </select>
+
+				    <label id="prop-default-val-label" class="text label-150">Default Value</label>
+				    <input type="text" id="prop-default-val"  class="cp-string input-150" cp-prop-name="DefaultVal" cp-max-len="128" cp-nullable="true" value="{{= (it.DefaultVal?it.DefaultVal:'') }}"></input>
+
+				    <label id="prop-scale-label" class="text label-150">Scale</label>
+				    <input type="text" id="prop-scale"  class="cp-integer input-150" cp-prop-name="Scale" cp-nullable="true" value="{{= (it.Scale?it.Scale:'') }}"></input>
+
+				    <label id="prop-precision-label" class="text label-150">Precision</label>
+				    <input type="text" id="prop-precision"  class="cp-integer input-150" cp-prop-name="Precision" cp-nullable="true" value="{{= (it.Precision?it.Precision:'') }}"></input>
+
+				    <button type="button" style="float:left;clear:left;" class="cp-submit">Save Property Field</button> 
+				</form>
+
+				<form class="cp-update" cp-entity-name="RefeField" cp-action-name="UpdateRefeField" cp-read-action-name="UpdateReadRefeField" cp-read-field="['RefeName', 'RefeType', 'Label', 'RefeEntity', 'InvName', 'Element']" style="float:left;clear:left;margin:5px;display:none"  id="update-refe-field">
+	  				<label id="refe-name-label" class="text label-150" >Name</label>
+				    <input type="text" id="refe-name"  class="cp-string input-150" cp-prop-name="RefeName" cp-max-len="16" value="{{= (it.RefeName?it.RefeName:'') }}"></input>
+				    
+	                <label class="text label-150">Type</label>
+				    <select id="refe-type" class="cp-string input-150" cp-prop-name="RefeType" cp-nullable="true">
+				    {{? ('cp-one2one'==it.RefeType) }}
+				      	<option value="cp-one2one" selected="selected">One2One</option>
+				    {{??}}
+				    	<option value="cp-one2one">One2One</option>
+				    {{?}} 
+
+				    {{? ('cp-one2one-s'==it.RefeType) }}
+				      	<option value="cp-one2one-s" selected="selected">One2One-S</option>
+				    {{??}}
+				    	<option value="cp-one2one-s">One2One-S</option>
+				    {{?}} 
+
+				    {{? ('cp-one2one-i'==it.RefeType) }}
+				      	<option value="cp-one2one-i" selected="selected">One2One-I</option>
+				    {{??}}
+				    	<option value="cp-one2one-i">One2One-I</option>
+				    {{?}} 
+
+				    {{? ('cp-one2one-a'==it.RefeType) }}
+				      	<option value="cp-one2one-a" selected="selected">One2One-A</option>
+				    {{??}}
+				    	<option value="cp-one2one-a">One2One-A</option>
+				    {{?}} 
+
+				    {{? ('cp-one2one-aw'==it.RefeType) }}
+				      	<option value="cp-one2one-aw" selected="selected">One2One-AW</option>
+				    {{??}}
+				    	<option value="cp-one2one-aw">One2One-AW</option>
+				    {{?}} 
+
+				    {{? ('cp-one2one-d'==it.RefeType) }}
+				      	<option value="cp-one2one-d" selected="selected">One2One-D</option>
+				    {{??}}
+				    	<option value="cp-one2one-d">One2One-D</option>
+				    {{?}} 
+
+				    {{? ('cp-one2one-dw'==it.RefeType) }}
+				      	<option value="cp-one2one-dw" selected="selected">One2One-DW</option>
+				    {{??}}
+				    	<option value="cp-one2one-dw">One2One-DW</option>
+				    {{?}} 
+
+				    {{? ('cp-one2many'==it.RefeType) }}
+				      	<option value="cp-one2many" selected="selected">One2Many</option>
+				    {{??}}
+				    	<option value="cp-one2many">One2Many</option>
+				    {{?}} 
+
+				    {{? ('cp-one2many-s'==it.RefeType) }}
+				      	<option value="cp-one2many-s" selected="selected">One2Many-S</option>
+				    {{??}}
+				    	<option value="cp-one2many-s">One2Many-S</option>
+				    {{?}} 
+
+				    {{? ('cp-one2many-i'==it.RefeType) }}
+				      	<option value="cp-one2many-i" selected="selected">One2Many-I</option>
+				    {{??}}
+				    	<option value="cp-one2many-i">One2Many-I</option>
+				    {{?}} 
+
+				    {{? ('cp-one2many-d'==it.RefeType) }}
+				      	<option value="cp-one2many-d" selected="selected">One2Many-D</option>
+				    {{??}}
+				    	<option value="cp-one2many-d">One2Many-D</option>
+				    {{?}} 
+
+				    {{? ('cp-one2many-dw'==it.RefeType) }}
+				      	<option value="cp-one2many-dw" selected="selected">One2Many-DW</option>
+				    {{??}}
+				    	<option value="cp-one2many-dw">One2Many-DW</option>
+				    {{?}} 
+
+				    {{? ('cp-many2one'==it.RefeType) }}
+				      	<option value="cp-many2one" selected="selected">Many2One</option>
+				    {{??}}
+				    	<option value="cp-many2one">Many2One</option>
+				    {{?}} 
+
+				    {{? ('cp-many2one-s'==it.RefeType) }}
+				      	<option value="cp-many2one-s" selected="selected">Many2One-S</option>
+				    {{??}}
+				    	<option value="cp-many2one-s">Many2One-S</option>
+				    {{?}} 
+
+				    {{? ('cp-many2one-b'==it.RefeType) }}
+				      	<option value="cp-many2one-b" selected="selected">Many2One-B</option>
+				    {{??}}
+				    	<option value="cp-many2one-b">Many2One-B</option>
+				    {{?}} 
+
+				    {{? ('cp-many2one-a'==it.RefeType) }}
+				      	<option value="cp-many2one-a" selected="selected">Many2One-A</option>
+				    {{??}}
+				    	<option value="cp-many2one-a">Many2One-A</option>
+				    {{?}} 
+
+				    {{? ('cp-many2one-aw'==it.RefeType) }}
+				      	<option value="cp-many2one-aw" selected="selected">Many2One-AW</option>
+				    {{??}}
+				    	<option value="cp-many2one-aw">Many2One-AW</option>
+				    {{?}} 
+
+				    {{? ('cp-many2many'==it.RefeType) }}
+				      	<option value="cp-many2many" selected="selected">Many2Many</option>
+				    {{??}}
+				    	<option value="cp-many2many">Many2Many</option>
+				    {{?}} 
+
+				    {{? ('cp-many2many-s'==it.RefeType) }}
+				      	<option value="cp-many2many-s" selected="selected">Many2Many-S</option>
+				    {{??}}
+				    	<option value="cp-many2many-s">Many2Many-S</option>
+				    {{?}} 
+
+				    </select>
+
+				    <label id="refe-label-label" class="text label-150">Label</label>
+				    <input type="text" id="refe-label"  class="cp-string input-150" cp-prop-name="Label" cp-max-len="128" cp-nullable="true" value="{{= (it.Label?it.Label:'') }}"></input>
+
+				    <label id="refe-refeentity-label" class="text label-150">Foreign Entity</label>
+				    <input type="text" id="refe-refeentity"  class="cp-string input-150" cp-prop-name="RefeEntity" cp-max-len="16" cp-nullable="true" value="{{= (it.RefeEntity?it.RefeEntity:'') }}"></input>
+
+				    <label id="refe-invname-label" class="text label-150">Inverse Reference Name</label>
+				    <input type="text" id="refe-invname"  class="cp-string input-150" cp-prop-name="InvName" cp-max-len="16" cp-nullable="true" value="{{= (it.InvName?it.InvName:'') }}"></input>
+
+				    <label id="refe-element-label" class="text label-150">Element</label>
+				    <select id="refe-element" class="cp-string input-150" cp-prop-name="Element" cp-nullable="true">
+				    	{{? ('list'==it.Element) }}
+				      		<option value="list" selected="selected">List</option>
+					    {{??}}
+					    	<option value="list">List</option>
+					    {{?}}
+
+					    {{? ('select'==it.Element) }}
+				      	<option value="select" selected="selected">Select</option>
+					    {{??}}
+					    	<option value="select">Select</option>
+					    {{?}}
+				    </select>
+
+				    <button type="button" style="float:left;clear:left;" class="cp-submit">Save Reference Field</button> 
+				</form>
+		  	</div>
+		  	</div>
+		  	<div id="cleared">
+		  	</div>
+		</div>
+
+
+		<script type="text/javascript" src="./js/jquery.js"></script>
+		<script type="text/javascript" src='./clicpilot-js-1.0.3.js' class="clicpilot-js"></script>
+		<script type="text/javascript" src="./ace/ace.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./wizard.js" charset="utf-8"></script>
+		<div id="hiddendiv" style="display:none"></div>
+  	</body>
+</html>

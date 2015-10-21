@@ -1,0 +1,15 @@
+
+
+
+        <p>{{ message }}</p>
+        <form class="cp-create" cp-entity-name="Msg" cp-action-name="CreateMsg" cp-complete-observer="['QueryMsg']">
+            <label>MsgText</label><p>
+            <input type="text" class="cp-string" cp-prop-name="MsgText" value=""></input>
+            <button type="button" class="cp-submit" onclick="CP_DoAction('CreateMsg');">Create</button>
+        </form> 
+<script>var CP_PageName = 'html_angularjs_create';</script>
+<script src='./cp-js/jquery-1.11.1.min.js'></script>
+<script src='./cp-js/cp.util.1.0.js'></script>
+<script src='./cp-js/cp.util.ajax.1.0.js'></script>
+<script src='./cp-js/actions/Default/QueryMsg.js'></script>
+<script src='./cp-js/actions/Default/CreateMsg.js'></script>
