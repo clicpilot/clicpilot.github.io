@@ -12,22 +12,17 @@
 	  	<div id="wrapper">
 		  	<div id="content">
 			  	<div id="configcontent" class="contentpane" style="float:left;clear:left;border: 1px solid black; border-color: #ccc;">
-					
+					<div id="editorbar" style="width:100%;height:30px">
+						<span class='text' id="filenamebar" style="float:left;"></span>
+                    	<button type="button" style="float:left;" onclick="javascript:previewInWin();return false;">Preview</button> 
+	            
+					</div>
 
-
+			  		<div id="editorpanel" style="width:100%"></div>
 
 			          
 				</div>
 
-				<div id="editorcontent" class="contentpane" style="float:left;clear:left;border: 1px solid black; border-color: #ccc;">
-					<div id="editorbar" style="width:100%;height:30px">
-						<span class='text' id="filenamebar" style="float:left;"></span>
-                    	<button type="button" style="float:left;" onclick="javascript:renameFile();return false;">Rename</button> 
-	                    <button type="button" style="float:left;" class="cp-delete" cp-entity-name="File" cp-action-name="DeleteFile" onclick="javascript:if(!$('#selectedFileId').val()){return;}if(window.confirm('Delete File?'))CP_DoAction('DeleteFile', {Id:$('#selectedFileId').val()});return false;">Delete</button>  
-					</div>
-					<div id="editorpanel" style="width:100%"></div>
-
-				</div>
 
 			
 		  	</div>
@@ -76,34 +71,34 @@
 					<label style="" class="text label-150">Action Type</label>
 					<select style="" class="cp-string input-150" cp-prop-name="Type" cp-max-len="32">
 
-						{{? ('Create'==it.Type) }}
-					      	<option value="Create" selected="selected">Create</option>
+						{{? ('cp-create'==it.Type) }}
+					      	<option value="cp-create" selected="selected">Create</option>
 					    {{??}}
-					    	<option value="Create">Create</option>
+					    	<option value="cp-create">Create</option>
 					    {{?}} 
 
-					    {{? ('Update'==it.Type) }}
-					      	<option value="Update" selected="selected">Update</option>
+					    {{? ('cp-update'==it.Type) }}
+					      	<option value="cp-update" selected="selected">Update</option>
 					    {{??}}
-					    	<option value="Update">Update</option>
+					    	<option value="cp-update">Update</option>
 					    {{?}} 
 
-					    {{? ('Read'==it.Type) }}
-					      	<option value="Read" selected="selected">Read</option>
+					    {{? ('cp-read'==it.Type) }}
+					      	<option value="cp-read" selected="selected">Read</option>
 					    {{??}}
-					    	<option value="Read">Read</option>
+					    	<option value="cp-read">Read</option>
 					    {{?}} 
 
-					    {{? ('Add Reference'==it.Type) }}
-					      	<option value="Add Reference" selected="selected">Add Reference</option>
+					    {{? ('cp-add-ref'==it.Type) }}
+					      	<option value="cp-add-ref" selected="selected">Add Reference</option>
 					    {{??}}
-					    	<option value="Add Reference">Add Reference</option>
+					    	<option value="cp-add-ref">Add Reference</option>
 					    {{?}} 
 
-					    {{? ('Remove Reference'==it.Type) }}
-					      	<option value="Remove Reference" selected="selected">Remove Reference</option>
+					    {{? ('cp-remove-ref'==it.Type) }}
+					      	<option value="cp-remove-ref" selected="selected">Remove Reference</option>
 					    {{??}}
-					    	<option value="Remove Reference">Remove Reference</option>
+					    	<option value="cp-remove-ref">Remove Reference</option>
 					    {{?}} 
 
 				  	</select>
@@ -130,18 +125,19 @@
 			  	<form style="float:left;clear:left;margin:5px;min-width:100px">
 				  	<label style="float:left;clear:left" class="text label-150">Fields</label>
 					<select style="float:left;"  class="input-150" id="fieldlist">
-				  		<optgroup label="Property" class="cp-query-ref" cp-refe-name="PropField" cp-action-name="QueryFormPropField" cp-entity-name="Form" cp-field="['PropFieldId', 'PropName']">
+				  		<optgroup label="Property" class="cp-query-ref" cp-refe-name="PropField" cp-action-name="QueryFormPropField" cp-entity-name="Form" cp-field="['PropFieldId', 'PropName', 'PropType', 'Label', 'MaxLen', 'MinLen', 'Max', 'Min', 'RegExpr', 'Nullable', 'DefaultVal', 'Scale', 'Precision']">
 							<option value="Prop,{{=it.PropFieldId}}">{{=it.PropName}}</option>
 						</optgroup>
-						<optgroup label="Reference" class="cp-query-ref" cp-refe-name="RefeField" cp-action-name="QueryFormRefeField" cp-entity-name="Form" cp-field="['RefeFieldId', 'RefeName']">
+						<optgroup label="Reference" class="cp-query-ref" cp-refe-name="RefeField" cp-action-name="QueryFormRefeField" cp-entity-name="Form" cp-field="['RefeFieldId', 'RefeName', 'RefeType', 'Label', 'RefeEntity', 'RefeProp', 'InvName', 'Element']">
 							<option value="Refe,{{=it.RefeFieldId}}">{{=it.RefeName}}</option>
 						</optgroup>
 				  	</select>
+				  	<button type="button" style="float:left;clear:left" onclick="javascript:createPropField();return false;">Add Property Field</button> 
+					<button type="button" style="float:left;" onclick="javascript:createRefeField();return false;">Add Reference Field</button> 
+
 			  	</form>
 
-			  	<button type="button" style="float:left;clear:left" onclick="javascript:createPropField();return false;">Add Property Field</button> 
-				<button type="button" style="float:left;" onclick="javascript:createRefeField();return false;">Add Reference Field</button> 
-
+			  	
 					
 
 			  	<form class="cp-update" cp-entity-name="PropField" cp-action-name="UpdatePropField" cp-read-action-name="UpdateReadPropField" cp-read-field="['PropName', 'PropType', 'Label', 'MaxLen', 'MinLen', 'Max', 'Min', 'RegExpr', 'Nullable', 'DefaultVal', 'Scale', 'Precision']" style="float:left;clear:left;margin:5px;display:none" id="update-prop-field">
@@ -264,7 +260,7 @@
 				    <button type="button" style="float:left;clear:left;" class="cp-submit">Save Property Field</button> 
 				</form>
 
-				<form class="cp-update" cp-entity-name="RefeField" cp-action-name="UpdateRefeField" cp-read-action-name="UpdateReadRefeField" cp-read-field="['RefeName', 'RefeType', 'Label', 'RefeEntity', 'InvName', 'Element']" style="float:left;clear:left;margin:5px;display:none"  id="update-refe-field">
+				<form class="cp-update" cp-entity-name="RefeField" cp-action-name="UpdateRefeField" cp-read-action-name="UpdateReadRefeField" cp-read-field="['RefeName', 'RefeType', 'Label', 'RefeEntity', 'RefeProp', 'InvName', 'Element']" style="float:left;clear:left;margin:5px;display:none"  id="update-refe-field">
 	  				<label id="refe-name-label" class="text label-150" >Name</label>
 				    <input type="text" id="refe-name"  class="cp-string input-150" cp-prop-name="RefeName" cp-max-len="16" value="{{= (it.RefeName?it.RefeName:'') }}"></input>
 				    
@@ -392,22 +388,27 @@
 				    <label id="refe-refeentity-label" class="text label-150">Foreign Entity</label>
 				    <input type="text" id="refe-refeentity"  class="cp-string input-150" cp-prop-name="RefeEntity" cp-max-len="16" cp-nullable="true" value="{{= (it.RefeEntity?it.RefeEntity:'') }}"></input>
 
+					<label id="refe-refeprop-label" class="text label-150">Foreign Entity Property</label>
+				    <input type="text" id="refe-refeprop"  class="cp-string input-150" cp-prop-name="RefeProp" cp-max-len="1024" cp-nullable="true" value="{{= (it.RefeProp?it.RefeProp:'') }}"></input>
+
 				    <label id="refe-invname-label" class="text label-150">Inverse Reference Name</label>
 				    <input type="text" id="refe-invname"  class="cp-string input-150" cp-prop-name="InvName" cp-max-len="16" cp-nullable="true" value="{{= (it.InvName?it.InvName:'') }}"></input>
 
 				    <label id="refe-element-label" class="text label-150">Element</label>
 				    <select id="refe-element" class="cp-string input-150" cp-prop-name="Element" cp-nullable="true">
+					    {{? ('select'==it.Element) }}
+				      	<option value="select" selected="selected">Select</option>
+					    {{??}}
+					    	<option value="select">Select</option>
+					    {{?}}
+
 				    	{{? ('list'==it.Element) }}
 				      		<option value="list" selected="selected">List</option>
 					    {{??}}
 					    	<option value="list">List</option>
 					    {{?}}
 
-					    {{? ('select'==it.Element) }}
-				      	<option value="select" selected="selected">Select</option>
-					    {{??}}
-					    	<option value="select">Select</option>
-					    {{?}}
+
 				    </select>
 
 				    <button type="button" style="float:left;clear:left;" class="cp-submit">Save Reference Field</button> 
@@ -418,11 +419,113 @@
 		  	</div>
 		</div>
 
+		
+		<script type="script/template" id='form-template'>
+			<form id="<%= it.Name %>" class="<%= it.Type %>" cp-entity-name="<%= it.EntityName %>" cp-action-name="<%= it.Name %>">
+				<legend> <%= it.Label %> </legend>
+
+				<% for(var i=0;i<it.PropField.length;i++) { 
+					var field = it.PropField[i]; 
+				%>
+					<Label><%= field.Label %></label>
+					  
+					<% if(field.PropType=="cp-string") { %>
+			        	<input type="text" class="<%= field.PropType %>" cp-prop-name="<%= field.PropName %>"
+
+			      	<% } else if(field.PropType=="cp-time" 
+						|| field.PropType=="cp-datetime") { %>
+			        	<input type="text" class="<%= field.PropType %>" cp-prop-name="<%= field.PropName %>"
+			      	<% } else if(field.PropType=="cp-short" 
+				        || field.PropType=="cp-integer"
+				        || field.PropType=="cp-long"
+				        || field.PropType=="cp-float"
+				        || field.PropType=="cp-double"
+				        || field.PropType=="cp-decimal") { %>
+			        	<input type="number" class="<%= field.PropType %>" cp-prop-name="<%= field.PropName %>"
+			      	<% } else if(field.PropType=="cp-boolean") { %>
+			        	<input type="checkbox" class="<%= field.PropType %>" cp-prop-name="<%= field.PropName %>"
+			      	<% } else if(field.PropType=="cp-date") { %>
+			        	<input type="date" class="<%= field.PropType %>" cp-prop-name="<%= field.PropName %>"        
+			      	<% } else if(field.PropType=="cp-text") { %>
+  						<textarea class="<%= field.PropType %>" cp-prop-name="<%= field.PropName %>"
+			      	<% }   %>
+
+			      	<%if(field.MaxLen){%>
+		        		cp-max-len="<%=field.MaxLen%>"
+		        	<%}%>
+		        	<%if(field.MinLen){%>
+		        		cp-min-len="<%=field.MinLen%>"
+		        	<%}%>
+		        	<%if(field.Max){%>
+		        		cp-max="<%=field.Max%>"
+		        	<%}%>
+		        	<%if(field.Min){%>
+		        		cp-min="<%=field.Min%>"
+		        	<%}%>
+		        	<%if(field.RegExpr){%>
+		        		cp-reg-expr="<%=field.RegExpr%>"
+		        	<%}%>
+		        	<%if(field.Nullable){%>
+		        		cp-nullable="<%=field.Nullable%>"
+		        	<%}%>
+		        	<%if(field.DefaultVal){%>
+		        		cp-default-value="<%=field.DefaultVal%>"
+		        	<%}%>
+		        	<%if(field.Scale){%>
+		        		cp-scale="<%=field.Scale%>"
+		        	<%}%>
+		        	<%if(field.Precision){%>
+		        		cp-precision="<%=field.Precision%>"
+		        	<%}%>
+		        	<% if(field.PropType=="cp-text") { %>
+			      		></textarea>
+			      	<% } else {%>
+			      		></input>
+			      	<%}%>
+				<% } %>
+
+
+				<% for(var i=0;i<it.RefeField.length;i++) { 
+					var field = it.RefeField[i]; 
+				%>
+					<Label><%= field.Label %></label>
+				<% if(field.Element=='select') {%>
+					<% if(field.RefeType.indexOf('2one')!=-1) { %>
+					<select id="<%=it.Name%>-<%=field.RefeName%>-select" class="<%=field.RefeType%>" cp-refe-name="<%=field.RefeName%>" cp-inv-name="<%=field.InvName%>" cp-refe-entity="<%=field.RefeEntity%>" cp-refe-cand="QueryCand<%=it.EntityName%><%=field.RefeName%><%=it.Name%>">
+			          {{if(it.<%=field.RefeName%>) { }}
+			          <option selected="selected" value="0">&nbsp;</option>
+			          <option selected="selected" value="{{=it.<%=field.RefeName%>.<%=field.RefeEntity%>Id}}">{{=it.<%=field.RefeName%>.<%=field.RefeEntity%>Id}}</option>
+			          {{ } else { }}
+			          <option selected="selected" value="0">&nbsp;</option>
+			          {{ } }}
+			          <option class="cp-query-ref-candidate" cp-action-name="QueryCand<%=it.EntityName%><%=field.RefeName%><%=it.Name%>" cp-container-id="<%=it.Name%>-<%=field.RefeName%>-select" cp-entity-name="<%=it.EntityName%>" cp-refe-name="<%=field.RefeName%>" cp-refe-entity="<%=field.RefeEntity%>" cp-field="[<%=field.RefeProp%>]" value="{{=it.<%=field.RefeEntity%>Id}}">{{=it.<%=field.RefeEntity%>Id||'&nbsp;'}}</option>
+			        </select>
+			        <% } %>	
+				<% } %>	
+					
+				<% } %>
+
+
+				<% if('cp-create'==it.Type) {%>
+				<button type="button" class="cp-submit">Create</button>
+				<%}%>
+				
+				<% if('cp-update'==it.Type) {%>
+				<button type="button" class="cp-submit">Update</button>
+				<%}%>
+				<% if ((('cp-update'==it.Type) || ('cp-read'==it.Type)) && it.IncludeDelete) { %>
+				<input type="hidden" value="{{=it.<%= it.EntityName %>Id}}" id="<%= it.Name %>_<%= it.EntityName %>Id">
+    			<button type="button" class="cp-delete" cp-entity-name="<%= it.EntityName %>" cp-action-name="Delete<%= it.EntityName %>" onclick="javascript:if(window.confirm('Delete File?'))CP_DoAction('DeleteFile', {Id:$('#<%= it.Name %>_<%= it.EntityName %>Id').val() });return false;">Delete</button>
+    			<%}%>
+  			</form>
+		</script>
 
 		<script type="text/javascript" src="./js/jquery.js"></script>
+		<script type="text/javascript" src="./js/HTMLFormatter.js"></script>
 		<script type="text/javascript" src='./clicpilot-js-1.0.3.js' class="clicpilot-js"></script>
 		<script type="text/javascript" src="./ace/ace.js" charset="utf-8"></script>
 		<script type="text/javascript" src="./wizard.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/underscore-min.js" charset="utf-8"></script>
 		<div id="hiddendiv" style="display:none"></div>
   	</body>
 </html>

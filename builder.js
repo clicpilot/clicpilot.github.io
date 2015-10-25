@@ -473,14 +473,7 @@ function SelectFile(id) {
 
 }
 
-window.previewInWin = function() {
-  var html = createAppHTML();
-  var myWindow = window.open("clicpilot preview win", "");
-  myWindow.document.open('text/html');
-  myWindow.document.write(html);
-  myWindow.document.close();
 
-}
 
 function exportApp() {
 	var zip = new JSZip();
@@ -721,7 +714,17 @@ function importImageFile() {
 	$("#fileInput").remove();
 }
 
+window.previewInWin = function() {
+  var html = createAppHTML();
+  var myWindow = window.open("clicpilot preview win", "");
+  myWindow.document.open('text/html');
+  myWindow.document.write(html);
+  myWindow.document.close();
+
+}
+
 function createAppHTML() {
+	debugger;
   var appid = window.SelectedAppId;
   var appObj = {};
   appObj.name = apps["app_"+appid].name;
