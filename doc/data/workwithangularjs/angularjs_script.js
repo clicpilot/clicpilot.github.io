@@ -1,6 +1,6 @@
-var scotchApp = angular.module('testApp', ['ngRoute']);
+var testApp = angular.module('testApp', ['ngRoute']);
 
-scotchApp.config(function($routeProvider) {
+testApp.config(function($routeProvider) {
     $routeProvider
         .when('/', {
             templateUrl : 'html_angularjs_create.html',
@@ -12,13 +12,13 @@ scotchApp.config(function($routeProvider) {
         })
 });
 
-scotchApp.controller('createController', function($scope) {
+testApp.controller('createController', function($scope) {
     $scope.message = 'Create Message';
 
 
 });
 
-scotchApp.controller('queryController', function($scope) {
+testApp.controller('queryController', function($scope) {
     $scope.message = 'Query Message';
     CP_DoAction("QueryMsg");
 });
