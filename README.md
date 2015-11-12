@@ -1,2 +1,2 @@
-This is the clicpilot website on GitHub.
-https://clicpilot.github.io 
+This is the clicpilot website on github.com.
+https://clicpilot.github.io
