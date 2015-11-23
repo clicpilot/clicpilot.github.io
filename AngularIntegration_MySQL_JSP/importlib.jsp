@@ -1,9 +1,0 @@
-<%@page import="java.lang.reflect.*" %>
-<%@page import="java.io.*" %>
-<%@page import="java.math.*" %>
-<%@page import="java.sql.*" %>
-<%@page import="java.text.*" %>
-<%@page import="java.util.*" %>
-<%@page import="javax.sql.*" %>
-<%@page import="javax.naming.*" %>
-<%@page import="org.json.*" %>

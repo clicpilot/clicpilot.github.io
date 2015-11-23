@@ -25,9 +25,9 @@
 	    window.ShowMessage = window.ShowResponse;
     </script>
     <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
-    <script>
-      	CP.AddSQLMap("HSQLDB", [
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"  ></script>
+    <script  class="clicpilot-js">
+      	CP.AddSQLMap("MySQL2", [
 		  {
 		    "Name":"MySQL2",
 		    "Type":"Database",
@@ -39,6 +39,7 @@
 		      "JDBC_URL":"jdbc;hsqldb:hsql://localhost/mydb;default_schema=true ",
 		      "JDBC_URL_Params":"",
 		      "Support_ForeignKey":"true",
+              "Support_ConstraintName":"true",
 		      "Type_Boolean":" SMALLINT",
 		      "Type_Date":" DATE",
 		      "Type_DateTime":" DateTime",
