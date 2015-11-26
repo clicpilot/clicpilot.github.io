@@ -265,6 +265,14 @@ var content =
 			"file":["callback_main.html", "mycallback.callback.js", "html_callback.html"],
 			"children":[
 				{
+					"title":"CP_AppInit",
+					
+				},
+                {
+					"title":"CP_ExecuteAction",
+					"file":["executeaction_main.html", "html_executeaction.html", "executeaction.callback.js"],
+				},
+                {
 					"title":"Block Action",
 					"file":["block_main.html", "block.callback.js", "html_block_callback.html"],
 				},

@@ -7,3 +7,4 @@ As clicpilot-js has handled the onload event. If you want to invoke some functio
 
 
 Here is an example to invoke a function after page loading, and write the application name.
+
