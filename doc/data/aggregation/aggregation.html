@@ -26,7 +26,7 @@
         </li>
       </ul>
       <h4>Aggregation</h4>
-      <ul class="cp-query" cp-entity-name="EntAggr" cp-action-name="QueryEntAggrAggr" cp-field="['Prop1 P', 'SUM Prop2 SUMProp2']" cp-order-field="['SUMProp2']" cp-order-type="DESC">
+      <ul class="cp-query" cp-entity-name="EntAggr" cp-action-name="QueryEntAggrAggr" cp-field="['Prop1 P', 'SUM Prop2 SUMProp2']" cp-order-field="['SUMProp2']" cp-groupby-field=['P'] cp-order-type="DESC">
         <li>
           <span>{{=it.P}}</span>
           <span>{{=it.SUMProp2}}</span>
@@ -50,7 +50,7 @@
         CP_UpdateView('QueryEntAggrAggr');
     });
     </script>
-    <script src="https://clicpilot.github.io/clicpilot-js-1.0.3.js" class="clicpilot-js"></script>
+    <script src="https://clicpilot.github.io/clicpilot-js-current.js" class="clicpilot-js"></script>
     <script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
     </body>
 </html>  
