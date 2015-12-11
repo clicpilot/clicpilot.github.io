@@ -1,6 +1,6 @@
 * Background
 
-A web application includes three tiers, user interface(UI), middle-tier and database layer. The popular UI is made by HTML/JavaScript/CSS. Middle-tier has many choice such as Java/PHP/Python/Ruby, and the popular methodolgy is REST API, UI can send request through AJAX to the REST API and execute the middle-tier code. The middle-tier normally has a connection to the database layer and send SQL or commands to control the storage. 
+A web application includes three tiers, user interface(UI), middle-tier and database layer. The popular UI is made by HTML/JavaScript/CSS. Middle-tier has many choices such as Java/PHP/Python/Ruby, and the popular methodolgy is REST API, UI can send request through AJAX to the REST API and execute the middle-tier code. The middle-tier normally has a connection to the database layer and send SQL or commands to control the storage. 
 So that, we need write code in these three layers. Some code generation tools can generate code from data model to middle-tier and some UI code. It can speed up the application development. clicpilot is to generate middle-tier and database layer code from UI.
 
 * Concept
