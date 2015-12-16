@@ -24,8 +24,8 @@
     	$("#ItemName").val("Item 3");
     	CP_DoAction("CreateItem", {});
     });
-    CP_AfterAction("CreateItem", function(param){
-    	$("#log").append("CreateItem action execute "+(param.success?"successfully ":"unsuccessfully ")+" item id: "+param.obj.ItemId+"\n");
+    CP_AfterAction("CreateItem", function(arg, res){
+    	$("#log").append("CreateItem action execute "+(res.success?"successfully ":"unsuccessfully ")+" item id: "+res.obj.ItemId+"\n");
     });
    	window.ShowResponse = function(msg) {
 	    $("#msg").text(msg);

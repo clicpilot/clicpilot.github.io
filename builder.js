@@ -18,7 +18,8 @@ if(window.CP_Init) {
   	$("#manageApp").click();
 
     
-    CP_AfterAction("CreateApp", function(res){
+    CP_AfterAction("CreateApp", function(arg, res){
+        debugger;
 	    if(res.success) {
 	    	window.SelectedAppId = res.obj.AppId;
 	    	updateView();
@@ -29,7 +30,7 @@ if(window.CP_Init) {
 	    }
     });
 
-    CP_AfterAction("DeleteApp", function(res){
+    CP_AfterAction("DeleteApp", function(arg, res){
 	    if(res.success) {
 	    	window.SelectedAppId = null;
 	        updateView();
@@ -47,7 +48,7 @@ if(window.CP_Init) {
 
     
 
-    CP_AfterAction("CreateFolder", function(res){
+    CP_AfterAction("CreateFolder", function(arg, res){
 
 	    if(res.success) {
 
@@ -62,7 +63,7 @@ if(window.CP_Init) {
     	
     });
 
-    CP_AfterAction("DeleteFolder", function(res){
+    CP_AfterAction("DeleteFolder", function(arg, res){
 
 	    if(res.success) {
 
@@ -77,7 +78,7 @@ if(window.CP_Init) {
     	
     });
 
-    CP_AfterAction("CreateFile", function(res){
+    CP_AfterAction("CreateFile", function(arg, res){
 
 	    if(res.success) {
 
@@ -92,7 +93,7 @@ if(window.CP_Init) {
     	
     });
 
-    CP_AfterAction("DeleteFile", function(res){
+    CP_AfterAction("DeleteFile", function(arg, res){
 
 	    if(res.success) {
 
