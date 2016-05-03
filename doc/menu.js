@@ -20,6 +20,7 @@ window.drawMenuItem=function(item, level, nextitem) {
         $("#page_"+key)
         $("body").delegate("#page_"+key, "click", {item:item, menulevel:menulevel, nextitem:nextitem}, function(e){
             var html = [];
+            
             drawPageItem(e.data.item, html, e.data.menulevel, e.data.nextitem);
             $("#main").html(html.join("\n"));
             location.href = "#main-page";
@@ -47,7 +48,7 @@ function drawPageItem(item, html, level, nextitem) {
     html.push('<h'+level+'>'+title+'</h'+level+'>');
     
 
-    html.push('<div id="'+key+'_md"></div>');
+    html.push('<div id="'+key+'_md">Loading...</div>');
 
     loadFile(key, key+".md", key+'_md');
     if(item.file) {
