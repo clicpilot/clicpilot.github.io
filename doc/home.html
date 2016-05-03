@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Page Title</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+	<link href="../google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="../google-code-prettify/prettify.js"></script>
+	<script type="text/javascript" src="./content.js"></script>
+	<script type="text/javascript" src="./menu.js"></script>
+    <script type="text/javascript" src="./showdown.js"></script>
+    
+    <script data-require="bootstrap@*" data-semver="3.1.1" src="../js/bootstrap.min.js"></script>
+    
+    <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="../css/bootstrap.min.css" />
+    
+    <style>
+        .prettyprint ol.linenums > li { list-style-type: decimal; }
+
+        .full { background: #0f0; height: 100% }
+
+        pre {
+            word-wrap: normal;
+        }
+    </style>
+</head>
+<body>
+
+<div data-role="page" id="main-page">
+
+	<div data-role="header" data-position="fixed">
+		<h1>Clicpilot Document</h1>
+        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content" id="main">
+
+	</div><!-- /content -->
+
+</div><!-- /page -->
+    <div data-role="page" id="nav-panel">
+        <ul data-role="listview" id="menu-list" class="ui-listview-outer"><li data-icon="delete"><a href="#main-page" data-rel="close">Close</a></li>
+        </ul>
+    </div><!-- /panel -->
+</body>
+</html>

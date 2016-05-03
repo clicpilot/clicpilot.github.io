@@ -1,4 +1,5 @@
 window.onload=function(){
+    
 	var html1 = [];
 	var html2 = [];
 	window.loadfiles=[]
