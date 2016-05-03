@@ -12,7 +12,7 @@ window.drawMenuItem=function(item, level, nextitem) {
     menulevel++;
     var space = "";
     for(var i=0;i<menulevel;i++) {
-        space+="&nbsp;";
+        space+="&nbsp;&nbsp;";
     }
     var key = item.title.replace(/\s/g, "").toLowerCase();
     if(!item.children) {
@@ -20,23 +20,31 @@ window.drawMenuItem=function(item, level, nextitem) {
         $("#page_"+key)
         $("body").delegate("#page_"+key, "click", {item:item, menulevel:menulevel, nextitem:nextitem}, function(e){
             var html = [];
-            
+
             drawPageItem(e.data.item, html, e.data.menulevel, e.data.nextitem);
             $("#main").html(html.join("\n"));
             location.href = "#main-page";
             //alert(e.data.item.title);
         });
     } else {
-        $("#menu-list").append('<li data-role="list-divider">'+space+item.title+'</li>');
+        $("#menu-list").append('<li><a href="#" id="page_'+key+'">'+space+item.title+'</a></li>');
         for(var i=0;i<item.children.length;i++) {
             drawMenuItem(item.children[i], menulevel, (i==item.children.length)?null:item.children[i+1]);
         }
-        //for next chapter
-        $("body").delegate("#page_"+key, "click", {item:item}, function(e){
-            var nextkey = item.children[0].title.replace(/\s/g, "").toLowerCase();
-            $("#page_"+nextkey).click();
+        $("body").delegate("#page_"+key, "click", {item:item, menulevel:menulevel, nextitem:item.children[0]}, function(e){
+            var html = [];
+
+            drawPageItem(e.data.item, html, e.data.menulevel, e.data.nextitem);
+            $("#main").html(html.join("\n"));
+            location.href = "#main-page";
+            //alert(e.data.item.title);
         });
+        
+
     }
+    
+
+    
     menulevel--;
 }
 
