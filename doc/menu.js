@@ -1,14 +1,14 @@
 window.onload = function() {
     window.menulevel = 0;
     for(var i=0;i<content.length;i++) {
-        drawMenuItem(content[i], "menu-list");
+        drawMenuItem(content[i], menulevel, (i==content.length)?null:content[i+1]);
     }
     $("#page_about").click();
     $("#menu-list").listview();
     $("#menu-list").listview('refresh');
 }
 
-window.drawMenuItem=function(item, level) {
+window.drawMenuItem=function(item, level, nextitem) {
     menulevel++;
     var space = "";
     for(var i=0;i<menulevel;i++) {
@@ -18,9 +18,9 @@ window.drawMenuItem=function(item, level) {
     if(!item.children) {
         $("#menu-list").append('<li><a href="#" id="page_'+key+'">'+space+item.title+'</a></li>');
         $("#page_"+key)
-        $("body").delegate("#page_"+key, "click", {item:item, menulevel:menulevel}, function(e){
+        $("body").delegate("#page_"+key, "click", {item:item, menulevel:menulevel, nextitem:nextitem}, function(e){
             var html = [];
-            drawPageItem(e.data.item, html, e.data.menulevel);
+            drawPageItem(e.data.item, html, e.data.menulevel, e.data.nextitem);
             $("#main").html(html.join("\n"));
             location.href = "#main-page";
             //alert(e.data.item.title);
@@ -28,13 +28,18 @@ window.drawMenuItem=function(item, level) {
     } else {
         $("#menu-list").append('<li data-role="list-divider">'+space+item.title+'</li>');
         for(var i=0;i<item.children.length;i++) {
-            drawMenuItem(item.children[i]);
+            drawMenuItem(item.children[i], menulevel, (i==item.children.length)?null:item.children[i+1]);
         }
+        //for next chapter
+        $("body").delegate("#page_"+key, "click", {item:item}, function(e){
+            var nextkey = item.children[0].title.replace(/\s/g, "").toLowerCase();
+            $("#page_"+nextkey).click();
+        });
     }
     menulevel--;
 }
 
-function drawPageItem(item, html, level) {
+function drawPageItem(item, html, level, nextitem) {
     window.loadfiles = [];
 	var title = item.title;
 	var key = title.replace(/\s/g, "").toLowerCase();
@@ -63,6 +68,10 @@ function drawPageItem(item, html, level) {
 	}
     html.push('</div>');
 
+    if(nextitem) {
+        var nextkey = nextitem.title.replace(/\s/g, "").toLowerCase();
+        html.push('<a href="#" class="ui-btn" id="page_'+nextkey+'">Next Chapter: '+nextitem.title+'</a>');
+    }
     
     for(var i=0;i<loadfiles.length;i++) {
 		loadfiles[i]();
